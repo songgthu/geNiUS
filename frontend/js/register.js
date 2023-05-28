@@ -16,7 +16,7 @@ function handleRegister(event) {
       password: password,
     };
 
-      fetch("http://localhost:5501/register-user", {
+      fetch("http://localhost/register-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
