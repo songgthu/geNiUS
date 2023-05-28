@@ -18,7 +18,7 @@ function handleLogin(event) {
       };
   
    
-    fetch("http://localhost:5501/login-user", {
+    fetch("/login-user", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
