@@ -18,7 +18,7 @@ function handleLogin(event) {
       };
   
    
-    fetch("/login-user", {
+    fetch("https://genius-gamma.vercel.app/login-user", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
