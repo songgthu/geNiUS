@@ -1,20 +1,9 @@
 {
-    "version": 2,
     "builds": [
-        {
-            "src": "./server.js",
-            "use": "@vercel/static"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/frontend/html/login.html"
-        }
-    
-       ]
+    {
+        "src": "./server.js",
+        "use": "@vercel/static"
+    }
+],
+    "rewrites": [{ "source": "/(.*)", "destination": "/frontend/html/login.html" }]
 }
-
-// {
-//     "rewrites": [{ "source": "/(.*)", "destination": "/frontend/html/login.html" }]
-// }
