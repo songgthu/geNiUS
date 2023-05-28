@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/styles/login.css">
+  
+</head>
+
+<body class="container">
+  <form id="registerForm" class="register">
+
+    <h1 align="center" class="heading" >Register</h1>
+    <div class="flex-input">
+      <label for="name" class="name-label">Name:</label>
+      <input type="text" class="name" id="name" placeholder="Enter Your Name" autocomplete="off" required>
+    </div>
+    
+    <div class="flex-input">
+      <label for="email" class="email-label">Email:</label>
+      <input type="email" class="email" id="email" placeholder="Enter Your Email" required>
+    </div>
+    
+    <div class="flex-input">
+      <label for="password" class="pwd-label">Password:</label>
+      <input type="password" class="password" id="password" placeholder="Enter Your Password" autocomplete="off" required>
+    </div>
+    
+    <div>
+      <button type="submit" class="registerButton" id="register">Get Started!</button>
+    </div>
+    
+    <div>
+      <a style="display:block; text-align:center"  href="login.html" class="link">Have an account? Log in here!</a>
+    </div>
+  
+  </form>
+  <script type="text/javascript" src="/frontend/js/register.js"></script>
+</body>
+</html>

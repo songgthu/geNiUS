@@ -1,0 +1,26 @@
+.exam, .calendar, .timetable {
+  font-family:'Quicksand', sans-serif;
+  background-color: #926359;
+  color: #f4eccd;
+  font-size: 20px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.container {
+  background-color: #f4eccd;
+}
+
+.header {
+  font-family:'Quicksand', sans-serif;
+  font-size: 50px;
+  text-align: center;
+  color:  #926359;
+}
+
+.exam:hover, .calendar:hover, .timetable:hover {
+  color: #95817d;
+  background-color: #f4eccd;
+}
+

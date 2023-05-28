@@ -1,0 +1,97 @@
+.heading, .link, .login, .register, .loginButton, .registerButton {
+  font-family: 'Quicksand', sans-serif;
+}
+.container {
+  background-color: #f4eccd;
+  display: flex;
+  justify-content: center;
+  height: 700px;
+  align-items: center;
+  border-radius: 3px;
+}
+.flex-input {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.login, .register {
+  border-radius: 15px;
+  background-color: #c99575;
+  padding: 10px;
+  width: 400px;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+  width: 200px;
+  padding: 10px;
+  font-family:'Quicksand', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  color: #926359;
+  
+}
+
+
+label {
+  flex-basis: 100px;
+  margin-top: 10px;
+  margin-left: 35px;
+  font-size: 18px;
+  font-weight: 600;
+}
+::placeholder {
+  color: #926359;
+}
+
+.loginButton, .registerButton {
+  width: 80%; 
+  font-size: 19px;
+  font-weight: 700;
+  background-color: #926359;
+  color: #f4eccd;
+  border-radius: 10px;
+  border: none;
+  margin-left: 35px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.loginButton:hover, .registerButton:hover {
+  cursor: pointer;
+  color: #95817d;
+  background-color: #f4eccd;
+}
+
+.email-label, .pwd-label, .name-label {
+  color: #f4eccd;
+}
+
+.email, .password, .name {
+  border: 0cm;
+}
+
+.heading {
+  color: #f4eccd;
+  font-weight: 700;
+}
+
+.link {
+  color: #f4eccd;
+  font-size: 17px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+@media all and (max-width: 480px) {
+  .flex-input {
+    flex-direction: column;
+  }
+
+  label {
+    flex-basis: 0;
+  }
+}

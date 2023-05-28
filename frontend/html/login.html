@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <script src="/frontend/js/login.js"></script>
+  <link rel="stylesheet" href="/frontend/styles/login.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="/frontend/js/login.js"></script>
+  </head>
+</head>
+
+<body class="container">
+
+  <form id="loginForm" class="login">
+    
+    <h1 align="center" class="heading">Login</h1>
+    <div class="flex-input">
+      <label for="email" class="email-label">Email:</label>
+      <input type="email" id="email" class ="email" placeholder="Enter Your Email" required>
+    </div>
+    
+    <div class="flex-input">
+      <label for="password" class="pwd-label">Password:</label>
+      <input type="password" id="password" class ="password" placeholder="Enter Your Password" autocomplete="off" required>
+    </div>
+    
+    <div>
+      <button type="submit" class="loginButton" id="login">Log In</button>
+    </div>
+    
+    <div>
+      <a style="display:block; text-align:center"  href="register.html" class="link">Don't have an account? Register here</a>
+    </div>
+    
+  </form>
+</body>
+</html>
