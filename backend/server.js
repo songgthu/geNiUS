@@ -113,7 +113,7 @@ app.post('/register-user', (req, res) => {
 });
 
 // Start the server
-const port = 5501;
+const port = process.env.PORT || 5501;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
