@@ -8,8 +8,8 @@ const path = require('path');
 // Create connection to the remote database
 const connection = mysql.createConnection({
   host: 'aws.connect.psdb.cloud',
-  user: '2d3wzuslc0ooayk49u7k',
-  password: 'pscale_pw_cQR0X8obwQ0HfgYJvblKIWwaFYQDV4ftYYzr6FpbMGm',
+  user: '0esuifwd5sv59akpnvc9',
+  password: 'pscale_pw_gtOJvnqVUm38gnvmRIUW7mc1gmxwkpPzRRj0lI9oOBz',
   database: 'genius',
   ssl: { rejectUnauthorized: true },
   multipleStatements: true,
