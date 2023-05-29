@@ -29,10 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
-const initialPath = path.join(__dirname, 'frontend', 'html');
-app.get('/', (req, res) => {
-  res.sendFile(path.join(initialPath,"login.html"));
-})
+// const initialPath = path.join(__dirname, 'frontend', 'html');
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(initialPath,"login.html"));
+// })
 app.get('/login-user', (req, res) => {
     res.sendFile(path.join(initialPath,"login.html"));
   })
