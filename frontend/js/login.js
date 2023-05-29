@@ -17,8 +17,8 @@ function handleLogin(event) {
         password: password
       };
   
-    const baseUrl = window.location.hostname == '127.0.0.1' ? 'http://localhost:5501' : 'https://genius-gamma.vercel.app/frontend/html/login.html';
-    fetch(`${baseUrl}/login-user`, {
+    // const baseUrl = window.location.hostname == '127.0.0.1' ? 'http://localhost:5501' : 'https://genius-gamma.vercel.app';
+    fetch("http://localhost:5501/login-user", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
