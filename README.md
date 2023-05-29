@@ -14,11 +14,10 @@ We want <strong>ALL</strong> NUS students to gain access to a customised app for
 - [x] Log in page
 - [x] Register page
 
-# Testing: Accessing our webapp
+# Testing: Accessing our web application
 <ol>
-  <li>Log in to your github account and https://github.com/songgthu/Orbital-geNiUS.git access this link. </li>
-  <li>Click on the green button (code) and click download zip. </li>
+  <li>Download the zip folder from this <a href="[https://www.w3schools.com](https://drive.google.com/file/d/1iA4eSE67aPvPg8bw7oziV4AQagq_6Ef2/view?usp=sharing)">link</a>. </li>
   <li>The folder will be downloaded on your computer and please unzip it. </li>
-  <li>Then, open VScode, click the “open folder” and choose the unzipped folder.</li>
-  <li>On your Vscode, download the Live Server extension.</li>
+  <li>Then, open VScode, click the “open folder” and choose the folder.</li>
+  <li>Right-click the login.html file and choose Open with live server. (download the Live Server extension if you do not have it)</li>
   <li>On the terminal, type npm start</li>
