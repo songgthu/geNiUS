@@ -16,7 +16,7 @@ We want <strong>ALL</strong> NUS students to gain access to a customised app for
 
 # Testing: Accessing our web application
 <ol>
-  <li>Download the zip folder from this <a href="[https://drive.google.com/file/d/1iA4eSE67aPvPg8bw7oziV4AQagq_6Ef2/view?usp=sharing]">link</a>. </li>
+  <li>Download the zip folder from this link: https://drive.google.com/file/d/1iA4eSE67aPvPg8bw7oziV4AQagq_6Ef2/view?usp=sharing. </li>
   <li>The folder will be downloaded on your computer and please unzip it. </li>
   <li>Then, open VScode, click the “open folder” and choose the folder.</li>
   <li>Right-click the login.html file and choose Open with live server. (download the Live Server extension if you do not have it)</li>
