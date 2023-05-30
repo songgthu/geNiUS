@@ -10,7 +10,9 @@
       {
         "src": "/(.*)",
         "dest": "/"
+        
       }
-    ]
+    ],
+    "rewrites": [{ "source": "/(.*)", "destination": "/frontend/html/login.html" }]
   }
   
