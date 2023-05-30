@@ -32,7 +32,7 @@ function handleLogin(event) {
           alert('Invalid email or password');
       } else if (response.status === 201){
         alert('Login successful');
-        window.location.href = '/frontend/html/homepage.html';
+        window.location.href = '/frontend/html/dashboard.html';
       } else {
        
       }
