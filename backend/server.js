@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const mysql = require('mysql2');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // Create connection to the remote database
 const connection = mysql.createConnection({
@@ -47,34 +49,54 @@ app.post('/login-user', (req, res) => {
 
   const { email, password } = req.body;
   // Query the database to retrieve the user
-  const selectUserQuery = `
+  const selectUserByEmailQuery = `
+  SELECT *
+  FROM users
+  WHERE email = ?
+`;
+const selectUserQuery = `
   SELECT *
   FROM users
   WHERE email = ? AND password = ?
 `;
-  connection.execute(selectUserQuery,
-    [email, password],
-    (err, results) => {
-      if (err) {
-        console.error('Error Executing query:', err);
-        res.status(500).json({ error: 'Internal server error' });
-        return;
-      }
-      // Check email and password
-      if(results.length > 0 && email == results[0].email 
-        && password == results[0].password) {
-          res.status(201).json({ message: 'Login successful' });
-      } else {
-        res.status(409).json({ error: 'Invalid email or password' });
-      }
-    
+connection.execute(selectUserByEmailQuery,
+  [email],
+  (err, results) => {
+    if (err) {
+      console.error('Error Executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
     }
-  );
+    // Check email and password
+    if(results.length > 0 && email == results[0].email) {
+          // check password
+          const storedHashPw = results[0].password;
+          bcrypt.compare(password, storedHashPw, (err, isMatch) => {
+            if (isMatch) {
+              res.status(201).json({ message: 'Login successful' });
+            } else {
+              res.status(409).json({ error: 'Invalid password' });
+            }
+          });
+        
+    } else {
+      res.status(409).json({ error: 'Invalid email' });
+    }
+  
+  }
+);
+  
 });
 
 // Register endpoint
 app.post('/register-user', (req, res) => {
   const { name, email, password } = req.body;
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    if (err) {
+      console.error('Error hashing password:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
   console.log(name);
   // Check if the user already exists
   const selectUserQuery = `
@@ -102,7 +124,7 @@ app.post('/register-user', (req, res) => {
         // Insert the new user into the database
         connection.execute(
           createNewUser,
-          [name, email, password],
+          [name, email, hashedPassword],
           (err) => {
             if (err) {
               console.error('Error inserting into the database:', err);
@@ -115,7 +137,7 @@ app.post('/register-user', (req, res) => {
     }
   }
   );
- 
+});
 });
 
 // Start the server
@@ -123,3 +145,7 @@ const port = process.env.PORT || 5501;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+
+
+
