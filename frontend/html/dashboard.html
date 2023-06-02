@@ -5,40 +5,89 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="/frontend/styles/dashboard.css">
     <link rel="stylesheet" href="/frontend/styles/calendar.css">
+    <link rel="stylesheet" href="/frontend/styles/Todaystask.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   </head>
 
   <body class="container">
-    <div>
-      <h1 class="header"> geNiUS <h1>
-    </div>
+    <section class="layout">
+    <div class ="navBar">
+    <h1 class="header"> geNiUS <h1>
+    <h2 id='welcome'>t</h2>
+    
     <nav class="sideNav">
-      
       <button class="navButton" onclick="window.location.href='/frontend/html/dashboard.html'">
         <span class="material-symbols-outlined">
-          home </span>Dashboard</button>
+          home 
+        </span>Dashboard</button>
+      
       <button class="navButton" onclick="window.location.href='/frontend/html/timetable.html'">
         <span class="material-symbols-outlined">
           schedule
           </span>Timetable</button>
+
       <button class="navButton" onclick="window.location.href='/frontend/html/exam.html'">
         <span class="material-symbols-outlined">
           school
           </span>Exam Management</button>
-      <button class="navButton" onclick="logout()">
+          
+      <button class="navButton" id="logoutButton">
         <span class="material-symbols-outlined">
           output
           </span>Log out</button>
     </nav>
+  </div>
+
     <div class="wrapper">
+      <div class="tabBar">
+        <ul>
+        <li data-li="overview"  class="active" onclick="changeTab()">Overview</li>
+        <li data-li="today" onclick="changeTab()">Today's Tasks</li>
+        <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
+        </ul>
+      </div> 
+    
+    
+    
+    <div class="item today" style="display: none;">
+    <h2 class="tdyview">Today's Tasks</h2>
+    
+    <main class="app">
+      <div class="input-header">
+        <h1><span id="date"></span></h1>
+        <div class="to-do-input">
+          <input type="text" id="item" placeholder="Enter Task"><button id="enter">Add new task</button>
+        </div>
+      </div>
+      <div class="to-do-list"></div>
+    </main>
+  </div>
+
+    <div class="item upcoming" style="display: none;">
+    <h2>View 3</h2>
+    <p>This is the content of view 3.</p>
+    </div>
+    <div class="item overview" >
       <header>
-        
         <div class="icons">
         <span id ="prev" class="material-symbols-outlined">chevron_left</span>
         <p class ="current-date"></p>
         <span id ="next" class="material-symbols-outlined">chevron_right</span>
         </div>
       </header>
+      
       <div class="calendar">
         <ul class="weeks">
           <li>Sun</li>
@@ -52,13 +101,44 @@
         <ul class="days"></ul>
       </div>
     </div>
+    </div>
+  </section>
+
+  <script type="text/javascript" src="/frontend/js/logout.js"></script>
     <script>
-      function logout() {
-        window.location.href = "/frontend/html/index.html";
-      }
+      
+      function changeTab() {
+        var li_elements = document.querySelectorAll(".tabBar ul li");
+        var item_elements = document.querySelectorAll(".item");
+        for (var i = 0; i < li_elements.length; i++) {
+          li_elements[i].addEventListener("click", function() {
+          li_elements.forEach(function(li) {
+          li.classList.remove("active");
+        });
+        
+        this.classList.add("active");
+        var li_value = this.getAttribute("data-li");
+        item_elements.forEach(function(item) {
+          item.style.display = "none";
+        });
+        
+        if (li_value == "overview") {
+          document.querySelector("." + li_value).style.display = "block";
+        } else if (li_value == "today") {
+          document.querySelector("." + li_value).style.display = "block";
+        } else if (li_value == "upcoming") {
+          document.querySelector("." + li_value).style.display = "block";
+        } else {
+          console.log("");
+        }
+      });
+    }
+  }
+
     </script>
     <script type="text/javascript" src="/frontend/js/calendar.js"></script>
-
+    <script type="text/javascript" src="/frontend/js/dashboard.js"></script>
+    <script type="text/javascript" src="/frontend/js/todo.js"></script>
   </body>
 
 

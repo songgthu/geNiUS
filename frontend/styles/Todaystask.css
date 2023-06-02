@@ -1,0 +1,51 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #f4eccd;
+  padding: 10px;
+  
+}
+
+.todolist {
+  width: 100%;
+  max-width: 540px;
+  background-color:  #926359;
+  margin: 100px auto 20px;
+  padding: 40px 30px 70px;
+  border-radius: 10px;
+}
+
+.todolist h2 {
+  color: #f4eccd;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.material-symbols-outlined {
+  width: 30px;
+  margin-left: 15px;
+}
+
+
+
+.addtask {
+  display: inline-block;
+  width: 200px;
+  padding: 10px;
+  font-family:'Quicksand', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  color: #926359;
+  border: none;
+}
+
+.add {
+  display: inline-block;
+  margin-left: 50px;
+}
+
+
+

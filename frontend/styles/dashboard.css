@@ -1,4 +1,16 @@
+.layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid: "navBar wrapper";
+}
 
+.wrapper { 
+  grid-area: body; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}
 nav {
   display: flex;
   flex-direction: column;
@@ -10,8 +22,9 @@ nav {
   background-color: #926359;
   color: #f4eccd;
   font-size: 20px;
-  margin-bottom: 10px;
-  border-radius: 7px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -22,7 +35,7 @@ nav {
 .header {
   font-family:'Quicksand', sans-serif;
   font-weight: 700px;
-  text-align: center;
+  text-align: auto;
   color:  #926359;
 }
 
@@ -30,3 +43,4 @@ button:hover {
   color: #95817d;
   background-color: #f4eccd;
 }
+

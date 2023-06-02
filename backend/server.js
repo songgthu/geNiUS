@@ -4,8 +4,14 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const mysql = require('mysql2');
 const path = require('path');
+
+// for hash password
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+// for session storage
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 
 // Create connection to the remote database
 const connection = mysql.createConnection({
@@ -33,16 +39,36 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '')));
 
+// session middleware
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(cookieParser());
+app.use(sessions({
+    secret: "jabfoyshnoscertkesy",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false 
+}));
+
+var session;
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/html/login.html'));
+  session = req.session;
+  res.sendFile(path.join(__dirname, '../frontend/html/index.html'));
 })
+
+
 app.get('/login-user', (req, res) => {
     res.sendFile(path.join(__dirname,"login.html"));
   })
 app.get('/register-user', (req, res) => {
     res.sendFile(path.join(__dirname,"register.html"));
   })
+
+  
+
+// app.get('/update-timetable', (req, res) => {
+//   res.sendFile(path.join(__dirname,"timetable.html"));
+// })
 
 // Login endpoint
 app.post('/login-user', (req, res) => {
@@ -54,11 +80,7 @@ app.post('/login-user', (req, res) => {
   FROM users
   WHERE email = ?
 `;
-const selectUserQuery = `
-  SELECT *
-  FROM users
-  WHERE email = ? AND password = ?
-`;
+
 connection.execute(selectUserByEmailQuery,
   [email],
   (err, results) => {
@@ -73,7 +95,15 @@ connection.execute(selectUserByEmailQuery,
           const storedHashPw = results[0].password;
           bcrypt.compare(password, storedHashPw, (err, isMatch) => {
             if (isMatch) {
-              res.status(201).json({ message: 'Login successful' });
+              session = req.session;
+              req.session.user = results[0].name;
+              console.log('Username:', req.session.user);
+              
+              res.status(201).json({ 
+                username: req.session.user,
+                message: 'Login successful' });
+              
+             
             } else {
               res.status(409).json({ error: 'Invalid password' });
             }
@@ -138,6 +168,29 @@ app.post('/register-user', (req, res) => {
   }
   );
 });
+});
+
+// Update Timetable endpoint
+app.post('/update-timetable', (req, res) => {
+
+  const { url, email } = req.body;
+  console.log(url + '' + email);
+  // Query the database to retrieve the user
+  const updateURLQuery = `UPDATE users SET url = ? WHERE email = ?`;
+
+connection.execute(updateURLQuery,
+  [url, email],
+  (err, results) => {
+    if (err) {
+      console.error('Error Executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({message: 'Update timetable successfully'});
+    }
+  }
+);
+  
 });
 
 // Start the server
