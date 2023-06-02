@@ -15,7 +15,19 @@ function createTask(){
     // Get the input value
     const taskInput = document.querySelector('.taskInput').value;
     const deadline = document.querySelector('.deadlineInput').value;
+    if (taskInput != "" && deadline != "") {
+    var [datePart, timePart] = deadline.split('T');
 
+// Split the date component into year, month, and day
+
+var [year, month, day] = datePart.split('-');
+
+
+// Convert the month value to a string representation
+var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { month: 'long' });
+
+// Construct the formatted date string
+var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     // Create a new row
     var table = document.querySelector('.task-table');
     var row = table.insertRow();
@@ -27,7 +39,7 @@ function createTask(){
 
     // // Set the values for the cells
     taskCell.textContent = taskInput;
-    deadlineCell.textContent = deadline;
+    deadlineCell.textContent = formattedDate;
 
     // // Create a checkbox and label for the status cell
     var checkboxContainer = document.createElement('div');
@@ -44,6 +56,9 @@ function createTask(){
 
     statusCell.appendChild(checkboxContainer);
     close();
+    } else {
+      alert("Please fill in all the fields");
+    }
   }
 
   // Function to close task box
