@@ -52,8 +52,7 @@ label {
 
 .homeButton2 {
   text-align: center;
-  display: block;
-  width: 50%;
+  width: 350px;
   font-size: 19px;
   font-weight: 500;
   background-color: #926359;
@@ -64,6 +63,7 @@ label {
   margin-bottom: 15px;
   padding-top: 7px;
   padding-bottom: 7px;
+
 }
 
 .registerButton, .loginButton, .homeButton {
@@ -80,8 +80,6 @@ label {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-
-
 
 .loginButton:hover, .registerButton:hover{
   cursor: pointer;

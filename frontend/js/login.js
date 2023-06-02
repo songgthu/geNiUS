@@ -1,3 +1,8 @@
+window.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', handleLogin);
+});  
+
 function handleLogin(event) {
     event.preventDefault(); // Prevents the default form submission behavior
   
@@ -31,8 +36,18 @@ function handleLogin(event) {
           // Log in failed
           alert('Invalid email or password');
       } else if (response.status === 201){
+        response.json().then(data => {
+        const username = data.username;
+        
+        sessionStorage.setItem("email", email);
+        
         alert('Login successful');
-        window.location.href = '/frontend/html/dashboard.html';
+        const url = `/frontend/html/dashboard.html`;
+        sessionStorage.setItem("sessionToken", "usersessiontoken");
+        sessionStorage.setItem("username", username);
+        
+        window.location.href = url;
+        })
       } else {
        
       }
@@ -43,10 +58,9 @@ function handleLogin(event) {
   
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('loginForm');
-  loginForm.addEventListener('submit', handleLogin);
-});  
+
+
+
   
 
     
