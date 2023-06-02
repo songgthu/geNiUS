@@ -5,12 +5,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="/frontend/styles/dashboard.css">
     <link rel="stylesheet" href="/frontend/styles/calendar.css">
-    <link rel="stylesheet" href="/frontend/styles/Todaystask.css">
+    <link rel="stylesheet" href="/frontend/styles/today-task.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
  
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,27 +55,7 @@
         <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
         </ul>
       </div> 
-    
-    
-    
-    <div class="item today" style="display: none;">
-    <h2 class="tdyview">Today's Tasks</h2>
-    
-    <main class="app">
-      <div class="input-header">
-        <h1><span id="date"></span></h1>
-        <div class="to-do-input">
-          <input type="text" id="item" placeholder="Enter Task"><button id="enter">Add new task</button>
-        </div>
-      </div>
-      <div class="to-do-list"></div>
-    </main>
-  </div>
 
-    <div class="item upcoming" style="display: none;">
-    <h2>View 3</h2>
-    <p>This is the content of view 3.</p>
-    </div>
     <div class="item overview" >
       <header>
         <div class="icons">
@@ -100,7 +77,72 @@
         </ul>
         <ul class="days"></ul>
       </div>
+
     </div>
+
+    <div class="item today" style="display: none;">
+      <h2 class="tdyview">Today's Tasks:</h2>
+      <button class="addButton" type="button">+  Add Task</button>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Deadline</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Task 1</td>
+            <td>June 10, 2023</td>
+            <td>
+              <div class="checkbox-container">
+                <input type="checkbox" id="statusCheckbox1">
+                <label for="statusCheckbox1"></label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Task 2</td>
+            <td>June 15, 2023</td>
+            <td>
+              <div class="checkbox-container">
+                <input type="checkbox" id="statusCheckbox2">
+                <label for="statusCheckbox2"></label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Task 3</td>
+            <td>June 20, 2023</td>
+            <td>
+              <div class="checkbox-container">
+                <input type="checkbox" id="statusCheckbox3">
+                <label for="statusCheckbox3"></label>
+              </div>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+      <div id="modal" class="modal" style="display: none">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <input type="text" class="taskInput" placeholder="Enter the task" required></input>
+          <input type="text" class="deadlineInput" placeholder="When is the deadline?" required></input>
+          <button type="button" class="saveTaskButton"  >Save</button>
+          <button type="button" class="closeTaskButton">Cancel</button>
+          <button type="button">Delete Task</button>
+        </div>
+      </div>
+      
+      
+    </div>
+  
+      <div class="item upcoming" style="display: none;">
+      <h2>View 3</h2>
+      <p>This is the content of view 3.</p>
+      </div>
     </div>
   </section>
 
@@ -139,6 +181,7 @@
     <script type="text/javascript" src="/frontend/js/calendar.js"></script>
     <script type="text/javascript" src="/frontend/js/dashboard.js"></script>
     <script type="text/javascript" src="/frontend/js/todo.js"></script>
+    
   </body>
 
 
