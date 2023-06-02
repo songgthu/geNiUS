@@ -50,3 +50,7 @@ function createTask(){
   function close() {
     modal.style.display = "none";
   }
+
+  // Discard change
+  const cancel = document.querySelector(".cancelTaskButton");
+  cancel.addEventListener('click', close);
