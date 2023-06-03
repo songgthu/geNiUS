@@ -38,14 +38,15 @@ function handleLogin(event) {
       } else if (response.status === 201){
         response.json().then(data => {
         const username = data.username;
-        
+        const userId = data.userId;
+        console.log(userId);
         sessionStorage.setItem("email", email);
         
         alert('Login successful');
         const url = `/frontend/html/dashboard.html`;
         sessionStorage.setItem("sessionToken", "usersessiontoken");
         sessionStorage.setItem("username", username);
-        
+        sessionStorage.setItem("userId", userId);
         window.location.href = url;
         })
       } else {

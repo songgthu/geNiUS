@@ -97,10 +97,12 @@ connection.execute(selectUserByEmailQuery,
             if (isMatch) {
               session = req.session;
               req.session.user = results[0].name;
-              console.log('Username:', req.session.user);
-              
+              //console.log('Username:', req.session.user);
+              req.session.userId = results[0].id;
+              //console.log(req.session.userId);
               res.status(201).json({ 
                 username: req.session.user,
+                userId: req.session.userId,
                 message: 'Login successful' });
               
              
@@ -160,6 +162,7 @@ app.post('/register-user', (req, res) => {
               console.error('Error inserting into the database:', err);
               return;
             } else {
+              
               console.log('Create new user successfully');
             }
           }
@@ -174,7 +177,7 @@ app.post('/register-user', (req, res) => {
 app.post('/update-timetable', (req, res) => {
 
   const { url, email } = req.body;
-  console.log(url + '' + email);
+  // console.log(url + '' + email);
   // Query the database to retrieve the user
   const updateURLQuery = `UPDATE users SET url = ? WHERE email = ?`;
 
@@ -191,6 +194,40 @@ connection.execute(updateURLQuery,
   }
 );
   
+});
+
+app.post('/add-task', (req, res) => {
+  const { taskInput, deadline, userId } = req.body;
+  // console.log(taskInput);
+  // console.log(deadline);
+  // console.log(userId);
+  const addTaskQuery = `INSERT INTO tasks (task, deadline, created_by) VALUES (?, ?, ?)`;
+  
+  connection.execute(addTaskQuery, [taskInput, deadline, userId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ message: 'Add task successfully' });
+    }
+  });
+});
+
+app.post('/tasks', (req,res) => {
+  const{ userId } = req.body;
+  const retrieveQuery = `SELECT * FROM tasks WHERE created_by = ?`;
+  connection.execute(retrieveQuery, [userId], (err, results) =>{
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ 
+        results: results,
+        message: 'Retrieve task successfully' });
+    }
+  });
 });
 
 // Start the server
