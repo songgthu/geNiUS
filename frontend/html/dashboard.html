@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/frontend/styles/dashboard.css">
     <link rel="stylesheet" href="/frontend/styles/calendar.css">
     <link rel="stylesheet" href="/frontend/styles/today-task.css">
+    <link rel="stylesheet" href="/frontend/styles/upcoming-task.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     
  
@@ -116,8 +118,36 @@
     </div>
   
       <div class="item upcoming" style="display: none;">
-      <h2>View 3</h2>
-      <p>This is the content of view 3.</p>
+        <button class="addButton1" type="button">+  Add Task</button>
+        <table class="task-table1">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Deadline</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody class = "taskBody1">
+          </tbody>
+        </table>
+        <div class="modal1" style="display: none">
+          <div class="modal-content1">
+            <span class="close1">&times;</span>
+            <input type="text" class="taskInput1" placeholder="Enter the task" required></input>
+            <input type="datetime-local" class="deadlineInput1" placeholder="When is the deadline?" required></input>
+            <button type="button" class="saveTaskButton1"  >Save</button>
+          </div>
+        </div>
+        
+        <div id ="edit-modal1" class="task-modal1" style="display: none">
+          <div class="modal-content1">
+            <span class="closeTask1">&times;</span>
+            <input type="text" class="newTaskInput1" placeholder="Enter the task" required></input>
+            <input type="datetime-local" class="newDeadlineInput1" placeholder="When is the deadline?" required></input>
+            <button type="button" class="saveChangeButton1"  >Save</button>
+            <button type="button" class="deleteTaskButton1">Delete Task</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -143,12 +173,8 @@
           item.style.display = "none";
         });
         
-        if (li_value == "overview") {
-          document.querySelector("." + li_value).style.display = "block";
-        } else if (li_value == "today") {
-          document.querySelector("." + li_value).style.display = "block";
-        } else if (li_value == "upcoming") {
-          document.querySelector("." + li_value).style.display = "block";
+        if (li_value == "overview" || li_value == "today" || li_value == "upcoming") {
+        document.querySelector("." + li_value).style.display = "block";
         } else {
           console.log("");
         }
@@ -161,7 +187,9 @@
     </script>
     <script type="text/javascript" src="/frontend/js/calendar.js"></script>
     <script type="text/javascript" src="/frontend/js/dashboard.js"></script>
-    <script type="text/javascript" src="/frontend/js/todo.js"></script>
+    <script type="text/javascript" src="/frontend/js/today-task.js"></script>
+    <script type="text/javascript" src="/frontend/js/upcoming-task.js"></script>
+
     
   </body>
 
