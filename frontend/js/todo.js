@@ -1,19 +1,34 @@
-
-
 const create = document.querySelector('.addButton');
-var modal = document.getElementById("modal");
 create.addEventListener('click', createTask);
 
+var modal = document.getElementById("modal");
+var editModal = document.getElementById("edit-modal");
+
+const deleteButtons = document.querySelectorAll('.deleteTaskButton');
+deleteButtons.forEach((button) => {
+  button.addEventListener('click', deleteTask);
+});
+
 var span = document.getElementsByClassName("close")[0];
-span.addEventListener('click', close);
+span.addEventListener('click', closeTask);
+
+// Trigger close for edit-modal
+const editModalCloseButton = document.querySelector("#edit-modal .closeTask");
+editModalCloseButton.addEventListener("click", closeEditModal);
+
+function closeEditModal() {
+  const editModal = document.getElementById("edit-modal");
+  editModal.style.display = "none";
+}
+
 
 function createTask(){
   modal.style.display="block";
   const addQuery = document.querySelector('.saveTaskButton');
-  addQuery.addEventListener('click', modifyTask);
+  addQuery.addEventListener('click', addTask);
 }
   // Function to add a new task
-  function modifyTask() {
+  function addTask() {
     // Get the input value
     const taskInput = document.querySelector('.taskInput').value;
     const deadline = document.querySelector('.deadlineInput').value;
@@ -36,6 +51,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
 
     // // Create cells for the task, deadline, and status
     var taskCell = row.insertCell(0);
+   
     var deadlineCell = row.insertCell(1);
     var statusCell = row.insertCell(2);
 
@@ -76,28 +92,30 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     }).then(response => {
       if (response.status === 500) {
         alert('Internal server error');
+      } else if(response.status === 409) {
+        alert('Task name already exist');
       } else if (response.status === 201) {
-          alert('Add task successfully');
+
+        alert('Add task successfully');
+        close();
+        retrieveTask();
       } else {
        
       }
     })
     .catch(error => {
       console.error('Error during add task:', error)});
-    close();
+    
     } else {
       alert("Please fill in all the fields");
     }
   }
+// Open task
 
-  // Function to close task box
-  function close() {
-    modal.style.display = "none";
-  }
 
-  // Discard change
-  const cancel = document.querySelector(".cancelTaskButton");
-  cancel.addEventListener('click', close);
+function closeTask() {
+  modal.style.display="none";
+}
 
   // Retrieve task data
   // Fetch task data from the database
@@ -131,39 +149,162 @@ function retrieveTask(){
 }
 
 function displayTask() {
-  //const taskData = sessionStorage.getItem('taskData');
   const taskData = JSON.parse(sessionStorage.getItem('taskData'));
   const table = document.querySelector(".task-table")
   const taskBody = document.querySelector(".taskBody");
-
+  taskBody.innerHTML = "";
   for(let i = 0; i < taskData.length; i++) {
     const newRow = document.createElement("tr");
     const taskCell = document.createElement("td");
+    taskCell.classList.add("task-name");
     const deadlineCell = document.createElement("td");
+    deadlineCell.classList.add("deadline");
     const completedCell = document.createElement("td");
-    
     
     deadlineCell.textContent = taskData[i].deadline;
     taskCell.textContent = taskData[i].task;
     
-    
     const checkboxContainer = document.createElement("div");
     const checkbox = document.createElement("input");
     const checkboxLabel = document.createElement("label");
+    checkbox.checked = taskData[i].completed == 1 ? true : false;
+    console.log(checkbox.checked);
 
-    checkboxContainer.classList.add("checkbox-container");
-    checkbox.type = "checkbox";
-    checkbox.id = `statusCheckbox${completedCell.textContent}`;
     checkboxContainer.appendChild(checkbox);
     checkboxContainer.appendChild(checkboxLabel);
     completedCell.appendChild(checkboxContainer);
 
+    checkboxContainer.classList.add("checkbox-container");
+    checkbox.type = "checkbox";
+    checkbox.id = `statusCheckbox${i}`;
+
     newRow.appendChild(taskCell);
     newRow.appendChild(deadlineCell);
     newRow.appendChild(completedCell);
-    console.log(newRow);
+    
     taskBody.appendChild(newRow);
+    taskCell.addEventListener('click', function() {
+      openTask(taskCell.textContent); // Pass the clicked task name as a parameter
+    });
+    checkbox.addEventListener('click', function() {
+      checkBox(checkbox, taskCell.textContent);
+    });
+  }
+  
+  
+}
 
+// Update checkbox
+function checkBox(checkbox, taskName) {
+  const isChecked = checkbox.checked;
+  var value = "true";
+  if(!isChecked) {
+    value = "false";
   }
 
+  const data = {
+    taskStatus: value,
+    taskName: taskName
+  };
+
+  fetch(`http://localhost:5501/update-checkbox`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Update checkbox successfully');
+      checkbox.checked = isChecked; // Update the checkbox state based on the server response
+      console.log(isChecked);
+    } else {
+
+    }
+  })
+  .catch(error => {
+    console.error('Error during update checkbox:', error)
+  });
+}
+
+
+function openTask(oldTask) {
+  console.log("1");
+  editModal.style.display="block";
+  //const oldTask= document.querySelector('.task-name').textContent;
+  const update = document.querySelector(".saveChangeButton");
+  console.log(update);
+  console.log(oldTask);
+  
+  update.addEventListener('click', function(){
+    console.log("2");
+    updateTask(oldTask);
+  });
+}
+// Function to update task change (name, deadline, checkbox)
+function updateTask(oldTask) {
+  console.log("here");
+  const newTask = document.querySelector('.newTaskInput').value;
+  const newDeadline = document.querySelector('.newDeadlineInput').value;
+  var [datePart, timePart] = newDeadline.split('T');
+  var [year, month, day] = datePart.split('-');
+  var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { month: 'long' });
+  var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
+  const data = {
+    newTask: newTask,
+    newDeadline: formattedDate,
+    oldTask: oldTask
+  };
+  
+  // console.log(oldTask);
+
+  fetch(`http://localhost:5501/update-task`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Update task successfully');
+      
+    } else {
+     
+    }
+  }).catch(error => {
+    console.error('Error during delete task:', error);
+  });
+}
+
+// Function to delete task
+function deleteTask() {
+  const taskName = document.querySelector('.task-name').textContent;
+
+  const data = {
+    taskName: taskName
+  };
+  console.log(taskName);
+
+  fetch(`http://localhost:5501/delete-task`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Delete task successfully');
+      location.reload();
+    } else {
+     
+    }
+  }).catch(error => {
+    console.error('Error during delete task:', error);
+  });
 }
