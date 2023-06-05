@@ -21,3 +21,10 @@ We want <strong>ALL</strong> NUS students to gain access to a customised app for
   <li>Then, open VScode, click the “open folder” and choose the folder.</li>
   <li>Right-click the login.html file and choose Open with live server. (download the Live Server extension if you do not have it)</li>
   <li>On the terminal, type npm start</li>
+
+  # Milestone 2
+- [x] Introduction page
+- [x] Dashboard page
+- [x] Timetable feature
+- [x] Calendar page
+  
