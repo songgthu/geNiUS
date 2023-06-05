@@ -1,28 +1,24 @@
 const create = document.querySelector('.addButton');
+
 create.addEventListener('click', createTask);
 
-var modal = document.getElementById("modal");
-var editModal = document.getElementById("edit-modal");
-
-const deleteButtons = document.querySelectorAll('.deleteTaskButton');
-deleteButtons.forEach((button) => {
-  button.addEventListener('click', deleteTask);
-});
+var modal = document.querySelector(".modal");
+var editModal = document.querySelector(".task-modal");
 
 var span = document.getElementsByClassName("close")[0];
 span.addEventListener('click', closeTask);
 
 // Trigger close for edit-modal
-const editModalCloseButton = document.querySelector("#edit-modal .closeTask");
+const editModalCloseButton = document.querySelector(".closeTask");
 editModalCloseButton.addEventListener("click", closeEditModal);
 
 function closeEditModal() {
-  const editModal = document.getElementById("edit-modal");
   editModal.style.display = "none";
 }
 
 
 function createTask(){
+  console.log("create");
   modal.style.display="block";
   const addQuery = document.querySelector('.saveTaskButton');
   addQuery.addEventListener('click', addTask);
@@ -137,8 +133,9 @@ function retrieveTask(){
         const results = data.results; // Access the "results" property
         sessionStorage.setItem('taskData', JSON.stringify(results));
         console.log(sessionStorage.getItem('taskData'));
-        displayTask();
+        displayTodayTask();
         alert('Task retrieve successfully');
+        
       });
     } else {
      
@@ -148,12 +145,17 @@ function retrieveTask(){
     console.error('Error during retrieve task:', error)});
 }
 
-function displayTask() {
+function displayTodayTask() {
   const taskData = JSON.parse(sessionStorage.getItem('taskData'));
   const table = document.querySelector(".task-table")
   const taskBody = document.querySelector(".taskBody");
   taskBody.innerHTML = "";
+  const today = new Date();
+  
   for(let i = 0; i < taskData.length; i++) {
+    const taskDate = new Date(taskData[i].deadline);
+    if (today.getDate() === taskDate.getDate() &&
+    today.getMonth() === taskDate.getMonth()) {
     const newRow = document.createElement("tr");
     const taskCell = document.createElement("td");
     taskCell.classList.add("task-name");
@@ -183,14 +185,16 @@ function displayTask() {
     newRow.appendChild(completedCell);
     
     taskBody.appendChild(newRow);
+    
     taskCell.addEventListener('click', function() {
       openTask(taskCell.textContent); // Pass the clicked task name as a parameter
     });
     checkbox.addEventListener('click', function() {
       checkBox(checkbox, taskCell.textContent);
     });
+    
+  } else {}
   }
-  
   
 }
 
@@ -238,10 +242,15 @@ function openTask(oldTask) {
   console.log(update);
   console.log(oldTask);
   
+  
   update.addEventListener('click', function(){
     console.log("2");
     updateTask(oldTask);
   });
+  const del = document.querySelector('.deleteTaskButton');
+  del.addEventListener('click', function() {
+    deleteTask(oldTask);
+});
 }
 // Function to update task change (name, deadline, checkbox)
 function updateTask(oldTask) {
@@ -271,7 +280,7 @@ function updateTask(oldTask) {
       alert('Internal server error');
     } else if (response.status === 201) {
       alert('Update task successfully');
-      
+      retrieveTask();
     } else {
      
     }
@@ -281,8 +290,7 @@ function updateTask(oldTask) {
 }
 
 // Function to delete task
-function deleteTask() {
-  const taskName = document.querySelector('.task-name').textContent;
+function deleteTask(taskName) {
 
   const data = {
     taskName: taskName
@@ -300,7 +308,7 @@ function deleteTask() {
       alert('Internal server error');
     } else if (response.status === 201) {
       alert('Delete task successfully');
-      location.reload();
+      retrieveTask();
     } else {
      
     }
