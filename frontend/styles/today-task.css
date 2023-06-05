@@ -34,7 +34,7 @@
     text-align: center;
   }
   /* Style for task box */
-  .modal {
+  .modal, .task-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -57,7 +57,7 @@
   }
   
   /* The Close Button */
-  .close {
+  .close, .closeTask {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -65,7 +65,8 @@
   }
   
   .close:hover,
-  .close:focus {
+  .close:focus, .closeTask:hover,
+  .closeTask:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

@@ -50,7 +50,7 @@
     <div class="wrapper">
       <div class="tabBar">
         <ul>
-        <li data-li="overview"  class="active" onclick="changeTab()">Overview</li>
+        <li data-li="overview"  onclick="changeTab()">Overview</li>
         <li data-li="today" onclick="changeTab()">Today's Tasks</li>
         <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
         </ul>
@@ -92,37 +92,6 @@
           </tr>
         </thead>
         <tbody class = "taskBody">
-          <tr>
-            <td>Task 1</td>
-            <td>June 10, 2023</td>
-            <td>
-              <div class="checkbox-container">
-                <input type="checkbox" id="statusCheckbox1">
-                <label for="statusCheckbox1"></label>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Task 2</td>
-            <td>June 15, 2023</td>
-            <td>
-              <div class="checkbox-container">
-                <input type="checkbox" id="statusCheckbox2">
-                <label for="statusCheckbox2"></label>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Task 3</td>
-            <td>June 20, 2023</td>
-            <td>
-              <div class="checkbox-container">
-                <input type="checkbox" id="statusCheckbox3">
-                <label for="statusCheckbox3"></label>
-              </div>
-            </td>
-          </tr>
-          <!-- Add more rows as needed -->
         </tbody>
       </table>
       <div id="modal" class="modal" style="display: none">
@@ -131,11 +100,18 @@
           <input type="text" class="taskInput" placeholder="Enter the task" required></input>
           <input type="datetime-local" class="deadlineInput" placeholder="When is the deadline?" required></input>
           <button type="button" class="saveTaskButton"  >Save</button>
-          <button type="button" class="cancelTaskButton">Cancel</button>
-          <button type="button">Delete Task</button>
         </div>
       </div>
       
+      <div id="edit-modal" class="task-modal" style="display: none">
+        <div class="modal-content">
+          <span class="closeTask">&times;</span>
+          <input type="text" class="newTaskInput" placeholder="Enter the task" required></input>
+          <input type="datetime-local" class="newDeadlineInput" placeholder="When is the deadline?" required></input>
+          <button type="button" class="saveChangeButton"  >Save</button>
+          <button type="button" class="deleteTaskButton">Delete Task</button>
+        </div>
+      </div>
       
     </div>
   
@@ -156,10 +132,13 @@
           li_elements[i].addEventListener("click", function() {
           li_elements.forEach(function(li) {
           li.classList.remove("active");
+          sessionStorage.removeItem('activeTab');
         });
         
         this.classList.add("active");
+        
         var li_value = this.getAttribute("data-li");
+        sessionStorage.setItem('activeTab', li_value);
         item_elements.forEach(function(item) {
           item.style.display = "none";
         });
@@ -176,6 +155,8 @@
       });
     }
   }
+
+
 
     </script>
     <script type="text/javascript" src="/frontend/js/calendar.js"></script>

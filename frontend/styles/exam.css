@@ -1,0 +1,28 @@
+
+html {
+    font-family: 'Quicksand', sans-serif;
+  }
+  
+  body {
+    background-color:  #f4eccd;
+  }
+  #timerDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c99575;
+  }
+  
+  .time {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15px;
+    color: antiquewhite;
+    font-size: 20px;
+  }
+  
+  .time span {
+    margin-top: 10px;
+  }
