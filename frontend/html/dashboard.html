@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
   <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+ 
   </head>
 
   <body class="container">
@@ -59,6 +59,9 @@
       </div> 
 
     <div class="item overview" >
+      <div class="item-overview" >
+      <!-- Left part -->
+      <div class="left">
       <header>
         <div class="icons">
         <span id ="prev" class="material-symbols-outlined">chevron_left</span>
@@ -66,7 +69,7 @@
         <span id ="next" class="material-symbols-outlined">chevron_right</span>
         </div>
       </header>
-      
+      <!-- Calendar on the left -->
       <div class="calendar">
         <ul class="weeks">
           <li>Sun</li>
@@ -78,10 +81,44 @@
           <li>Sat</li>
         </ul>
         <ul class="days"></ul>
+        <div class="gotodate">
+          <input type="text" placeholder="mm/yyyy" class="date-input"/>
+          <button class="search-button">Search</button>
+          <button class="today-button">Today</button>
+  
+        </div>
       </div>
+    </div>
+    <!-- Right part -->
+    <div class="right">
+      <div class ="events">
+        
+        <div class="today-date">
+          <div class="event-day"></div>
+          <div class="event-fulldate"></div>
+        </div>
 
+        <!-- Task list on the right -->
+        <div class="task-list">
+          Tasks
+          <table class="taskListTable">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Deadline</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody class = "taskListBody">
+            </tbody>
+          </table>
+
+        </div>
+      </div>
     </div>
 
+    </div>
+  </div>
     <div class="item today" style="display: none;">
       <h2 class="tdyview">Today's Tasks:</h2>
       <button class="addButton" type="button">+  Add Task</button>

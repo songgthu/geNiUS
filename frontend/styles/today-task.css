@@ -1,16 +1,16 @@
-.task-table {
+.task-table, .taskListTable{
   width: 100%;
   border-collapse: collapse;
 }
 
 .task-table th,
-.task-table td {
+.task-table td, .taskListTable th, .taskListTable td{
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.task-table th {
+.task-table th, .taskListTable th {
   color: #f4eccd;
   background-color: #926359;
 }

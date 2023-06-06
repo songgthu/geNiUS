@@ -309,9 +309,7 @@ function deleteTask(taskName) {
     } else if (response.status === 201) {
       alert('Delete task successfully');
       retrieveTask();
-    } else {
-     
-    }
+    } 
   }).catch(error => {
     console.error('Error during delete task:', error);
   });

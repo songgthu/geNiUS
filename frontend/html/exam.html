@@ -2,10 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="/frontend/styles/exam.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
   </head>
 
   <body>
-    <h1>geNiUS</h1>
+    <h1 class="header">geNiUS</h1>
     <div class="dateInput">
       <nav class="sideNav">
         <button class="navButton" onclick="window.location.href='/frontend/html/dashboard.html'">
@@ -28,10 +30,20 @@
             output
             </span>Log out</button>
       </nav>
-      <input type="text" id="name" placeholder="What exam do you have?">
-      <label for="countdownDate">Countdown Date: </label>
-      <input type="datetime-local" id="countdownDate" />
-      <button onclick="startCountdown()">Start</button>
+      <div class="container">
+        <div class="flex-input">
+          <label for="name" class="name-label">Exam: </label>
+        <input type="text" id="name" placeholder="What exam do you have?">
+        </div>
+        
+        <div class="flex-input">
+          <label for="countdownDate" class="countdown-label">Countdown Date: </label>
+          <input type="datetime-local" id="countdownDate" />
+        </div>
+        
+        <button id="startBtn" onclick="startCountdown()">Start</button>
+      </div>
+      
       <div id="timerDisplay">
         <div class="time">
           <p>Days</p>
@@ -72,26 +84,9 @@
         const storedDate = parseInt(localStorage.getItem('countdownDate'));//get input date in millisec, retrieve from local storage
         const remTime = storedDate - now; //get the time difference
 
-
-        //displaying the time rem to date
-        const days = Math.floor(remTime / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((remTime % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((remTime % (1000 * 60)) / 1000);
-
-        /*document.getElementById("days").innerHTML = days; 
-        document.getElementById("hours").innerHTML = ("0" + hours).slice(-2);
-        document.getElementById("mins").innerHTML = ("0" + mins).slice(-2);
-        document.getElementById("secs").innerHTML = ("0" + secs).slice(-2);
-        */
-        document.getElementById("timerDisplay").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s ";
-      }, 1000);
-
-
-      if (remTime <= 0) { 
+        if (remTime <= 0) { 
           clearInterval(countdownInterval);
-          document.getElementById("timerDisplay").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s ";
-
+          localStorage.removeItem("countdownDate");
           /*document.getElementById("days").innerHTML = 00; 
           document.getElementById("hours").innerHTML = 00;
           document.getElementById("mins").innerHTML = 00;
@@ -101,6 +96,23 @@
           document.getElementById("timerDisplay").textContent = "All the best!"
           return;
         }
+
+        //displaying the time rem to date
+        const days = Math.floor(remTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((remTime % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((remTime % (1000 * 60)) / 1000);
+
+        /*document.getElementById("days").innerHTML = days; 
+        document.getElementById("hours").innerHTML = ("0" + hours);
+        document.getElementById("mins").innerHTML = ("0" + mins);
+        document.getElementById("secs").innerHTML = ("0" + secs);*/
+        
+        document.getElementById("timerDisplay").innerHTML = days + "d " + hours + "h " + mins + "m " + secs + "s ";
+      }, 1000);
+
+
+      
     }
 
         
