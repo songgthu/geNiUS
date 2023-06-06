@@ -294,9 +294,29 @@ app.post('/update-task', (req, res) => {
         }
       });
     }
-  //});
   
 );
+
+app.post('/task-list', (req, res) => {
+  const {dataDate} = req.body;
+
+  // Query the database to retrieve tasks for the selected date
+  const retrieveTask = `
+  SELECT *
+  FROM tasks
+  WHERE SUBSTRING_INDEX(deadline, ',', 2) = ?`;
+
+  connection.execute(retrieveTask, [dataDate], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        results: results,
+        message: 'Retrieve task successfully' });
+    }
+  });
+});
 
 // Start the server
 const port = process.env.PORT || 5501;

@@ -9,6 +9,23 @@ function handleRegister(event) {
 
   // Perform validation and submit the form
   if (email != "" && password != "") {
+    // Check Password Complexity
+    if (password.length < 8) { //check for pwd length
+      alert("Password must be at least 8 characters long");
+      return;
+    } else if (!/[a-z]/.test(password)) {
+      alert("Password must contain at least one lowercase character");
+      return;
+    } else if(!/[A-Z]/.test(password)) {
+      alert("Password must contain at least one uppercase character");
+      return;
+    } else if(!/[0-9]/.test(password)) {
+      alert("Password must contain at least one digit");
+      return;
+    } else if(!/[!@#$%^&*]/.test(password)) {
+      alert("Password must contain at least one special character");
+      return;
+    } else {
     // Prepare the data to be sent
     const data = {
       name: name,
@@ -35,8 +52,9 @@ function handleRegister(event) {
       .catch(error => {
         console.error('Error during registration:', error)});
     }
+      }
 }
-  
+
 window.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('registerForm');
   registerForm.addEventListener('submit', handleRegister);
