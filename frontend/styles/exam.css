@@ -1,6 +1,6 @@
-
 html {
   font-family: 'Quicksand', sans-serif;
+  font-weight: 700px;
 }
 
 .header {
@@ -67,6 +67,11 @@ margin-bottom: 20px;
 display: block;
 border-color: antiquewhite ;
 font-weight: 25;
+}
+
+.navButton:hover {
+  background-color: #c99575;
+  transition-duration: 0.5s;
 }
 
 .countdown-label, .name-label {

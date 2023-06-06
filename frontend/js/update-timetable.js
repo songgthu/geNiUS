@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('updateForm');
+  const form = document.querySelector('.flex-input');
   form.addEventListener('submit', updateTimetable);
   
   // Retrieve the stored URL from sessionStorage
