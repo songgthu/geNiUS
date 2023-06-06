@@ -40,7 +40,8 @@ const renderCalendar = ()=> {
         month: "long",
         year: "numeric"
     });
-    retrieveTaskList(eventDate);
+    retrieveTaskList(eventDate.innerHTML);
+    
 
     // Activate date when clicked on
     currentDate.innerText = `${months[currMonth]} ${currYear}`;
@@ -111,6 +112,13 @@ function goToToday() {
  currMonth = today.getMonth();
  currYear = today.getFullYear();
  renderCalendar();
+  const selectedFormattedDate = today.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+  retrieveTaskList(selectedFormattedDate);
+  console.log(selectedFormattedDate);
 }
 
 function formatDate(event) {
