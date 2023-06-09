@@ -221,13 +221,30 @@ function displayDateTask() {
       
       taskBody.appendChild(newRow);
       
+      
       taskCell.addEventListener('click', function() {
-        openTask(taskCell.textContent); // Pass the clicked task name as a parameter
+        openTask(taskCell.textContent); 
       });
       checkbox.addEventListener('click', function() {
         checkBox(checkbox, taskCell.textContent);
       });
       
     } 
+    countTasks();
     }
+
+function countTasks() {
+    const taskListBody = document.querySelector(".taskListBody");
+    const totalTasks = taskListBody.childElementCount;
+    
+    const totalElement = document.querySelector(".total-tasks");
+    totalElement.innerHTML = totalTasks == 0 
+        ? "No task yet..."
+        : totalTasks == 1
+        ? "Total: " + totalTasks + " task" 
+        : "Total: " + totalTasks + " tasks";
+}
+
+const overviewTab = document.querySelector('li[data-li="overview"].active');
+overviewTab.addEventListener('click', goToToday);
 
