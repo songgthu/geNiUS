@@ -155,8 +155,7 @@ function displayUpcomingTask() {
   
   for(let i = 0; i < taskData.length; i++) {
     const taskDate = new Date(taskData[i].deadline);
-    if (today.getDate() != taskDate.getDate() ||
-    today.getMonth() != taskDate.getMonth()) {
+    if (today.getTime() < taskDate.getTime()) {
     const newRow = document.createElement("tr");
     const taskCell = document.createElement("td");
     taskCell.classList.add("task-name1");

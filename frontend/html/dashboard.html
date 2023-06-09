@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="/frontend/styles/dashboard.css">
     <link rel="stylesheet" href="/frontend/styles/calendar.css">
@@ -29,9 +31,8 @@
     
     <nav class="sideNav">
       <button class="navButton" onclick="window.location.href='/frontend/html/dashboard.html'">
-        <span class="material-symbols-outlined">
-          home 
-        </span>Dashboard</button>
+        <span class="material-symbols-outlined"> home </span>
+        Dashboard</button>
       
       <button class="navButton" onclick="window.location.href='/frontend/html/timetable.html'">
         <span class="material-symbols-outlined">
@@ -53,7 +54,7 @@
     <div class="wrapper">
       <div class="tabBar">
         <ul>
-        <li data-li="overview"  onclick="changeTab()">Overview</li>
+        <li data-li="overview"  class="active" onclick="changeTab()">Overview</li>
         <li data-li="today" onclick="changeTab()">Today's Tasks</li>
         <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
         </ul>
@@ -63,6 +64,101 @@
       <div class="item-overview" >
       <!-- Left part -->
       <div class="left">
+        <div class="quick-timer">
+          <h2 class="quick-timer-title">Study Timer</h2>
+          <div class="timer">
+            <span class="time-hours">00</span>
+            <span class="time-part">:</span>
+            <span class="time-minutes">00</span>
+            <span class="time-part">:</span>
+            <span class="time-seconds">00</span>
+            <button class="start-timer">
+            <span class="material-icons">play_arrow</span>
+            </button>
+            <button class="stop-timer" style="display: none;">
+              <span class="material-icons">stop</span>
+            </button>
+            <button class="set-timer">
+            <span class="material-icons">timer</span>
+            </button>
+          </div>
+          
+        </div>
+        <div class="quick-countdown">
+          <h2 class="quick-countdown-title">Countdown</h2>
+          <label for="countdown-event" class="countdown-label">Event:</label>
+          <input type="text" class="countdown-event" required></input>
+          <input type="datetime-local" class="countdown-date" required></input>
+          <button class="start-countdown">Start</button>
+          <button class="reset-countdown">Reset</button>
+
+          <div class="countdown-timer">
+            <div class="name-part">
+              <span class="countdown-item" id="countdown-event"></span>
+            </div>
+            <div class="timing-part">
+              <div class="countdown-item">
+                <span class="countdown-number" id="countdown-days">00</span>
+                <span class="countdown-tag">DAYS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="countdown-hours">00</span>
+                <span class="countdown-tag">HOURS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="countdown-minutes">00</span>
+                <span class="countdown-tag">MINUTES</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="countdown-seconds">00</span>
+                <span class="countdown-tag">SECONDS</span>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+        
+
+
+        <div class="shortcut">
+          <h2 class="shortcut-title">Shortcuts</h2>
+          <ul class="shortcutList">
+          <li>
+            <span class="material-symbols-outlined"> arrow_outward </span>
+            <a href="https://www.nus.edu.sg/canvas/login/" target="_blank">NUS Canvas</a>
+            <span class="deleteShortcut">&times;</span>
+          </li>
+          <li>
+            <span class="material-symbols-outlined"> arrow_outward </span>
+            <a href="https://myedurec.nus.edu.sg/psp/cs90prd/?cmd=login&languageCd=ENG&" target="_blank">NUS Edurec</a>
+            <span class="deleteShortcut">&times;</span>
+          </li>
+          </ul>
+          <div class="shortcut-modal" style="display:none">
+          <div>
+            <label for="shortcutInput" class="shortcut-label">Shortcut:</label>
+            <input type="text" class="shortcutInput" placeholder="Enter name for shortcut" required></input>
+          </div>
+          <div>
+            <label for="shortcutURLInput" class="shortcutURL-label">Link:</label>
+            <input type="text" class="shortcutURLInput" placeholder="Enter the URL" required></input>
+          </div>
+          <button class="submit-shortcut-button">Add Shortcut</button>
+          <button class="cancel-shortcut-button">Close</button>
+        </div>
+          <button class="add-shortcut-button">
+            <span class="material-symbols-outlined">add_link</span>
+            <p>Add your own shortcut</p>
+          </button>
+          <button class="restore-button">
+            <span class="material-icons-outlined"> restore </span>
+            <p>Restore defaults</p>
+          </button>
+        </div>
+      </div>
+      <!-- Middle part -->
+      <div class="middle">
       <header>
         <div class="icons">
         <span id ="prev" class="material-symbols-outlined">chevron_left</span>
@@ -101,7 +197,6 @@
 
         <!-- Task list on the right -->
         <div class="task-list">
-          Tasks
           <table class="taskListTable">
             <thead>
               <tr>
@@ -121,7 +216,7 @@
     </div>
   </div>
     <div class="item today" style="display: none;">
-      <h2 class="tdyview">Today's Tasks:</h2>
+      <h2 class="today-title">Today's Tasks</h2>
       <button class="addButton" type="button">+  Add Task</button>
       <table class="task-table">
         <thead>
@@ -137,8 +232,10 @@
       <div id="modal" class="modal" style="display: none">
         <div class="modal-content">
           <span class="close">&times;</span>
+          <label for="taskInput" class="task-label">Task name:</label>
           <input type="text" class="taskInput" placeholder="Enter the task" required></input>
-          <input type="datetime-local" class="deadlineInput" placeholder="When is the deadline?" required></input>
+          <label for="deadline" class="deadline-label">Deadline:</label>
+          <input type="datetime-local" class="deadlineInput" required></input>
           <button type="button" class="saveTaskButton"  >Save</button>
         </div>
       </div>
@@ -146,7 +243,9 @@
       <div id="edit-modal" class="task-modal" style="display: none">
         <div class="modal-content">
           <span class="closeTask">&times;</span>
+          <label for="taskInput" class="task-label">Task name:</label>
           <input type="text" class="newTaskInput" placeholder="Enter the task" required></input>
+          <label for="deadline" class="deadline-label">Deadline:</label>
           <input type="datetime-local" class="newDeadlineInput" placeholder="When is the deadline?" required></input>
           <button type="button" class="saveChangeButton"  >Save</button>
           <button type="button" class="deleteTaskButton">Delete Task</button>
@@ -156,6 +255,7 @@
     </div>
   
       <div class="item upcoming" style="display: none;">
+        <h2 class="upcoming-title">Upcoming Tasks</h2>
         <button class="addButton1" type="button">+  Add Task</button>
         <table class="task-table1">
           <thead>
@@ -171,7 +271,9 @@
         <div class="modal1" style="display: none">
           <div class="modal-content1">
             <span class="close1">&times;</span>
+            <label for="taskInput" class="task-label">Task name:</label>
             <input type="text" class="taskInput1" placeholder="Enter the task" required></input>
+            <label for="deadlineInput" class="deadline-label">Deadline:</label>
             <input type="datetime-local" class="deadlineInput1" placeholder="When is the deadline?" required></input>
             <button type="button" class="saveTaskButton1"  >Save</button>
           </div>
@@ -180,7 +282,9 @@
         <div id ="edit-modal1" class="task-modal1" style="display: none">
           <div class="modal-content1">
             <span class="closeTask1">&times;</span>
+            <label for="taskInput" class="task-label">Task name:</label>
             <input type="text" class="newTaskInput1" placeholder="Enter the task" required></input>
+            <label for="deadlineInput" class="deadline-label">Deadline:</label>
             <input type="datetime-local" class="newDeadlineInput1" placeholder="When is the deadline?" required></input>
             <button type="button" class="saveChangeButton1"  >Save</button>
             <button type="button" class="deleteTaskButton1">Delete Task</button>
@@ -225,6 +329,7 @@
     </script>
     <script type="text/javascript" src="/frontend/js/calendar.js"></script>
     <script type="text/javascript" src="/frontend/js/dashboard.js"></script>
+    <script type="text/javascript" src="/frontend/js/quick-functions.js"></script>
     <script type="text/javascript" src="/frontend/js/today-task.js"></script>
     <script type="text/javascript" src="/frontend/js/upcoming-task.js"></script>
 

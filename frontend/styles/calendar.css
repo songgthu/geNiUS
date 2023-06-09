@@ -55,15 +55,20 @@ header .icons span, header .p {
     height: 38px;
     width: 38px;
     margin: 0 1px;
-    margin-bottom: 20px;
     cursor: pointer;
     text-align: center;
-    line-height: 60px;
+    line-height: 30px;
     border-radius: 50%;
     color: #f4eccd;
 }
+header .icons span {
+    transform: scale(1.5);
+}
 
-
+header .icons span:hover {
+    color: #926359;
+    
+}
 
 .icons {
     display: flex;
@@ -92,7 +97,7 @@ header .icons span, header .p {
     text-align: center;
 }
 .calendar .days {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     
 }
 .calendar .days li {

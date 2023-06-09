@@ -44,7 +44,7 @@ function handleLogin(event) {
         
         alert('Login successful');
         const url = `/frontend/html/dashboard.html`;
-        sessionStorage.setItem("sessionToken", "usersessiontoken");
+        sessionStorage.setItem("sessionToken", email);
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("userId", userId);
         window.location.href = url;
