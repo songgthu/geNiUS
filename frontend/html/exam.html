@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/frontend/styles/exam.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     
@@ -31,18 +30,63 @@
             output
             </span>Log out</button>
       </nav>
-      <div class="container">
+
+      
+      <section class="modal hidden">
+        <div>
+          <button class="closeModal">x</button>
+        </div>
+
         <div class="flex-input">
-          <label for="name" class="name-label">Exam: </label>
-        <input type="text" id="name" placeholder="What exam do you have?">
+          <label for="examName" class="name-label">Exam: </label>
+          <input type="text" id="examName" placeholder="What exam do you have?">
+        </div>
+
+        <div class="flex-input">
+          <label for="examDate" class="date-label">Exam: </label>
+          <input type="datetime-local" id="countdownDate"/>
         </div>
         
         <div class="flex-input">
-          <label for="countdownDate" class="countdown-label">Countdown Date: </label>
-          <input type="datetime-local" id="countdownDate" />
+          <label for="examVenue" class="venue-label">Exam: </label>
+          <input type="text" id="examName" placeholder="Exam venue">
         </div>
+
         
-        <button id="startBtn" onclick="startCountdown()">Start</button>
+        <div id="textBoxContainer">
+          
+          <div class="textBox-container">
+            <label for="examContent" class="content-label">Exam content: </label>
+            <input type="text" id="examContent" placeholder="Content">
+          </div>
+          
+          <button id="addContent">+</button>
+          
+        </div>
+      </section>
+      
+      <div class="overlay hidden"></div>
+      <button class="openModal">Add</button>
+      
+      
+        <div class="modalBox"> 
+
+          <div class="modalContent">
+            <div class="flex-input">
+              <label for="name" class="name-label">Exam: </label>
+              <input type="text" id="name" placeholder="What exam do you have?">
+            </div>
+            
+            <div class="flex-input">
+              <label for="countdownDate" class="countdown-label">Countdown Date: </label>
+              <input type="datetime-local" id="countdownDate" />
+            </div>
+            
+            <button class="startCDButton">Start</button>
+          </div>
+      
+      
+        
       </div>
       
       <div id="timerDisplay">
@@ -149,8 +193,57 @@
       }
     }
     
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".overlay");
+    const openModalBtn = document.querySelector(".openModal");
+    const closeModalBtn = document.querySelector(".closeModal");
+
+    const openModal = function () {
+      modal.classList.remove("hidden");
+      overlay.classList.remove("hidden"); //remove hidden class, so it will show the display
+    };
+
+    const closeModal = function () {
+      modal.classList.add("hidden");
+      overlay.classList.add("hidden");
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key ==="Enter" && !modal.classList.contains("hidden")) {
+        closeModal();
+      }
+    })
+
+    openModalBtn.addEventListener("click", openModal);
+    closeModalBtn.addEventListener("click", closeModal)
+    overlay.addEventListener("click", closeModal)
+
+    
+    const addcontentBtn = document.getElementById("addContent");
+  
+    let textboxCount = 1;
+
+    addcontentBtn.addEventListener("click", function(){
+      const textBoxContainer = document.getElementById("textBoxContainer");
+      const newtextboxContainer = document.createElement("div");
+      newtextboxContainer.classList.add("textBox-container");
+
+      const textbox = document.createElement("input");
+      textbox.setAttribute("type",  "text");
+      textbox.setAttribute("id", "textbox", (textboxCount + 1));
+      textbox.classList.add("textbox");
+      textbox.placeholder = "More exam content...";
+      
+      
+      newtextboxContainer.appendChild(textbox);
+      textBoxContainer.appendChild(newtextboxContainer);
+      textboxCount++;
+    });
+    
+    
+    
     </script>
     <script type="text/javascript" src="/frontend/js/logout.js"></script>
   </body>
 
-</html>
+</html></html>

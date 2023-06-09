@@ -1,13 +1,10 @@
-.timetable {
-  background-color: #f4eccd;
-}
-
 * {
-  box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
 }
 h2 {
   text-align: center;
+  font-size: 30px;
+  color: #926359;
 }
 .grid-container {
   display: grid;
@@ -23,14 +20,10 @@ h2 {
   grid-area: sideNav; 
 }
 
-.main-content {
-  background-color: #f4eccd;
-  padding: 20px;
-  grid-area: mainContent; 
-}
 
 .header {
   color: #926359;
+  font-weight: 900;
   background-color: #f4eccd;
   font-weight: 700;
   font-size: 50px;
@@ -43,7 +36,6 @@ h2 {
   background-color: #926359;
   color: #f4eccd;
   font-size: 20px;
-  margin-bottom: 15px;
   border-radius: 10px;
   padding: 5px;
   width: 150px;
@@ -60,48 +52,7 @@ h2 {
   transition-duration: 0.5s;
 }
 
-.flex-input {
-  background-color: #c99575;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
 
-.url-label {
-  display: inline-block;
-  font-family: 'Quicksand', sans-serif;
-  color: #f4eccd;
-}
-
-#url {
-  width: 200px;
-  padding: 10px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 5px;
-  background-color: #f4eccd;
-  color: #926359;
-  border: none;
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.submitButton {
-  background-color: #926359;
-  font-family: 'Quicksand', sans-serif;
-  color: #f4eccd;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 16px;
-  border: none;
-}
-
-#timetable-iframe {
-  height: calc(100% - 20px);
-  width: 100%;
-  border: 10px solid #c99575;
-}
 
 .wrapper {
   display: flex;
@@ -109,6 +60,7 @@ h2 {
   align-items: center;
   justify-content: center;
   height: 100%;
+  grid-area: mainContent; 
 }
 
 .tabBar ul  {
@@ -118,8 +70,11 @@ h2 {
   background-color: #926359;
   padding: 10px;
 }
-
+.tabBar ul li.active {
+  border-bottom: 4px solid #f4eccd; 
+}
 .tabBar ul li {
+  color: #f4eccd;
   margin-right: 15px;
   margin-left: 15px;
   cursor: pointer;
@@ -128,9 +83,104 @@ h2 {
   
 .tabBar ul li:hover {
   border-radius: 5px;
+  transform: scale(1.10);
+  transition-duration: 0.5s;
+}
+
+.tabBar ul li:hover ::after {
+  text-decoration: underline;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.material-symbols-outlined {
+  vertical-align: middle;
+}
+
+.item {
+  display: flex;
+}
+
+.left {
+  flex: 1;
+  margin-right: 30px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 5px solid #926359;
+  border-radius: 10px;
+  background-color: #f4eccd;
+}
+
+.middle {
+  flex: 1;
+  border: 5px solid #f4eccd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.right {
+  flex: 1;
+  margin-left: 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 5px solid #926359;
+  border-radius: 10px;
+}
+
+.search-button, .today-button {
+  background-color: #926359;
+  font-family: 'Quicksand', sans-serif;
+  color: #f4eccd;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.search-button:hover, .today-button:hover {
+  color: #926359;
   background-color: #f4eccd;
   transition-duration: 0.5s;
 }
+
+.current-date {
+ color: #f4eccd;
+ font-weight: 900;
+}
+
+.gotodate {
+  display: flex;
+  margin-top: 20px;
+
+}
+
+.date-input {
+  text-indent: 10px;
+  vertical-align: middle;
+  border-radius: 10px;
+  background-color: #f4eccd;
+  border: none;
+  color: #926359;
+}
+.date-input::placeholder {
+  font-size: 20px;
+  opacity: 0.5;
+  color: #926359;
+}
+.event-day, .event-fulldate {
+  font-size: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #926359;
+  font-weight: 900;
+}
+
 @media (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr;
@@ -142,4 +192,266 @@ h2 {
   .sideNav {
     height: auto;
   }
+}
+
+
+
+/* Style for timer */
+.timer {
+  display: flex;
+  align-items: center;
+  color: #f4eccd;
+  background-color: #926359;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-left: 120px;
+  margin-right: 120px;
+}
+
+.quick-timer-title {
+  color: #926359;
+}
+
+.time-hours,.time-minutes, .time-seconds, .time-part {
+  margin-left: 10px;
+}
+
+.start-timer,
+.stop-timer,
+.set-timer, .start-timer.clicked, .stop-timer.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4eccd;
+  color: #c99575;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+
+.start-timer:hover,
+.stop-timer:hover,
+.set-timer:hover {
+  color:#926359;
+}
+
+/* Style for countdown*/
+.quick-countdown {
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.quick-countdown-title {
+  text-align: center;
+  font-size: 30px;
+  color: #926359;
+}
+
+.countdown-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.name-part {
+  margin-bottom: 20px;
+}
+
+.timing-part {
+  display: flex;
+  justify-content: center;
+  background-color: #926359;
+  border: 5px solid #c99575;
+  margin-right: 10px;
+}
+
+.countdown-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  font-weight: bold;
+  color: #f4eccd;
+  margin: 0 5px;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+.countdown-item#countdown-event {
+  color: #926359;
+  margin-bottom: 10px;
+}
+.countdown-label {
+  color:#926359;
+  font-weight: 900;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+.countdown-tag {
+  color: #f4eccd;
+}
+
+.countdown-event, .countdown-date {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  background-color: #f4eccd;
+  color: #926359;
+  border: 2px solid #c99575;
+  border-radius: 10px;
+  text-indent: 10px;
+}
+
+.start-countdown, .reset-countdown {
+  cursor: pointer;
+  color: #f4eccd;
+  background-color: #926359;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.start-countdown:hover, .reset-countdown:hover {
+  background-color: #c99575;
+  color: #f4eccd;
+  transition-duration: 0.5s;
+}
+
+
+
+
+/* Style for shortcut */
+.add-shortcut-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.shortcut {
+  margin-top: 40px;
+}
+
+.shortcut-title {
+  text-align: center;
+  font-size: 30px;
+  color: #926359;
+}
+
+.shortcutList {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.shortcutList li {
+  display: inline-block;
+  border-radius: 15px;
+  background-color: #926359;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.shortcutList li a {
+  color: #f4eccd;
+  align-items: center;
+  margin-bottom: 10px;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.shortcutList li span {
+  color: #f4eccd;
+}
+.deleteShortcut {
+  display: none;
+}
+
+.shortcutList li:hover .deleteShortcut {
+  display: inline;
+  cursor: pointer;
+}
+
+/* Shortcut modal box */
+
+.shortcut-modal {
+  background-color: #c99575;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.shortcut-label, .shortcutURL-label {
+  display: block;
+  padding: 10px;
+  color: #f4eccd;
+  margin-left: 20px;
+  font-weight: 900;
+}
+
+.shortcutInput, .shortcutURLInput {
+  margin-left: 20px;
+  width: 70%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #926359;
+  color: #926359;
+  background-color: #f4eccd;
+}
+
+.add-shortcut-button, .restore-button {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: #f4eccd;
+  color: #926359;
+  border: 3px solid #926359;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-shortcut-button:hover, .restore-button:hover {
+  background-color: #c99575;
+  color: #f4eccd;
+  transition-duration: 0.5s;
+}
+
+.add-shortcut-button p, .restore-button p {
+  margin: 0;
+  margin-left: 5px;
+}
+
+.submit-shortcut-button, .cancel-shortcut-button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  background-color: #f4eccd;
+  color: #926359;
+  font-weight: 900;
+  border: 3px solid #926359;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.submit-shortcut-button:hover, .cancel-shortcut-button:hover {
+  background-color: #926359;
+  color: #f4eccd;
+  transition-duration: 0.5s;
+}
+
+.closeShortcutModal {
+  color: #926359;
+  font-size: 40px;
+  border-radius: 5px;
+  margin-left: 500px;
+  cursor: pointer;
 }

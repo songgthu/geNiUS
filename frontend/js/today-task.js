@@ -237,7 +237,6 @@ function checkBox(checkbox, taskName) {
 function openTask(oldTask) {
   console.log("1");
   editModal.style.display="block";
-  //const oldTask= document.querySelector('.task-name').textContent;
   const update = document.querySelector(".saveChangeButton");
   console.log(update);
   console.log(oldTask);
