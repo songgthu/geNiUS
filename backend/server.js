@@ -65,10 +65,20 @@ app.get('/register-user', (req, res) => {
   })
 
   
-
-// app.get('/update-timetable', (req, res) => {
-//   res.sendFile(path.join(__dirname,"timetable.html"));
-// })
+const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
+app.get('/modules', (req, res) => {
+  fetch(apiUrl + 'modules/CS2030S.json')
+    .then(response => response.json())
+    .then(data => {
+      // Send the retrieved data as the response
+      res.json(data);
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error('Error:', error);
+      res.status(500).json({ error: 'An error occurred' });
+    });
+});
 
 // Login endpoint
 app.post('/login-user', (req, res) => {
@@ -177,7 +187,7 @@ app.post('/register-user', (req, res) => {
 app.post('/update-timetable', (req, res) => {
 
   const { url, email } = req.body;
-  // console.log(url + '' + email);
+
   // Query the database to retrieve the user
   const updateURLQuery = `UPDATE users SET url = ? WHERE email = ?`;
 
