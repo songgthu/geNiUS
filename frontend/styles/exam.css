@@ -13,7 +13,64 @@ text-align: center;
 body {
 background-color:  #f4eccd;
 }
+/* Style for tab layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto;
+  height: 100vh;
+  grid-template-areas: "sideNav mainContent"; 
+}
 
+.sideNav {
+  background-color: #f4eccd;
+  padding: 20px;
+  grid-area: sideNav; 
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  grid-area: mainContent; 
+}
+
+.planner-content, .countdown-content {
+  background-color: #c99575;
+}
+
+/* Style for tabBar */
+.tabBar ul  {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  background-color: #926359;
+  padding: 10px;
+}
+.tabBar ul li.active {
+  border-bottom: 4px solid #f4eccd; 
+}
+.tabBar ul li {
+  color: #f4eccd;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+  
+}
+  
+.tabBar ul li:hover {
+  border-radius: 5px;
+  transform: scale(1.10);
+  transition-duration: 0.5s;
+}
+
+.tabBar ul li:hover ::after {
+  text-decoration: underline;
+}
+
+/* Style for exam countdown tab */
 .modalBox {
 border-radius: 15px;
 background-color: #c99575;
@@ -183,6 +240,43 @@ font-size: 15px;
 }
 
 
- 
+/* Style for task customizer */
+.task-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.task-name, .task-in-schedule {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #926359;
+  color: #f4eccd;
+  border: 2px solid #f4eccd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.task-name.selected {
+  color: #926359;
+  background-color: #f4eccd;
+} 
 
 
+/* Style for schedule table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  
+}
+
+th, td {
+  border: 1px solid #f4eccd;
+  padding: 8px;
+}
+
+th {
+  background-color: #926359;
+  color:#f4eccd;
+}
