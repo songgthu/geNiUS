@@ -83,9 +83,39 @@ function updateTimer() {
   }
 
 // FOR QUICK COUNTDOWN
+var countdownInfo = null;
 document.addEventListener('DOMContentLoaded', function() {
-  const countdownDate = sessionStorage.getItem('countdownDate');
-  if (countdownDate) {
+  const data = { email: sessionStorage.getItem('email')};
+  fetch(`http://localhost:5501/get-quick-countdown`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      response.json().then(data => {
+        console.log(data.results[0].quickCountdown);
+        if (data.results.length > 0 && data.results[0].quickCountdown != null) {
+        countdownInfo = data.results[0].quickCountdown;
+        const countdownName = countdownInfo.split(",")[0];
+        const countdownDate = countdownInfo.split(",")[1];
+        sessionStorage.setItem('countdownDate', countdownDate);
+        sessionStorage.setItem('countdownName', countdownName);
+        console.log(countdownInfo);  
+        console.log(sessionStorage.getItem('countdownDate')); 
+        console.log(sessionStorage.getItem('countdownName')); 
+        alert('Get countdown successfully');
+      } 
+      
+    })
+  }
+}).catch(error => {
+      console.error('Error during query:', error)});
+  
+  if (sessionStorage.getItem('countdownDate') != 'undefined') {
     countdownInterval = setInterval(function () {
       updateCountdown();
     }, 1000);
@@ -96,7 +126,7 @@ const startCD = document.querySelector(".start-countdown");
 startCD.addEventListener('click', startCountdown);
 
 const resetCD = document.querySelector(".reset-countdown");
-resetCD.addEventListener('click', clearCountdown);
+resetCD.addEventListener('click', stopCountdown);
 
 let countdownInterval;
 // select elements to input values
@@ -114,19 +144,34 @@ let secondsCD = 0;
 function startCountdown() {
   const eventCD = document.querySelector(".countdown-event").value;
   const countdownDate = document.querySelector(".countdown-date").value;
-  const time = new Date(countdownDate).getTime();
+  const data = {
+    eventCD: eventCD,
+    countdownDate: countdownDate,
+    email: sessionStorage.getItem('email')
+  };
+  fetch(`http://localhost:5501/quick-countdown`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Save countdown successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
 
-  console.log(eventCD);
-  console.log(countdownDate);
-  console.log(time);
 
   if (eventCD == null || countdownDate == "") {
     alert('Please enter a valid event name and countdown date.');
     return;
   } else {
     eventHolder.textContent = eventCD;
-    sessionStorage.setItem('eventName', eventCD); 
-    sessionStorage.setItem('countdownDate', countdownDate); // Store countdown date in sessionStorage
+    sessionStorage.setItem('countdownDate', countdownDate);
+    sessionStorage.setItem('countdownName', eventCD);
     countdownInterval = setInterval(function () {
       updateCountdown();
     }, 1000);
@@ -134,9 +179,9 @@ function startCountdown() {
 }
 
 function updateCountdown() {
-  const countdownDate = sessionStorage.getItem('countdownDate'); // Retrieve countdown date from sessionStorage
+  const countdownDate = sessionStorage.getItem('countdownDate'); 
 
-  if (countdownDate) {
+  if (countdownDate != null) {
     const time = new Date(countdownDate).getTime();
     const currentTime = new Date().getTime();
     const remainingTime = time - currentTime;
@@ -172,7 +217,7 @@ function updateCountdown() {
     minuteHolder.textContent = formatTime(minutesCD);
     secondHolder.textContent = formatTime(secondsCD);
 
-    eventHolder.textContent = sessionStorage.getItem("eventName");
+    eventHolder.textContent = sessionStorage.getItem("countdownName");
     sessionStorage.setItem('daysCD', formatTime(daysCD));
     sessionStorage.setItem('hoursCD', formatTime(hoursCD));
     sessionStorage.setItem('minutesCD', formatTime(minutesCD));
@@ -184,42 +229,52 @@ function updateCountdown() {
     }
   } else {
     // No countdown date found in sessionStorage, stop the countdown
-    stopCountdown();
+    clearInterval(countdownInterval);
+    eventHolder.textContent = 'No event';
+    dayHolder.textContent = '00';
+    hourHolder.textContent = '00';
+    minuteHolder.textContent = '00';
+    secondHolder.textContent = '00';
+    console.log('no countdown');
     return;
   }
 }
 
-function clearCountdown() {
-  clearInterval(countdownInterval);
-  eventHolder.textContent = '';
-  dayHolder.textContent = '00';
-  hourHolder.textContent = '00';
-  minuteHolder.textContent = '00';
-  secondHolder.textContent = '00';
-
-  sessionStorage.removeItem('countdownDate'); // Remove countdown date from sessionStorage
-  sessionStorage.removeItem('daysCD');
-  sessionStorage.removeItem('hoursCD');
-  sessionStorage.removeItem('minutesCD');
-  sessionStorage.removeItem('secondsCD');
-}
-
 function stopCountdown() {
   clearInterval(countdownInterval);
+  eventHolder.textContent = 'No event';
   dayHolder.textContent = '00';
   hourHolder.textContent = '00';
   minuteHolder.textContent = '00';
   secondHolder.textContent = '00';
 
-  sessionStorage.removeItem('countdownDate'); // Remove countdown date from sessionStorage
+  sessionStorage.removeItem('countdownDate'); 
+  sessionStorage.removeItem('countdownName');
   sessionStorage.removeItem('daysCD');
   sessionStorage.removeItem('hoursCD');
   sessionStorage.removeItem('minutesCD');
   sessionStorage.removeItem('secondsCD');
+  
+  const data = { email: sessionStorage.getItem('email')};
+  fetch(`http://localhost:5501/delete-quick-countdown`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Delete countdown successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
 }
 
 
 // FOR SHORTCUTS
+document.addEventListener('DOMContentLoaded', retrieveShortcuts);
 localStorage.setItem('defaultShortcuts', document.querySelector('.shortcutList').innerHTML);
 const defaultShortcuts = localStorage.getItem('defaultShortcuts');
 
@@ -234,14 +289,31 @@ const shortcutList = document.querySelector('.shortcutList');
 shortcutList.addEventListener('click', deleteShortcut);
 
 function deleteShortcut(event) {
-  // Check if the clicked element matches the delete button selector
   if (event.target.matches('.deleteShortcut')) {
     // Get the parent <li> element of the clicked delete button
-    var liElement = event.target.parentNode;
+    const liElement = event.target.parentNode;
+
+    // Get the name and URL from the <li> element
+    const name = liElement.querySelector('a').textContent;
+    const url = liElement.querySelector('a').getAttribute('href');
+    const userId = sessionStorage.getItem('userId');
+    const data = { userId: userId, name: name, url: url};
+    fetch(`http://localhost:5501/delete-shortcut`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if (response.status === 201) {
+        alert('Delete shortcut successfully');
+        retrieveShortcuts();
+      }
+    }).catch(error => {
+        console.error('Error during query:', error)});
     
-    // Remove the <li> element from the DOM
-    liElement.parentNode.removeChild(liElement);
-    sessionStorage.setItem('storedShortcuts', shortcutList.innerHTML);
   }
 }
 
@@ -250,7 +322,6 @@ restore.addEventListener('click', restoreDefaults);
 
 function restoreDefaults() {
   document.querySelector('.shortcutList').innerHTML = defaultShortcuts;
-  sessionStorage.setItem('storedShortcuts',defaultShortcuts);
 }
 
 function openShortcutModal() {
@@ -274,22 +345,69 @@ function addShortcut() {
     alert('Please enter both shortcut name and URL.');
     return;
   }
+  var shortcutInfo = null;
+  const data = {
+    userId: sessionStorage.getItem('userId'),
+    scInput: scInput,
+    scURLInput: scURLInput
+  };
+  fetch(`http://localhost:5501/add-shortcut`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      alert('Add shortcut successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
 
-  const shortcutsList = document.querySelector(".shortcutList");
-
-  const listItemHTML = `
-    <li>
-      <span class="material-symbols-outlined"> arrow_outward </span>
-      <a href="${scURLInput}" target="_blank">${scInput}</a>
-      <span class="deleteShortcut">&times;</span>
-    </li>
-  `;
-
-  shortcutsList.innerHTML += listItemHTML;
-
-  sessionStorage.setItem('storedShortcuts', shortcutsList.innerHTML);
   closeShortcutModal();
+  retrieveShortcuts();
 
+}
+
+function retrieveShortcuts() {
+  const shortcutsList = document.querySelector(".shortcutList");
+  const data = { userId: sessionStorage.getItem('userId')};
+  fetch(`http://localhost:5501/get-shortcut`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+      response.json().then(data => {
+        const shortcuts = data.results;
+        console.log(shortcuts);
+        shortcutsList.innerHTML = localStorage.getItem('defaultShortcuts'); 
+
+        for(let i = 0; i < shortcuts.length; i++) {
+          const scInput = shortcuts[i].name;
+          const scURLInput = shortcuts[i].url;
+          const listItemHTML = `
+            <li>
+              <span class="material-symbols-outlined"> arrow_outward </span>
+              <a href="${scURLInput}" target="_blank">${scInput}</a>
+              <span class="deleteShortcut">&times;</span>
+            </li>
+          `;
+
+          shortcutsList.innerHTML += listItemHTML;
+        }
+        console.log(shortcutsList.innerHTML);
+      });
+    }
+  }).catch(error => {
+    console.error('Error during query:', error);
+  });
 }
 
 window.addEventListener('load', function() {

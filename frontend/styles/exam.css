@@ -280,3 +280,16 @@ th {
   background-color: #926359;
   color:#f4eccd;
 }
+/* Style for task in schedule */
+.deleteTaskInSchedule {
+  display: none;
+}
+
+.task-in-schedule:hover .deleteTaskInSchedule {
+  display: inline-block;
+  color: #f4eccd;
+}
+
+.deleteTaskInSchedule:hover {
+  cursor: pointer;
+}

@@ -86,15 +86,14 @@ function insertTask(event) {
           alert('Task already added to the schedule. Please select another task.');
           return;
         }
-  
-        var divElement = document.createElement('div');
-        divElement.classList.add('task-in-schedule');
-        divElement.setAttribute('data-task-id', selectedTask.id);
-        divElement.textContent = selectedTask.textContent;
+        var divElement = `<div class="task-in-schedule" data-task-id="${selectedTask.id}"}>
+        ${selectedTask.textContent}
+        <span class="deleteTaskInSchedule">&times;</span>
+        </div>`
         console.log(divElement);
   
         // Insert the div element into the clicked cell
-        cell.appendChild(divElement);
+        cell.innerHTML += divElement;
       } else {
         window.alert('Please select a valid cell to insert the task.');
       }
@@ -178,3 +177,32 @@ function resetPlanner() {
         tbody.innerHTML = '';
   }
 }
+
+const schedule = document.querySelector('.schedule-body');
+
+// Add a click event listener to the parent <ul> element
+schedule.addEventListener('click', deleteTaskInSchedule);
+
+function deleteTaskInSchedule(event) {
+  // Check if the clicked element matches the delete button selector
+  if (event.target.matches('.deleteTaskInSchedule')) {
+    // Get the parent <li> element of the clicked delete button
+    var liElement = event.target.parentNode;
+    
+    // Remove the <li> element from the DOM
+    liElement.parentNode.removeChild(liElement);
+  }
+}
+
+// const deleteButton = document.querySelectorAll('.deleteTaskInSchedule');
+
+// // Add event listener to the delete button
+// deleteButton.addEventListener('click', deleteTaskInSchedule);
+
+// // Function to handle the delete button click event
+// function deleteTaskInSchedule(event) {
+//   // Get the parent element (li) of the delete button
+//   const listItem = event.target.parentElement;
+//   // Remove the li element from its parent
+//   listItem.remove();
+// }
