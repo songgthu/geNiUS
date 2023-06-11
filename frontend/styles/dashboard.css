@@ -372,6 +372,18 @@ input[type="checkbox"] {
   display: none;
 }
 
+.shortcutList .defaultShortcut:hover {
+  color: #926359;
+  background-color: #c99575;
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
+.shortcutList li:hover {
+  cursor: pointer;
+  color: #926359;
+  transition-duration: 0.5s;
+  background-color: #c99575;
+}
 .shortcutList li:hover .deleteShortcut {
   display: inline;
   cursor: pointer;

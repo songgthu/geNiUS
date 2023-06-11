@@ -56,9 +56,9 @@ fetch(`http://localhost:5501/modules`, {
       const targetLabSession = "16A";
       const targetRecitationSession = "13";
       
-      const semesterData = data.semesterData;
-      for (let i = 0; i < semesterData.length; i++) {
-        const timetable = semesterData[i].timetable;
+      // sem 1
+
+        const timetable = data.semesterData[0].timetable;
         for (let j = 0; j < timetable.length; j++) {
           const lessonType = timetable[j].lessonType;
           const classNo = timetable[j].classNo;
@@ -90,7 +90,7 @@ fetch(`http://localhost:5501/modules`, {
       }
       
       
-    })
+    )
     .catch(error => {
       // Handle any errors
       console.error('Error:', error);

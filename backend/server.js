@@ -307,6 +307,7 @@ app.post('/update-task', (req, res) => {
   
 );
 
+// RETRIEVE TASK LIST ON CALENDAR
 app.post('/task-list', (req, res) => {
   const {dataDate} = req.body;
 
@@ -328,6 +329,112 @@ app.post('/task-list', (req, res) => {
   });
 });
 
+// FOR QUICK COUNTDOWN FEATURE
+app.post('/quick-countdown', (req, res) => {
+  const {eventCD, countdownDate, email} = req.body;
+  const cd = eventCD + "," + countdownDate; 
+
+  // Query the database to retrieve tasks for the selected date
+  const addCountdown = `UPDATE users SET quickCountdown = ? WHERE email = ?`;
+
+  connection.execute(addCountdown, [cd, email], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        message: 'Add countdown successfully' });
+    }
+  });
+});
+
+app.post('/get-quick-countdown', (req, res) => {
+  const {email} = req.body;
+
+  const getCountdown = `SELECT quickCountdown FROM users WHERE email= ?`;
+
+  connection.execute(getCountdown, [email], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else if (results.length === 0) {
+      res.status(200).json({ message: 'No data found' });
+    } else {
+      res.status(201).json({ 
+        results: results,
+        message: 'Get countdown successfully' });
+    }
+  });
+});
+
+app.post('/delete-quick-countdown', (req, res) => {
+  const {email} = req.body;
+
+  // Query the database to retrieve tasks for the selected date
+  const deleteCountdown = `UPDATE users SET quickCountdown = '' WHERE email = ?`;
+
+  connection.execute(deleteCountdown, [email], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        message: 'Delete countdown successfully' });
+    }
+  });
+});
+
+// FOR SHORTCUTS FEATURE
+app.post('/add-shortcut', (req, res) => {
+  const {userId, scInput, scURLInput} = req.body;
+  
+  const addShortcut = `INSERT INTO shortcuts (name, url, created_by) VALUES (?, ?, ?)`;
+
+  connection.execute(addShortcut, [scInput, scURLInput, userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        results: results,
+        message: 'Add shortcut successfully' });
+    }
+  });
+});
+
+app.post('/get-shortcut', (req, res) => {
+  const {userId} = req.body;
+
+  const getCountdown = `SELECT * FROM shortcuts WHERE created_by = ?`;
+
+  connection.execute(getCountdown, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        results: results,
+        message: 'Get countdown successfully' });
+    }
+  });
+});
+
+app.post('/delete-shortcut', (req, res) => {
+  const { userId, name, url} = req.body;
+
+  // Query the database to retrieve tasks for the selected date
+  const deleteShortcut = `DELETE FROM shortcuts WHERE created_by = ? AND name = ? AND url =?`;
+
+  connection.execute(deleteShortcut, [userId, name, url], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        message: 'Delete countdown successfully' });
+    }
+  });
+});
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
