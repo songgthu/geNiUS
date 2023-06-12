@@ -57,6 +57,7 @@
         <li data-li="overview"  class="active" onclick="changeTab()">Overview</li>
         <li data-li="today" onclick="changeTab()">Today's Tasks</li>
         <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
+        <li data-li="classes" onclick="changeTab()">Class Management</li>
         </ul>
       </div> 
 
@@ -290,6 +291,9 @@
           </div>
         </div>
       </div>
+      <div class="item classes" style="display: none;">
+      <p>This is tutorial and lab management</p>
+      </div>
     </div>
   </section>
 
@@ -314,7 +318,7 @@
           item.style.display = "none";
         });
         
-        if (li_value == "overview" || li_value == "today" || li_value == "upcoming") {
+        if (li_value == "overview" || li_value == "today" || li_value == "upcoming" || li_value == "classes") {
         document.querySelector("." + li_value).style.display = "block";
         } else {
           console.log("");

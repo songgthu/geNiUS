@@ -48,8 +48,10 @@ background-color:  #f4eccd;
   display: flex;
   flex-direction: row;
   background-color: #926359;
+  border-radius: 10px;
   padding: 10px;
 }
+
 .tabBar ul li.active {
   border-bottom: 4px solid #f4eccd; 
 }
@@ -58,7 +60,7 @@ background-color:  #f4eccd;
   margin-right: 15px;
   margin-left: 15px;
   cursor: pointer;
-  
+  font-size: 20px;
 }
   
 .tabBar ul li:hover {
@@ -70,6 +72,7 @@ background-color:  #f4eccd;
 .tabBar ul li:hover ::after {
   text-decoration: underline;
 }
+
 
 /* Style for exam countdown tab */
 .modalBox {
@@ -240,8 +243,33 @@ font-size: 15px;
   display: none;
 }
 
+/* STYLE FOR PLANNER TAB*/
+.recess-planner-title {
+  color:#926359;
+  background-color: #f4eccd;
+  border: 5px solid #c99575;
+  padding: 8px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.customize-title {
+  color: #f4eccd;
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 /* Style for task customizer */
+.planner-content {
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 25px;
+}
 .task-container {
   display: flex;
   flex-wrap: wrap;
@@ -263,6 +291,18 @@ font-size: 15px;
   background-color: #f4eccd;
 } 
 
+.task-in-schedule {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.task-name {
+  margin-bottom: 20px;
+}
+
+.time-header {
+  text-align: center;
+}
 
 /* Style for schedule table */
 table {
@@ -281,7 +321,44 @@ th {
   background-color: #926359;
   color:#f4eccd;
 }
+
+.add-row-button, .del-row-button, 
+.add-task-button, .delete-task-button, 
+.reset-schedule-button, .save-schedule-button, .get-schedule-button {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 900;
+  background-color: #926359;
+  color:#f4eccd;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 10px 10px 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.reset-schedule-button, .save-schedule-button, .get-schedule-button {
+  align-items: center;
+  justify-content: center;
+}
+.add-row-button:hover, .del-row-button:hover, 
+.add-task-button:hover, .delete-task-button:hover, 
+.reset-schedule-button:hover, .save-schedule-button:hover, .get-schedule-button:hover {
+  color: #926359;
+  background-color:#f4eccd;
+  transition-duration: 0.5s;
+}
+
 /* Style for task in schedule */
+.schedule-body {
+  color: #f4eccd;
+  
+}
+.task-name {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .deleteTaskInSchedule {
   display: none;
 }
@@ -289,6 +366,7 @@ th {
 .task-in-schedule:hover .deleteTaskInSchedule {
   display: inline-block;
   color: #f4eccd;
+  margin-left: 10px;
 }
 
 .deleteTaskInSchedule:hover {

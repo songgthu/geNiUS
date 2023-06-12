@@ -251,6 +251,8 @@ fetch(`http://localhost:5501/save-planner`, {
 
 const get = document.querySelector('.get-schedule-button');
 get.addEventListener('click', getPlanner);
+
+document.addEventListener('DOMContentLoaded', getPlanner);
 const getPlannerData = { userId: userId };
 function getPlanner() {
   fetch(`http://localhost:5501/get-planner`, {
@@ -288,7 +290,7 @@ function displayPlanner() {
   taskContainer.innerHTML = '';
   for(let i = 0; i < taskArray.length; i++) {
     const taskName = taskArray[i];
-    taskContainer.innerHTML += `<div class="task-name" id="${taskName}">${taskName}</div>`;
+    taskContainer.innerHTML += `<div class="task-name" id="${taskName}">${taskName}</div><span></span>`;
   }
   const allTasks = document.querySelectorAll(".task-name");
   allTasks.forEach(function(task) {

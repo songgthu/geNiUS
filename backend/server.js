@@ -487,7 +487,7 @@ app.post('/get-planner', (req, res) => {
       res.status(201).json({
         tasks: results[0].tasks,
         schedule: results[0].schedule,
-        message: 'Delete countdown successfully' });
+        message: 'Get planner successfully' });
     } else {
       res.status(409).json({ error: 'An error occurred' });
     }
