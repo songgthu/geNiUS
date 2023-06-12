@@ -66,23 +66,43 @@
             </div>
     
             
-            <div id="textBoxContainer">
+            <div class="container"> <!--todolist feature-->
               
-              <div class="textBox-container">
-                <label for="examContent" class="content-label">Exam content: </label>
-                <input type="text" id="examContent" placeholder="Content">
-              </div>
+              <h3 class="todoHeader">Add exams</h3>
+              <label id="label-success" class="text-success" style="display:none;"></label>
               
-              <button id="addContent">+</button>
-              
+              <form id="addForm"> <!--the todolist feature-->
+                
+                <div class="row"> 
+                  <div class="input-class">
+                    <input type="text" onkeyup="toggleButton(this,'submit')" class="form-control" id="item" placeholder="Add your exam content here">
+                  </div>
+                  
+                  <div class="output-class">
+                    <input type="submit" class="btn btn-dark" id="submit" value="Submit" disabled>
+                  </div>
+                </div> <!--closing brace for div class=row-->
+              </form>
+        
+              <h3 class="taskHeader">Exam contents</h3>
+        
+              <form id="nestedForm">
+                <ul class="list-group" id="items"></ul>
+              </form> 
             </div>
+
+            <button class="startCDButton">Done</button> <!--countdownbtn-->  
           </section>
           
           <div class="overlay hidden"></div>
-          <button class="openModal">Add</button>
+          <button class="openModal">
+            <span class="material-symbols-outlined">
+              add
+              </span> Add</button>
+            
           
           
-            <div class="modalBox"> 
+            <!--<div class="modalBox"> 
     
               <div class="modalContent">
                 <div class="flex-input">
@@ -125,19 +145,19 @@
           
           
           
-          </div>
+          </div>-->
         </div>
         </div>
         <div class="item planner" style="display: none">
           <div class="planner-content">
-          <p>This is recess week planner</p>
-          <p>Customize your schedule</p>
+          <h2 class="recess-planner-title">Recess Week Planner</h2>
+          <p class="customize-title">Customize your schedule</p>
           <button class="add-row-button">+ Add Row</button>
           <button class="del-row-button">Delete Row</button>
           
           
           <div class="task-customizer">
-            <p>Customize your tasks</p>
+            <p class="customize-title">Customize your tasks</p>
             <button class="add-task-button">+ Add Task</button>
             <button class="delete-task-button">Delete Task</button>
             <div class="task-container">
