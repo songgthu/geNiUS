@@ -422,7 +422,6 @@ app.post('/get-shortcut', (req, res) => {
 app.post('/delete-shortcut', (req, res) => {
   const { userId, name, url} = req.body;
 
-  // Query the database to retrieve tasks for the selected date
   const deleteShortcut = `DELETE FROM shortcuts WHERE created_by = ? AND name = ? AND url =?`;
 
   connection.execute(deleteShortcut, [userId, name, url], (error, results) => {
@@ -435,6 +434,66 @@ app.post('/delete-shortcut', (req, res) => {
     }
   });
 });
+
+// FOR PLANNER FEATURE
+app.post('/save-planner', (req, res) => {
+  const { tasks, schedule, userId } = req.body;
+
+  const selectPlanner = `SELECT * FROM planners WHERE created_by = ?`;
+  const updatePlanner = `UPDATE planners SET tasks = ?, schedule = ? WHERE created_by = ?`;
+  const insertPlanner = `INSERT INTO planners (tasks, schedule, created_by) VALUES (?, ?, ?)`;
+
+  connection.execute(selectPlanner, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (results.length > 0) {
+        // Planner exists, update it
+        connection.execute(updatePlanner, [tasks, schedule, userId], (error, results) => {
+          if (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+          } else {
+            res.status(200).json({ message: 'Update planner successfully' });
+          }
+        });
+      } else {
+        // Planner does not exist, insert it
+        connection.execute(insertPlanner, [tasks, schedule, userId], (error, results) => {
+          if (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+          } else {
+            res.status(201).json({ message: 'Save planner successfully' });
+          }
+        });
+      }
+    }
+  });
+});
+
+
+app.post('/get-planner', (req, res) => {
+  const { userId} = req.body;
+
+  const getPlanner = `SELECT * FROM planners WHERE created_by = ?`;
+
+  connection.execute(getPlanner, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else if(results.length > 0) {
+      res.status(201).json({
+        tasks: results[0].tasks,
+        schedule: results[0].schedule,
+        message: 'Delete countdown successfully' });
+    } else {
+      res.status(409).json({ error: 'An error occurred' });
+    }
+  });
+});
+
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
