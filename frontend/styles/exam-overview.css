@@ -1,0 +1,149 @@
+.delete {
+    background-color: #c99575;
+    color: #f4eccd;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 40px;
+    font-size: 15px;
+  }
+  
+  .edit {
+    background-color: #c99575;
+    color: #f4eccd;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  
+  #items {
+    list-style-type: none;
+    padding: 0;
+    flex: 1;
+    max-width: 200px;
+    word-wrap: break-word;
+  }
+  
+  .list-group-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    width: 300px;
+    
+    background-color: #926359;
+    color: #f4eccd;
+    border-radius: 5px;
+    padding-left: 10px;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .list-group-item .task-description {
+    flex: 1 1 auto;
+    word-wrap: break-word;
+  }
+  
+  .list-group-item .buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .task-description {
+    flex-grow: 1;
+    word-wrap: break-word;
+  }
+  
+  .form-control {
+    background-color: #926359;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    color: #f4eccd;
+    width: 200px;
+  }
+  
+  #submit, .delete, .edit {
+    background-color: #f4eccd; 
+    border: none;
+    font-size: 15px;
+    border-radius: 5px;
+    color: #926359;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    margin-left: 10px;
+  }
+  
+  .edit {
+    margin-right: 10px;
+  }
+  
+  
+  .todoHeader, .taskHeader {
+    text-decoration: underline;
+    color: antiquewhite;
+    font-family: 'Quicksand', sans-serif;
+  }
+  
+  ::placeholder {
+    font-size: small;
+  }
+  
+  .input-class, .output-class {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .flex-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .flex-input label {
+    width: 135px;
+    text-align: left;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  .flex-input input {
+    width: 200px;
+    text-align: left;
+    background-color: antiquewhite;
+    border: none;
+    margin-right: 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  
+  .date-label, .name-label, .venue-label {
+    display: block;
+    flex-basis: 100px;
+    margin-top: 10px;
+    margin-left: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    color: antiquewhite;
+    padding-right: 10px;
+  }
+  
+  .name-label input::placeholder {
+    color: #7f3f31;
+  }
+  
+  #label-success {
+    color: #7f3f31;
+  }
+  
+  #item::placeholder {
+    color: antiquewhite;
+  }
+  
+  
+  
+  
+  

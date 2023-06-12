@@ -21,9 +21,12 @@ function addTask() {
     // Append the new task to the task container
     taskContainer.appendChild(newTask);
   }
-  
+
+
+
 // Function to handle the task selection
 function selectTask(event) {
+  console.log('selected');
     var selectedTask = event.target;
     
     var allTasks = document.querySelectorAll('.task-name');
@@ -194,15 +197,122 @@ function deleteTaskInSchedule(event) {
   }
 }
 
-// const deleteButton = document.querySelectorAll('.deleteTaskInSchedule');
+// Send planner data to the database
+const userId = sessionStorage.getItem('userId');
+const saveSchedule = document.querySelector(".save-schedule-button");
+saveSchedule.addEventListener('click', savePlanner);
 
-// // Add event listener to the delete button
-// deleteButton.addEventListener('click', deleteTaskInSchedule);
+function savePlanner() {
+var taskContainerData = []; // array to store task data
 
-// // Function to handle the delete button click event
-// function deleteTaskInSchedule(event) {
-//   // Get the parent element (li) of the delete button
-//   const listItem = event.target.parentElement;
-//   // Remove the li element from its parent
-//   listItem.remove();
-// }
+var taskBlocks = document.querySelectorAll(".task-container .task-name");
+taskBlocks.forEach(function(taskName) {
+  taskContainerData.push(taskName.textContent);
+});
+console.log(taskBlocks);
+
+// Retrieve schedule data from the schedule-table
+var scheduleData = [];
+var tableRows = document.querySelectorAll(".schedule-table tbody tr");
+tableRows.forEach(function(row) {
+    var rowData = [];
+    var tableCells = row.querySelectorAll("td");
+    tableCells.forEach(function(cell) {
+      rowData.push(cell.innerHTML);
+    });
+    scheduleData.push(rowData);
+});
+console.log(scheduleData);
+
+const plannerData = {
+  tasks: taskContainerData,
+  schedule: scheduleData,
+  userId: userId
+};
+
+fetch(`http://localhost:5501/save-planner`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(plannerData)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if (response.status === 409) {
+          alert('Save planner failed');
+      } else if (response.status === 201){
+        alert('Save planner successfully');
+      }
+    }).catch(error => {
+      console.error('Error during login:', error)});
+
+}
+
+const get = document.querySelector('.get-schedule-button');
+get.addEventListener('click', getPlanner);
+const getPlannerData = { userId: userId };
+function getPlanner() {
+  fetch(`http://localhost:5501/get-planner`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(getPlannerData)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if (response.status === 409) {
+          alert('No planner found');
+      } else if (response.status === 201){
+        alert('Get planner successfully');
+        response.json().then(data => {
+          const tasks = data.tasks;
+          const schedule = data.schedule;
+          sessionStorage.setItem('taskBlocks', tasks);
+          sessionStorage.setItem('scheduleTable', schedule);
+          displayPlanner();
+      })
+    }
+  }).catch(error => {
+      console.error('Error during login:', error)});
+}
+
+function displayPlanner() {
+  const taskArray = JSON.parse(sessionStorage.getItem('taskBlocks'));
+  const scheduleArray = JSON.parse(sessionStorage.getItem('scheduleTable'));
+  console.log(scheduleArray);
+
+  // Display task blocks
+  const taskContainer = document.querySelector(".task-container");
+  taskContainer.innerHTML = '';
+  for(let i = 0; i < taskArray.length; i++) {
+    const taskName = taskArray[i];
+    taskContainer.innerHTML += `<div class="task-name" id="${taskName}">${taskName}</div>`;
+  }
+  const allTasks = document.querySelectorAll(".task-name");
+  allTasks.forEach(function(task) {
+    task.addEventListener('click', selectTask);
+  });
+  // Display planner
+  const plannerContainer = document.querySelector(".schedule-body");
+  plannerContainer.innerHTML = '';
+  for(let i = 0; i < scheduleArray.length; i++) {
+    const row = scheduleArray[i];
+    plannerContainer.innerHTML += 
+    `<tr>
+    <td class="time-header">${row[0]}</td>
+    <td>${row[1]}</td>
+    <td>${row[2]}</td>
+    <td>${row[3]}</td>
+    <td>${row[4]}</td>
+    <td>${row[5]}</td>
+    <td>${row[6]}</td>
+    <td>${row[7]}</td>
+  </tr>`
+  }
+  var newCells = document.querySelectorAll('.schedule-body td');
+  newCells.forEach(function (cell) {
+    cell.addEventListener('click', insertTask);
+  });
+}
