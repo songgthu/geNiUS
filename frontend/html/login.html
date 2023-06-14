@@ -30,6 +30,11 @@
       <label for="password" class="pwd-label">Password:</label>
       <input type="password" id="password" class ="password" placeholder="Enter Your Password" autocomplete="off" required>
     </div>
+    <div class="show-password">
+      <input type="checkbox" id="show-password-checkbox" class="show-password-checkbox" onclick="togglePasswordVisibility()">
+      <label for="show-password-checkbox" class="show-password-label">Show Password</label>
+    </div>
+    
     
     <div>
       <button type="submit" class="loginButton" id="login">Log In</button>
@@ -40,5 +45,15 @@
     </div>
     
   </form>
+  <script>
+    function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("password");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
+    }
+  </script>
 </body>
 </html>

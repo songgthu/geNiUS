@@ -66,8 +66,9 @@ app.get('/register-user', (req, res) => {
 
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
-app.get('/modules', (req, res) => {
-  fetch(apiUrl + 'modules/CS2030S.json')
+app.post('/modules', (req, res) => {
+  const {moduleCode} = req.body;
+  fetch(apiUrl + 'modules/' + moduleCode + '.json')
     .then(response => response.json())
     .then(data => {
       // Send the retrieved data as the response

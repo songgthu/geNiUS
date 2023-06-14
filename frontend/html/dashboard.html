@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/frontend/styles/calendar.css">
     <link rel="stylesheet" href="/frontend/styles/today-task.css">
     <link rel="stylesheet" href="/frontend/styles/upcoming-task.css">
+    <link rel="stylesheet" href="/frontend/styles/class.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     
@@ -76,7 +77,7 @@
             <button class="start-timer">
             <span class="material-icons">play_arrow</span>
             </button>
-            <button class="stop-timer" style="display: none;">
+            <button class="stop-timer" style="display: none">
               <span class="material-icons">stop</span>
             </button>
             <button class="set-timer">
@@ -292,8 +293,75 @@
         </div>
       </div>
       <div class="item classes" style="display: none;">
-      <p>This is tutorial and lab management</p>
+      <h2 class="class-title">NUS Class Management</h2>
+      <div class="class-customizer">
+        
+        <ul class="class-list"> 
+          <h3 class="modules-title">Modules:</h3>
+          <li class="class-name" id="MA1521">MA1521
+            <span class="material-symbols-outlined"> delete </span>
+          </li>
+          <li class="class-name" id="CS2040">CS2040
+            <span class="material-symbols-outlined" > delete</span>
+          </li>
+        </ul>
+        <button class="add-class-button">Add class</button>
+
       </div>
+      <div id="class-modal" class="class-modal" style="display: none">
+        <div class="class-modal-content">
+          
+          <div class="class-modal-input">
+
+          <label for="classInput" class="class-label">Module code:</label>
+          <input type="text" class="classInput" placeholder="E.g: CS2030S" required></input>
+
+          <label for="tutorialInput" class="tutorial-label">Tutorial:</label>
+          <input type="text" class="tutorialInput" placeholder="E.g: 03"></input>
+
+          <label for="labInput" class="lab-label">Lab:</label>
+          <input type="text" class="labInput" placeholder="E.g: 16A"></input>
+
+          <label for="recInput" class="rec-label">Recitation:</label>
+          <input type="text" class="recInput" placeholder="E.g: 05"></input>
+
+          <button type="button" class="search-class-button">Search</button>
+        </div>
+        <div class="vertical-line"></div> <!-- Vertical line -->
+          <div class="class-modal-results">
+            <h3 class="result-title">Results</h3>
+            <div class="result-content">No results...</div>
+            <button type="button" class="submit-class-button">Submit</button>
+          </div>
+          <span class="class-modal-close">&times;</span>
+        </div>
+        
+      </div>
+      <header>
+        <div class="class-icons">
+        <span id ="prevWeek" class="material-symbols-outlined">chevron_left</span>
+        <p class ="current-week"></p>
+        <span id ="nextWeek" class="material-symbols-outlined">chevron_right</span>
+        </div>
+      </header>
+      
+      <table class="class-management">
+        <thead class="class-headers">
+          <tr>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+          </tr>
+          
+        </thead>
+        <tbody class="class-body">
+        </tbody>
+      </table>
+      
+      </div>
+     
     </div>
   </section>
 
@@ -335,6 +403,7 @@
     <script type="text/javascript" src="/frontend/js/quick-functions.js"></script>
     <script type="text/javascript" src="/frontend/js/today-task.js"></script>
     <script type="text/javascript" src="/frontend/js/upcoming-task.js"></script>
+    <script type="text/javascript" src="/frontend/js/class.js"></script>
 
     
   </body>
