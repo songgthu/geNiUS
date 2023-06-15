@@ -207,6 +207,30 @@ connection.execute(updateURLQuery,
   
 });
 
+app.post('/get-timetable', (req, res) => {
+
+  const { userEmail } = req.body;
+
+  // Query the database to retrieve the user
+  const getURLQuery = `SELECT url FROM users WHERE email = ?`;
+
+connection.execute(getURLQuery,
+  [userEmail],
+  (err, results) => {
+    if (err) {
+      console.error('Error Executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({
+        results: results,
+        message: 'Update timetable successfully'});
+    }
+  }
+);
+  
+});
+
 app.post('/add-task', (req, res) => {
   const { taskInput, deadline, userId } = req.body;
   const selectTaskQuery = `
