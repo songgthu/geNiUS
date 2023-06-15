@@ -124,11 +124,14 @@ fetch(`http://localhost:5501/modules`, {
         const targetTutorialSession = searchData.tutorial;
         
         // sem 1
+        const semesterDropdown = document.getElementById('semester-dropdown');
+        var semesterValue = semesterDropdown.value == 1 ? 0 : 1;
+        
         const resultOutput = document.querySelector('.result-content');
         resultOutput.innerHTML = moduleCode +`<br>`;
         
-
-        const timetable = data.semesterData[0].timetable;
+        console.log(semesterValue);
+        const timetable = data.semesterData[semesterValue].timetable;
         for (let j = 0; j < timetable.length; j++) {
             const lessonType = timetable[j].lessonType;
             const classNo = timetable[j].classNo;
@@ -201,56 +204,6 @@ fetch(`http://localhost:5501/modules`, {
 const submitButton = document.querySelector('.submit-class-button');
 submitButton.addEventListener('click', displayModule);
 
-// function displayModule() {
-//     const moduleInfo = document.querySelector('.result-content').innerHTML;
-//     closeClassModalBox();
-//     const scheduleTable = document.querySelector('.class-body');
-  
-//     // Split the moduleInfo string into individual lines
-//     const moduleInfoLines = moduleInfo.split("<br>");
-//     var reformattedArray = moduleInfoLines.map(function(element) {
-//       return element.trim().replace(/\n/g, '');
-//     });
-  
-//     // Extract the relevant information from the moduleInfo lines
-//     console.log(reformattedArray);
-//     const moduleName = reformattedArray[0];
-//     const session = reformattedArray[1];
-//     const weeks = reformattedArray[2];
-//     const time = reformattedArray[3];
-//     const day = reformattedArray[4].split(":")[1].trim();
-//     const venue = reformattedArray[5];
-
-  
-//     // Extract the week numbers from the string
-//     const applicableWeeksArray = weeks.match(/\d+/g).map(Number);
-  
-//     // Get the current week number
-//     const currentWeek = parseInt(document.querySelector(".current-week").textContent.split(" ")[1]);
-  
-//     // Check if the current week is in the applicable weeks array
-//     for (let i = 1; i <= 13; i++) {
-//         if (applicableWeeksArray.includes(i)) {
-//             // Get the corresponding day container
-//             const dayContainer = document.querySelector(`.${day}-container-week-${i}`);
-            
-//             // Set the module name in the day container
-//             dayContainer.innerHTML = `<div class="${session.split(' ')[0]}info-${moduleName}">${moduleName} <br>
-//             ${session} <br>
-//             ${time} <br>
-//             ${venue}
-//             </div>`;
-//           }
-//     }
-    
-
-//     const classList = document.querySelector('.class-list');
-//     classList.innerHTML += `<li class="class-name" id="${moduleName}">${moduleName}
-//     <span class="material-symbols-outlined"> delete </span>
-//     </li>`;
-//     attachRemoveClassListener();
-//   }
-
 function displayModule() {
     const moduleInfo = document.querySelector('.result-content').innerHTML;
     closeClassModalBox();
@@ -269,7 +222,7 @@ function displayModule() {
     
     for (let i = 1; i < reformattedArray.length; i += 5) {
         
-      const session = reformattedArray[i];
+      const session = reformattedArray[i].split(' ')[0];
       const weeks = reformattedArray[i + 1];
       const time = reformattedArray[i + 2];
       const day = reformattedArray[i + 3].split(":")[1].trim();
@@ -293,15 +246,43 @@ function displayModule() {
             const dayContainer = document.querySelector(`.${day}-container-week-${i}`);
         
             // Set the module name in the day container
-            dayContainer.innerHTML += `<div class="${session.split(' ')[0]}info-${moduleName}">${moduleName} <br>
+            dayContainer.innerHTML += `<div class="${session}info-${moduleName}">${moduleName} <br>
             ${session} <br>
             ${time} <br>
-            ${venue}
-            </div>`;
+            ${venue} <br>
+            <span class="material-symbols-outlined ${session}-${moduleName}-w${i}-addTask">add_task</span>
+            <ul class="${session.split(' ')[0]}-${moduleName}-todolist"> 
+            </ul>
+            </div>
+            `;
+            
+            const addTaskIcons = document.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-addTask`);
+            console.log(addTaskIcons);
+            addTaskIcons.forEach(icon => {
+              icon.addEventListener('click', () => {
+                console.log('add task');
+                const task = prompt('What is your homework for this session?');
+                
+                  const todoList = document.querySelector(`.${session.split(' ')[0]}-${moduleName}-todolist`);
+                  
+                  const listItem = document.createElement('li');
+                  const checkbox = document.createElement('input');
+                  checkbox.type = 'checkbox';
+                  
+                  const label = document.createElement('label');
+                  label.textContent = task;
+                  
+                  listItem.appendChild(checkbox);
+                  listItem.appendChild(label);
+                  
+                  todoList.appendChild(listItem);
+              });
+            });
+            
           }
     }
     if(reformattedArray.length - (i + 4) == 2) {
-        return;
+        break;
     }
     }
   

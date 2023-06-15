@@ -248,7 +248,7 @@ margin: 0 20px;
     height: 400px;
 }
 
-[class^="info-"] {
+[class^="Recitationinfo-"], [class^="Labinfo-"], [class^="Tutorialinfo-"] {
     background-color: #f4eccd;
     color:#926359;
     border-radius: 10px;
