@@ -56,6 +56,7 @@ transition-duration: 0.5s;
 /* Style for class list */
 .modules-title {
     color: #f4eccd;
+    margin-left: 20px;
 }
 
 .class-list {
@@ -226,7 +227,7 @@ margin: 0 20px;
     border-top: 1px solid black;
 }
 
-.add-class-button, .remove-class-button {
+.add-class-button,.save-changes-button, .get-module-schedule-button {
     margin-left: 20px;
     border: none;
     border-radius: 10px;
@@ -237,9 +238,10 @@ margin: 0 20px;
     cursor: pointer;
 }
 
-.add-class-button:hover, .remove-class-button:hover {  
+.add-class-button:hover, .save-changes-button:hover, .get-module-schedule-button:hover {  
     color: #f4eccd;
     background-color: #926359;
+    transition-duration: 0.5s;
 }
 
 /* Style for class container */
@@ -253,3 +255,71 @@ margin: 0 20px;
     color:#926359;
     border-radius: 10px;
 }
+
+/* Style for add task in class table */
+[class^="todolist-"] {
+    background-color: #926359;
+    color: #f4eccd;
+    border-radius: 5px;
+    list-style: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 5px;
+}
+
+[class^="todolist-"] span {
+    background-color: #f4eccd;
+    color: #c99575;
+    border-radius: 5px;
+    list-style: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 1px;
+    cursor: pointer;
+    float: right;
+}
+[class^="todolist-"] span:hover {
+    color: #f4eccd;
+    background-color: #c99575;
+
+}
+
+[class^="header-"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    margin-top: 10px;
+}
+
+[class^="header-"] span {
+background-color: #926359;
+color: #f4eccd;
+padding: 7px;
+margin-left: 10px;
+cursor: pointer;
+border-radius: 50%;
+}
+
+.sessionTaskCheckbox {
+    float: left;
+    margin-left: 20px;
+    margin-top: 12px;
+}
+
+.semester-dropdown {
+    border-radius: 10px;
+    background-color: #f4eccd;
+    color: #926359;
+    font-weight: 900;
+    border: none;
+    padding: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
