@@ -495,6 +495,64 @@ app.post('/get-planner', (req, res) => {
   });
 });
 
+// FOR CLASS MANAGEMENT FEATURE
+app.post('/save-module-schedule', (req, res) => {
+  const { moduleList, moduleSchedule, userId } = req.body;
+
+  const selectModuleSchedule = `SELECT * FROM moduleSchedules WHERE created_by = ?`;
+  const updateModuleSchedule = `UPDATE moduleSchedules SET moduleList = ?, moduleSchedule = ? WHERE created_by = ?`;
+  const insertModuleSchedule = `INSERT INTO moduleSchedules (moduleList, moduleSchedule, created_by) VALUES (?, ?, ?)`;
+
+  connection.execute(selectModuleSchedule, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      if (results.length > 0) {
+        // module schedule exists, update it
+        connection.execute(updateModuleSchedule, [moduleList, moduleSchedule, userId], (error, results) => {
+          if (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+          } else {
+            res.status(200).json({ message: 'Update module schedule successfully' });
+          }
+        });
+      } else {
+        // module schedule does not exist, insert it
+        connection.execute(insertModuleSchedule, [moduleList, moduleSchedule, userId], (error, results) => {
+          if (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+          } else {
+            res.status(201).json({ message: 'Save module schedule successfully' });
+          }
+        });
+      }
+    }
+  });
+});
+
+app.post('/get-module-schedule', (req, res) => {
+  const { userId } = req.body;
+
+  const getModuleSchedule = `SELECT * FROM moduleSchedules WHERE created_by = ?`;
+
+  connection.execute(getModuleSchedule, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else if(results.length > 0) {
+      res.status(201).json({
+        moduleList: results[0].moduleList,
+        moduleSchedule: results[0].moduleSchedule,
+        message: 'Get module schedule successfully' });
+    } else {
+      res.status(409).json({ error: 'An error occurred' });
+    }
+  });
+});
+
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {

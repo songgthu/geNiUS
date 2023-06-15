@@ -1,3 +1,6 @@
+var moduleScheduleData = document.querySelector('.class-body').innerHTML;
+var moduleListData = document.querySelector('.class-list').innerHTML;
+var todoList = null;
 // REMOVE CLASS
 function attachRemoveClassListener() {
     const liElements = document.querySelectorAll(".class-name");
@@ -106,6 +109,7 @@ if (moduleCode !== null && (tutorial !== null || lab !== null || recitation !== 
     }
 } else {
     alert('Please fill in module code and at least one field (Tutorial/Lab/Recitation)');
+    return;
 }
 
 // search
@@ -250,52 +254,80 @@ function displayModule() {
             ${session} <br>
             ${time} <br>
             ${venue} <br>
+            <div class="header-${session}-${moduleName}-w${i}"> 
+            <h3 class="title-${session}-${moduleName}-w${i}"> To-do list </h3>
             <span class="material-symbols-outlined ${session}-${moduleName}-w${i}-addTask">add_task</span>
-            <ul class="${session.split(' ')[0]}-${moduleName}-todolist"> 
+            </div>
+            <ul class="todolist-${session}-${moduleName}-w${i}"> 
             </ul>
+            
             </div>
             `;
+
             
             const addTaskIcons = document.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-addTask`);
             console.log(addTaskIcons);
             addTaskIcons.forEach(icon => {
-              icon.addEventListener('click', () => {
-                console.log('add task');
-                const task = prompt('What is your homework for this session?');
-                
-                  const todoList = document.querySelector(`.${session.split(' ')[0]}-${moduleName}-todolist`);
-                  
-                  const listItem = document.createElement('li');
-                  const checkbox = document.createElement('input');
-                  checkbox.type = 'checkbox';
-                  
-                  const label = document.createElement('label');
-                  label.textContent = task;
-                  
-                  listItem.appendChild(checkbox);
-                  listItem.appendChild(label);
-                  
-                  todoList.appendChild(listItem);
-              });
+              icon.addEventListener('click', () => addTaskInModule(session, moduleName, i));
+              
             });
+            
             
           }
     }
     if(reformattedArray.length - (i + 4) == 2) {
         break;
     }
+    
     }
-  
-
-  
     const classList = document.querySelector('.class-list');
     classList.innerHTML += `<li class="class-name" id="${moduleName}">${moduleName}
       <span class="material-symbols-outlined"> delete </span>
       </li>`;
     attachRemoveClassListener();
+    moduleScheduleData = document.querySelector('.class-body').innerHTML;
+    moduleListData = document.querySelector('.class-list').innerHTML;
   }
-  
 
+function addTaskInModule(session, moduleName, i) {
+    todoList = document.querySelector(`.todolist-${session}-${moduleName}-w${i}`);
+    console.log("Session: " + session);
+    console.log("M: " + moduleName);
+    console.log("W: " + i);
+    const task = prompt('What is your homework for this session?');
+    if (task !== null && task.trim() !== '') {
+      
+      const listItem = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.classList.add('sessionTaskCheckbox');
+      
+      const label = document.createElement('label');
+      label.textContent = task;
+      
+      listItem.appendChild(label);
+      listItem.appendChild(checkbox);
+      listItem.innerHTML += `<span class="material-symbols-outlined ${session}-${moduleName}-w${i}-removeTask"> remove </span>`;
+      
+      todoList.appendChild(listItem);
+
+      const removeIcons = todoList.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-removeTask`);
+      removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
+      console.log(removeIcons);
+    } else if (task.trim() == ''){
+      alert('Cannot create empty task');
+    }              
+      
+}
+
+function removeTask(event) {
+    const confirmRemove = window.confirm('Are you sure you want to delete this task?');
+    if (confirmRemove) {
+        var spanElement = event.target; 
+        var liElement = spanElement.parentNode; 
+        liElement.parentNode.removeChild(liElement);
+    }
+}
 
   function generateLayout() {
     const scheduleTable = document.querySelector(`.class-body`);
@@ -315,7 +347,70 @@ function displayModule() {
     console.log(scheduleTable.innerHTML);
   }
 
-  function retrieveModuleSchedule() {
+ 
+  const saveChangesButton= document.querySelector('.save-changes-button');
+  saveChangesButton.addEventListener('click', saveModuleSchedule);
 
+  function saveModuleSchedule() {
+    const moduleData = {
+      moduleList: moduleListData,
+      moduleSchedule: moduleScheduleData,
+      userId: sessionStorage.getItem('userId')
+    };
+    console.log(moduleData);
+    fetch(`http://localhost:5501/save-module-schedule`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(moduleData)
+        }).then(response => {
+          if (response.status === 500) {
+            alert('Internal server error');
+          } else if (response.status === 409) {
+              alert('Save module schedule failed');
+          } else if (response.status === 201){
+            alert('Save module schedule successfully');
+          }
+        }).catch(error => {
+          console.error('Error during query:', error)});
+  }
+
+  
+  const getModuleScheduleButton = document.querySelector('.get-module-schedule-button');
+  getModuleScheduleButton.addEventListener('click', retrieveModuleSchedule);
+
+  document.addEventListener('DOMContentLoaded', retrieveModuleSchedule);
+
+  const getModuleScheduleData = { userId: sessionStorage.getItem('userId')};
+  function retrieveModuleSchedule() {
+    fetch(`http://localhost:5501/get-module-schedule`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(getModuleScheduleData)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if (response.status === 409) {
+          alert('No module schedule found');
+      } else if (response.status === 201){
+        alert('Get module schedule successfully');
+        response.json().then(data => {
+          const moduleList = data.moduleList;
+          const moduleSchedule = data.moduleSchedule;
+          document.querySelector('.class-list').innerHTML = moduleList;
+          document.querySelector('.class-body').innerHTML = moduleSchedule;
+          const addTaskElements = document.querySelectorAll('[class$="-addTask"]');
+          addTaskElements.forEach((add)=> add.addEventListener('click', () => 
+          addTaskInModule(
+          add.className.split(' ')[1].split('-')[0],
+          add.className.split(' ')[1].split('-')[1], 
+          add.className.split(' ')[1].split('-')[2].split('')[1])));
+      })
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
   }
 
