@@ -295,15 +295,8 @@
       <div class="item classes" style="display: none;">
       <h2 class="class-title">NUS Class Management</h2>
       <div class="class-customizer">
-        
         <ul class="class-list"> 
           <h3 class="modules-title">Modules:</h3>
-          <li class="class-name" id="MA1521">MA1521
-            <span class="material-symbols-outlined"> delete </span>
-          </li>
-          <li class="class-name" id="CS2040">CS2040
-            <span class="material-symbols-outlined" > delete</span>
-          </li>
         </ul>
         <button class="add-class-button">Add class</button>
 
@@ -312,7 +305,10 @@
         <div class="class-modal-content">
           
           <div class="class-modal-input">
-
+          <select id="semester-dropdown">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+          </select>
           <label for="classInput" class="class-label">Module code:</label>
           <input type="text" class="classInput" placeholder="E.g: CS2030S" required></input>
 
