@@ -28,28 +28,28 @@
     <h2 id='welcome'></h2>
     <section class="grid-container">
     <div class ="navBar">
-    
-    
-    <nav class="sideNav">
-      <button class="navButton" onclick="window.location.href='/frontend/html/dashboard.html'">
-        <span class="material-symbols-outlined"> home </span>
-        Dashboard</button>
+      <span class="material-symbols-outlined" id="menu-icon" onclick="toggleNav">menu</span>
+      <nav class="sideNav">
+        <button class="navButton dashboard" onclick="window.location.href='/frontend/html/dashboard.html'">
+          <span class="material-symbols-outlined">home</span>
+          <p class="navText" style="display: none">Dashboard</p>
+        </button>
       
-      <button class="navButton" onclick="window.location.href='/frontend/html/timetable.html'">
-        <span class="material-symbols-outlined">
-          schedule
-          </span>Timetable</button>
-
-      <button class="navButton" onclick="window.location.href='/frontend/html/exam.html'">
-        <span class="material-symbols-outlined">
-          school
-          </span>Exam Management</button>
-          
-      <button class="navButton" id="logoutButton">
-        <span class="material-symbols-outlined">
-          output
-          </span>Log out</button>
-    </nav>
+        <button class="navButton timetable" onclick="window.location.href='/frontend/html/timetable.html'">
+          <span class="material-symbols-outlined">schedule</span>
+          <p class="navText" style="display: none">Timetable</p>
+        </button>
+      
+        <button class="navButton exam" onclick="window.location.href='/frontend/html/exam.html'">
+          <span class="material-symbols-outlined">school</span>
+          <p class="navText" style="display: none">Exam Management</p>
+        </button>
+      
+        <button class="navButton logout" onclick="window.location.href='/frontend/html/logout.html'">
+          <span class="material-symbols-outlined">output</span>
+          <p class="navText" style="display: none">Log out</p>
+        </button>
+      </nav>
   </div>
 
     <div class="wrapper">
@@ -364,8 +364,27 @@
     </div>
   </section>
 
+
+
   <script type="text/javascript" src="/frontend/js/logout.js"></script>
+
     <script>
+    const toggleSideNav = document.getElementById('menu-icon');
+    toggleSideNav.addEventListener('click', toggleNav);
+    
+    function toggleNav() {
+    document.querySelectorAll('.navText').forEach((text) => {
+      if (text.style.display === 'none') {
+        text.style.display = '';
+        text.setAttribute('status','hidden');
+        text.setAttribute('status', 'shown');
+      } else {
+        text.style.display = 'none';
+        text.setAttribute('status', 'shown');
+        text.setAttribute('status', 'hidden');
+      }
+    });
+  }
       
       function changeTab() {
         var li_elements = document.querySelectorAll(".tabBar ul li");

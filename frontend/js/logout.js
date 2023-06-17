@@ -1,4 +1,4 @@
-const logoutButton = document.getElementById('logoutButton');
+const logoutButton = document.querySelector('.navButton.logout');
 logoutButton.addEventListener('click', logout);
 
 function logout() {
