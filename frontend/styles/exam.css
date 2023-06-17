@@ -129,16 +129,7 @@ border-color: antiquewhite ;
 font-weight: 25;
 }
 
-.countdown-label, .name-label {
-display: block;
-flex-basis: 100px;
-margin-top: 10px;
-margin-left: 35px;
-font-size: 16px;
-font-weight: 600;
-color: antiquewhite;
-padding-right: 10px;
-}
+
 
 #name, #countdownDate {
 width: 200px;
@@ -170,81 +161,9 @@ font-size: 15px;
 
 }
 
-.modal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.4rem;
-  width: 450px;
-  padding: 1.3rem;
-  min-height: 250px;
-  position: absolute;
-  top: 20%;
-  background-color: #c99575;
-  border: none;
-  border-radius: 15px;
-}
-
-.modal .flex {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.name-label, .countdown-label {
-  display: block;
-  flex-basis: 100px;
-  margin-top: 10px;
-  margin-left: 35px;
-  font-size: 16px;
-  font-weight: 600;
-  color: antiquewhite;
-  padding-right: 10px;
-}
-
-.openModal {
-  font-size: 19px;
-  font-weight: 700;
-  background-color: #926359;
-  color: #f4eccd;
-  border-radius: 10px;
-  border: none;
-  margin-left: 42px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  cursor: pointer;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background:  rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
-  z-index: 1;
-}
-.closeModal {
-  transform: translate(10px, -20px);
-  padding: 0.5rem 0.7rem;
-  background-color: #c99575;
-  border-radius: 50%;
-}
-.modal {
-  z-index: 2;
-}
-
-.hidden {
-  display: none;
-}
 
 /* STYLE FOR PLANNER TAB*/
-.recess-planner-title {
+.recess-planner-title, .exam-overview-title {
   color:#926359;
   background-color: #f4eccd;
   border: 5px solid #c99575;
@@ -262,7 +181,7 @@ font-size: 15px;
 }
 
 /* Style for task customizer */
-.planner-content {
+.planner-content, .countdown-content {
   border-radius: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -324,7 +243,7 @@ th {
 
 .add-row-button, .del-row-button, 
 .add-task-button, .delete-task-button, 
-.reset-schedule-button, .save-schedule-button, .get-schedule-button {
+.reset-schedule-button, .save-schedule-button, .get-schedule-button, .create-exam-button {
   font-family: 'Quicksand', sans-serif;
   font-weight: 900;
   background-color: #926359;
@@ -343,7 +262,8 @@ th {
 }
 .add-row-button:hover, .del-row-button:hover, 
 .add-task-button:hover, .delete-task-button:hover, 
-.reset-schedule-button:hover, .save-schedule-button:hover, .get-schedule-button:hover {
+.reset-schedule-button:hover, .save-schedule-button:hover, .get-schedule-button:hover,
+.create-exam-button:hover {
   color: #926359;
   background-color:#f4eccd;
   transition-duration: 0.5s;
