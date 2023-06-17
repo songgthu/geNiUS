@@ -37,11 +37,9 @@
   font-family: 'Quicksand', sans-serif;
   background-color: #926359;
   color: #f4eccd;
-  font-size: 20px;
-  margin-bottom: 15px;
   border-radius: 10px;
   padding: 5px;
-  width: 150px;
+  width: 160px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -49,10 +47,31 @@
   display: block;
   border-color: #f4eccd;
 }
+
 .navButton:hover {
   background-color: #c99575;
   transition-duration: 0.5s;
 }
+
+
+
+.navText[status="shown"] {
+  font-size: 20px;
+  text-align: center;
+  align-self: center;
+}
+
+#menu-icon {
+  color: #926359;
+  margin-left: 20px;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+#menu-icon:hover {
+  color: #c99575;
+}
+
 .flex-input {
   background-color: #c99575;
   padding: 10px;
