@@ -1,5 +1,3 @@
-var moduleScheduleData = document.querySelector('.class-body').innerHTML;
-var moduleListData = document.querySelector('.class-list').innerHTML;
 var todoList = null;
 // REMOVE CLASS
 function attachRemoveClassListener() {
@@ -232,7 +230,7 @@ function displayModule() {
       const day = reformattedArray[i + 3].split(":")[1].trim();
       
       const venue = reformattedArray[i + 4];
-         //     // Extract the week numbers from the string
+     // Extract the week numbers from the string
     const applicableWeeksArray = weeks.match(/\d+/g).map(Number);
     console.log(session);
     console.log(weeks);
@@ -285,8 +283,7 @@ function displayModule() {
       <span class="material-symbols-outlined"> delete </span>
       </li>`;
     attachRemoveClassListener();
-    moduleScheduleData = document.querySelector('.class-body').innerHTML;
-    moduleListData = document.querySelector('.class-list').innerHTML;
+
   }
 
 function addTaskInModule(session, moduleName, i) {
@@ -314,7 +311,7 @@ function addTaskInModule(session, moduleName, i) {
       const removeIcons = todoList.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-removeTask`);
       removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
       console.log(removeIcons);
-    } else if (task.trim() == ''){
+    } else if (task != null && task.trim() == ''){
       alert('Cannot create empty task');
     }              
       
@@ -345,16 +342,41 @@ function removeTask(event) {
     const week1 = document.querySelector('.class-container-week-1');
     week1.style.display='';
     console.log(scheduleTable.innerHTML);
+
   }
 
  
   const saveChangesButton= document.querySelector('.save-changes-button');
   saveChangesButton.addEventListener('click', saveModuleSchedule);
 
+  var moduleListArray = [];
+  var moduleScheduleArray = [];
+
+
   function saveModuleSchedule() {
+    // Store module list in an array
+  var moduleList = document.querySelector('.class-list').getElementsByTagName('li');
+  for (var i = 0; i < moduleList.length; i++) {
+    var module = moduleList[i].id;
+    moduleListArray.push(module);
+  }
+  // Store module schedule in an array
+  var scheduleRows = document.querySelector('.class-body').getElementsByTagName('tr');
+  for (var i = 0; i < scheduleRows.length; i++) {
+  var row = scheduleRows[i];
+  var rowData = [];
+
+  var cells = row.getElementsByTagName('th');
+  for (var j = 0; j < cells.length; j++) {
+    var cell = cells[j];
+    rowData.push(cell.textContent);
+  }
+  moduleScheduleArray.push(rowData);
+}
+
     const moduleData = {
-      moduleList: moduleListData,
-      moduleSchedule: moduleScheduleData,
+      moduleList: document.querySelector('.class-list').innerHTML,
+      moduleSchedule: document.querySelector('.class-body').innerHTML,
       userId: sessionStorage.getItem('userId')
     };
     console.log(moduleData);
@@ -371,6 +393,8 @@ function removeTask(event) {
               alert('Save module schedule failed');
           } else if (response.status === 201){
             alert('Save module schedule successfully');
+          } else {
+            alert('?');
           }
         }).catch(error => {
           console.error('Error during query:', error)});
@@ -383,6 +407,7 @@ function removeTask(event) {
   document.addEventListener('DOMContentLoaded', retrieveModuleSchedule);
 
   const getModuleScheduleData = { userId: sessionStorage.getItem('userId')};
+
   function retrieveModuleSchedule() {
     fetch(`http://localhost:5501/get-module-schedule`, {
       method: 'POST',
@@ -398,16 +423,18 @@ function removeTask(event) {
       } else if (response.status === 201){
         alert('Get module schedule successfully');
         response.json().then(data => {
-          const moduleList = data.moduleList;
-          const moduleSchedule = data.moduleSchedule;
-          document.querySelector('.class-list').innerHTML = moduleList;
-          document.querySelector('.class-body').innerHTML = moduleSchedule;
+          document.querySelector('.class-list').innerHTML = data.moduleList;
+          document.querySelector('.class-body').innerHTML = data.moduleSchedule;
+
           const addTaskElements = document.querySelectorAll('[class$="-addTask"]');
           addTaskElements.forEach((add)=> add.addEventListener('click', () => 
           addTaskInModule(
           add.className.split(' ')[1].split('-')[0],
           add.className.split(' ')[1].split('-')[1], 
           add.className.split(' ')[1].split('-')[2].split('')[1])));
+
+          const removeTaskElements = document.querySelectorAll('[class$="-removeTask"]');
+          removeTaskElements.forEach((remove)=> remove.addEventListener('click', () => removeTask())); 
       })
     }
   }).catch(error => {

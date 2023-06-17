@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/frontend/styles/exam.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/frontend/styles/exam-overview.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
   </head>
 
@@ -90,6 +91,41 @@
               <form id="nestedForm">
                 <ul class="list-group" id="items"></ul>
               </form>
+
+<!--countdown display part-->
+              <div class="quick-countdown">
+                
+                <button class="start">Start</button>
+                <button class="reset">Reset</button>
+      
+                <div class="countdown-timer">
+                  <div class="name-part">
+                    <span class="countdown-item" id="countdown-event"></span>
+                  </div>
+                  
+                  <div class="timing-part">
+                    <div class="countdown-item">
+                      <span class="countdown-number" id="countdown-days">00</span>
+                      <span class="countdown-tag">DAYS</span>
+                    </div>
+                    <div class="countdown-item">
+                      <span class="countdown-number" id="countdown-hours">00</span>
+                      <span class="countdown-tag">HOURS</span>
+                    </div>
+                    <div class="countdown-item">
+                      <span class="countdown-number" id="countdown-minutes">00</span>
+                      <span class="countdown-tag">MINUTES</span>
+                    </div>
+                    <div class="countdown-item">
+                      <span class="countdown-number" id="countdown-seconds">00</span>
+                      <span class="countdown-tag">SECONDS</span>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+              </div>
+              
      
             <button class="startCDButton">Done</button> <!--countdownbtn-->      
           </div>      

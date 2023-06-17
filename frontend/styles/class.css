@@ -322,4 +322,7 @@ border-radius: 50%;
     cursor: pointer;
 }
 
-
+th div {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

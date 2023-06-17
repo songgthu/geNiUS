@@ -527,35 +527,34 @@ app.post('/save-module-schedule', (req, res) => {
   const updateModuleSchedule = `UPDATE moduleSchedules SET moduleList = ?, moduleSchedule = ? WHERE created_by = ?`;
   const insertModuleSchedule = `INSERT INTO moduleSchedules (moduleList, moduleSchedule, created_by) VALUES (?, ?, ?)`;
 
-  connection.execute(selectModuleSchedule, [userId], (error, results) => {
+  connection.execute(selectModuleSchedule, [userId], (error, outerResults) => {
     if (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });
+    } else if (outerResults.length > 0) {
+      // module schedule exists, update it
+      connection.execute(updateModuleSchedule, [moduleList, moduleSchedule, userId], (error, innerResults) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ error: 'An error occurred' });
+        } else if(innerResults.length > 0){
+          res.status(200).json({ message: 'Update module schedule successfully' });
+        }
+      });
     } else {
-      if (results.length > 0) {
-        // module schedule exists, update it
-        connection.execute(updateModuleSchedule, [moduleList, moduleSchedule, userId], (error, results) => {
-          if (error) {
-            console.error(error);
-            res.status(500).json({ error: 'An error occurred' });
-          } else {
-            res.status(200).json({ message: 'Update module schedule successfully' });
-          }
-        });
-      } else {
-        // module schedule does not exist, insert it
-        connection.execute(insertModuleSchedule, [moduleList, moduleSchedule, userId], (error, results) => {
-          if (error) {
-            console.error(error);
-            res.status(500).json({ error: 'An error occurred' });
-          } else {
-            res.status(201).json({ message: 'Save module schedule successfully' });
-          }
-        });
-      }
+      // module schedule does not exist, insert it
+      connection.execute(insertModuleSchedule, [moduleList, moduleSchedule, userId], (error, innerResults) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ error: 'An error occurred' });
+        } else {
+          res.status(201).json({ message: 'Save module schedule successfully' });
+        }
+      });
     }
+    })
   });
-});
+
 
 app.post('/get-module-schedule', (req, res) => {
   const { userId } = req.body;
