@@ -53,16 +53,16 @@ var session;
 
 app.get('/', (req, res) => {
   session = req.session;
-  res.sendFile(path.join(__dirname, '../frontend/html/index.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'index.html'));
 })
 
 
 app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 app.get('/register.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'register.html'));
+  res.sendFile(path.join(__dirname, 'register.html'));
 });
 
 
