@@ -58,12 +58,13 @@ app.get('/', (req, res) => {
 
 
 app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
-})
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'login.html'));
+});
 
 app.get('/register.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'register.html'));
-})
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'register.html'));
+});
+
 
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
