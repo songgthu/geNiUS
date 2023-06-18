@@ -21,7 +21,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js"
+    "start": "node backend/sever.js"
   },
   "engines": {
     "node": ">=18.0.0"
