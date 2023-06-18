@@ -58,11 +58,11 @@ app.get('/', (req, res) => {
 
 
 app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'login.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'login.html'));
 });
 
 app.get('/register.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'register.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'register.html'));
 });
 
 
