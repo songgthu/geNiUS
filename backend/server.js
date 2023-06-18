@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, '')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // session middleware
 const oneDay = 1000 * 60 * 60 * 24;
@@ -58,11 +58,12 @@ app.get('/', (req, res) => {
 
 
 app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname,"login.html"));
-  })
+  res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
+})
+
 app.get('/register.html', (req, res) => {
-    res.sendFile(path.join(__dirname,"register.html"));
-  })
+  res.sendFile(path.join(__dirname, 'frontend', 'register.html'));
+})
 
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
