@@ -405,12 +405,11 @@ function removeTask(event) {
   }
 
   const getModuleScheduleData = { userId: sessionStorage.getItem('userId')};
-  
+
   const getModuleScheduleButton = document.querySelector('.get-module-schedule-button');
   getModuleScheduleButton.addEventListener('click', retrieveModuleSchedule);
 
   document.addEventListener('DOMContentLoaded', retrieveModuleSchedule);
-  attachRemoveTaskListener();
 
   
 
