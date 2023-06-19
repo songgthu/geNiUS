@@ -84,7 +84,7 @@ app.post('/modules', (req, res) => {
 });
 
 // Login endpoint
-app.post('/login-user', (req, res) => {
+app.post('/login.html', (req, res) => {
 
   const { email, password } = req.body;
   // Query the database to retrieve the user
