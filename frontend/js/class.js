@@ -206,6 +206,11 @@ fetch(`https://genius-4gmr.onrender.com/modules`, {
 const submitButton = document.querySelector('.submit-class-button');
 submitButton.addEventListener('click', displayModule);
 
+function attachRemoveTaskListener() {
+  const removeIcons = todoList.querySelectorAll(`[class$="-removeTask"]`);
+  removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
+}
+
 function displayModule() {
     const moduleInfo = document.querySelector('.result-content').innerHTML;
     closeClassModalBox();
@@ -307,10 +312,7 @@ function addTaskInModule(session, moduleName, i) {
       listItem.innerHTML += `<span class="material-symbols-outlined ${session}-${moduleName}-w${i}-removeTask"> remove </span>`;
       
       todoList.appendChild(listItem);
-
-      const removeIcons = todoList.querySelectorAll(`[class$="-removeTask"]`);
-      removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
-      console.log(removeIcons);
+      attachRemoveTaskListener();
     } else if (task != null && task.trim() == ''){
       alert('Cannot create empty task');
     }              
@@ -428,6 +430,7 @@ function removeTask(event) {
           document.querySelector('.class-list').innerHTML = data.moduleList;
           attachRemoveClassListener();
           document.querySelector('.class-body').innerHTML = data.moduleSchedule;
+          attachRemoveTaskListener();
 
           const addTaskElements = document.querySelectorAll('[class$="-addTask"]');
           addTaskElements.forEach((add)=> add.addEventListener('click', () => 
