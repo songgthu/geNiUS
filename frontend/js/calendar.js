@@ -154,7 +154,7 @@ function retrieveTaskList(selectedFormattedDate) {
     const data = {
         dataDate: selectedFormattedDate
     };
-fetch(`http://localhost:5501/task-list`, {
+fetch(`https://genius-4gmr.onrender.com/task-list`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'
