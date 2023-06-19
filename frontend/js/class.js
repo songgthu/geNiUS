@@ -210,6 +210,7 @@ function attachRemoveTaskListener() {
   const removeIcons = document.querySelectorAll(`[class$="-removeTask"]`);
   removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
 }
+attachRemoveTaskListener();
 
 function displayModule() {
     const moduleInfo = document.querySelector('.result-content').innerHTML;
