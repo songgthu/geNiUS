@@ -17,7 +17,7 @@ function removeClass(event) {
         var liElement = spanElement.parentNode; 
         liElement.parentNode.removeChild(liElement);
         
-        var moduleInfoAll = document.querySelectorAll(`.info-${liElement.id}`);
+        var moduleInfoAll = document.querySelectorAll(`[class$="info-${liElement.id}"]`);
         moduleInfoAll.forEach(moduleInfo => {
             moduleInfo.remove();
         });
@@ -308,7 +308,7 @@ function addTaskInModule(session, moduleName, i) {
       
       todoList.appendChild(listItem);
 
-      const removeIcons = todoList.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-removeTask`);
+      const removeIcons = todoList.querySelectorAll(`[class$="-removeTask"]`);
       removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
       console.log(removeIcons);
     } else if (task != null && task.trim() == ''){
