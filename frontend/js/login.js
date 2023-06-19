@@ -23,7 +23,7 @@ function handleLogin(event) {
       };
   
     
-    fetch(`https://genius-4gmr.onrender.com/login.html`, {
+    fetch(`https://genius-4gmr.onrender.com/login-user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
