@@ -323,6 +323,7 @@ function removeTask(event) {
     const confirmRemove = window.confirm('Are you sure you want to delete this task?');
     if (confirmRemove) {
         var spanElement = event.target; 
+        console.log(spanElement);
         var liElement = spanElement.parentNode; 
         liElement.parentNode.removeChild(liElement);
     }
@@ -426,6 +427,7 @@ function removeTask(event) {
         alert('Get module schedule successfully');
         response.json().then(data => {
           document.querySelector('.class-list').innerHTML = data.moduleList;
+          attachRemoveClassListener();
           document.querySelector('.class-body').innerHTML = data.moduleSchedule;
 
           const addTaskElements = document.querySelectorAll('[class$="-addTask"]');
