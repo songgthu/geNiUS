@@ -86,7 +86,7 @@ function updateTimer() {
 var countdownInfo = null;
 document.addEventListener('DOMContentLoaded', function() {
   const data = { email: sessionStorage.getItem('email')};
-  fetch(`http://localhost:5501/get-quick-countdown`, {
+  fetch(`https://genius-4gmr.onrender.com/get-quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -149,7 +149,7 @@ function startCountdown() {
     countdownDate: countdownDate,
     email: sessionStorage.getItem('email')
   };
-  fetch(`http://localhost:5501/quick-countdown`, {
+  fetch(`https://genius-4gmr.onrender.com/quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -256,7 +256,7 @@ function stopCountdown() {
   sessionStorage.removeItem('secondsCD');
   
   const data = { email: sessionStorage.getItem('email')};
-  fetch(`http://localhost:5501/delete-quick-countdown`, {
+  fetch(`https://genius-4gmr.onrender.com/delete-quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -298,7 +298,7 @@ function deleteShortcut(event) {
     const url = liElement.querySelector('a').getAttribute('href');
     const userId = sessionStorage.getItem('userId');
     const data = { userId: userId, name: name, url: url};
-    fetch(`http://localhost:5501/delete-shortcut`, {
+    fetch(`https://genius-4gmr.onrender.com/delete-shortcut`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -351,7 +351,7 @@ function addShortcut() {
     scInput: scInput,
     scURLInput: scURLInput
   };
-  fetch(`http://localhost:5501/add-shortcut`, {
+  fetch(`https://genius-4gmr.onrender.com/add-shortcut`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -374,7 +374,7 @@ function addShortcut() {
 function retrieveShortcuts() {
   const shortcutsList = document.querySelector(".shortcutList");
   const data = { userId: sessionStorage.getItem('userId')};
-  fetch(`http://localhost:5501/get-shortcut`, {
+  fetch(`https://genius-4gmr.onrender.com/get-shortcut`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
