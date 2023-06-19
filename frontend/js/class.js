@@ -316,6 +316,8 @@ function addTaskInModule(session, moduleName, i) {
     }              
       
 }
+const removeTaskElements = document.querySelectorAll('[class$="-removeTask"]');
+removeTaskElements.forEach((remove)=> remove.addEventListener('click', () => removeTask())); 
 
 function removeTask(event) {
     const confirmRemove = window.confirm('Are you sure you want to delete this task?');

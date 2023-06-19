@@ -322,6 +322,23 @@ restore.addEventListener('click', restoreDefaults);
 
 function restoreDefaults() {
   document.querySelector('.shortcutList').innerHTML = defaultShortcuts;
+  const data = { userId: sessionStorage.getItem('userId') };
+  fetch(`https://genius-4gmr.onrender.com/delete-shortcuts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if (response.status === 201) {
+        alert('Restore default shortcuts successfully');
+        retrieveShortcuts();
+      }
+    }).catch(error => {
+        console.error('Error during query:', error)});
+    
 }
 
 function openShortcutModal() {
