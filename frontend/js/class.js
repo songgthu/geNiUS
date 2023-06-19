@@ -207,7 +207,7 @@ const submitButton = document.querySelector('.submit-class-button');
 submitButton.addEventListener('click', displayModule);
 
 function attachRemoveTaskListener() {
-  const removeIcons = todoList.querySelectorAll(`[class$="-removeTask"]`);
+  const removeIcons = document.querySelectorAll(`[class$="-removeTask"]`);
   removeIcons.forEach(icon => icon.addEventListener('click', removeTask));
 }
 
