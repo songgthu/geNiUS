@@ -469,7 +469,23 @@ app.post('/delete-shortcut', (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     } else {
       res.status(201).json({ 
-        message: 'Delete countdown successfully' });
+        message: 'Delete shortcut successfully' });
+    }
+  });
+});
+
+app.post('/delete-shortcuts', (req, res) => {
+  const { userId } = req.body;
+
+  const deleteShortcuts = `DELETE FROM shortcuts WHERE created_by = ?`;
+
+  connection.execute(deleteShortcuts, [userId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    } else {
+      res.status(201).json({ 
+        message: 'Restore default shortcuts successfully' });
     }
   });
 });
