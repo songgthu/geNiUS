@@ -230,7 +230,7 @@ const plannerData = {
   userId: userId
 };
 
-fetch(`http://localhost:5501/save-planner`, {
+fetch(`https://genius-4gmr.onrender.com/save-planner`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -255,7 +255,7 @@ get.addEventListener('click', getPlanner);
 document.addEventListener('DOMContentLoaded', getPlanner);
 const getPlannerData = { userId: userId };
 function getPlanner() {
-  fetch(`http://localhost:5501/get-planner`, {
+  fetch(`https://genius-4gmr.onrender.com/get-planner`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

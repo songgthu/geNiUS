@@ -18,7 +18,7 @@ function updateTimetable(event) {
     url: input,
     email: userEmail
   };
-  fetch(`http://localhost:5501/update-timetable`, {
+  fetch(`https://genius-4gmr.onrender.com/update-timetable`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ function updateTimetable(event) {
 document.addEventListener('DOMContentLoaded', retrieveTimetable)
 function retrieveTimetable() {
   const data = { userEmail: userEmail };
-  fetch(`http://localhost:5501/get-timetable`, {
+  fetch(`https://genius-4gmr.onrender.com/get-timetable`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
