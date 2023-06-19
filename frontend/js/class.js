@@ -404,6 +404,7 @@ function removeTask(event) {
           console.error('Error during query:', error)});
   }
 
+  const getModuleScheduleData = { userId: sessionStorage.getItem('userId')};
   
   const getModuleScheduleButton = document.querySelector('.get-module-schedule-button');
   getModuleScheduleButton.addEventListener('click', retrieveModuleSchedule);
@@ -411,7 +412,7 @@ function removeTask(event) {
   document.addEventListener('DOMContentLoaded', retrieveModuleSchedule);
   attachRemoveTaskListener();
 
-  const getModuleScheduleData = { userId: sessionStorage.getItem('userId')};
+  
 
   function retrieveModuleSchedule() {
     fetch(`https://genius-4gmr.onrender.com/get-module-schedule`, {
