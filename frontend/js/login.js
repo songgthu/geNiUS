@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 window.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   loginForm.addEventListener('submit', handleLogin);
@@ -22,8 +23,7 @@ function handleLogin(event) {
         password: password
       };
   
-    
-    fetch(`https://genius-4gmr.onrender.com/login-user`, {
+    fetch(`${currentURL}/login-user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

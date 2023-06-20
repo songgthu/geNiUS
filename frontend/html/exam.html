@@ -2,9 +2,9 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/exam.css">
+    <link rel="stylesheet" href="/frontend/styles/exam.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="../styles/exam-overview.css">
+    <link rel="stylesheet" href="/frontend/styles/exam-overview.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
@@ -15,28 +15,27 @@
     <h1 class="header">geNiUS</h1>
     <section class="grid-container">
       <div class ="navBar">
-        <span class="material-symbols-outlined" id="menu-icon" onclick="toggleNav">menu</span>
-        <nav class="sideNav">
-          <button class="navButton dashboard" onclick="window.location.href='/dashboard.html'">
-            <span class="material-symbols-outlined">home</span>
-            <p class="navText" style="display: none">Dashboard</p>
-          </button>
+      <nav class="sideNav">
+        <button class="navButton" onclick="window.location.href='/frontend/html/dashboard.html'">
+          <span class="material-symbols-outlined">
+            home 
+          </span>Dashboard</button>
         
-          <button class="navButton timetable" onclick="window.location.href='/timetable.html'">
-            <span class="material-symbols-outlined">schedule</span>
-            <p class="navText" style="display: none">Timetable</p>
-          </button>
-        
-          <button class="navButton exam" onclick="window.location.href='/exam.html'">
-            <span class="material-symbols-outlined">school</span>
-            <p class="navText" style="display: none">Exam Management</p>
-          </button>
-        
-          <button class="navButton logout">
-            <span class="material-symbols-outlined">output</span>
-            <p class="navText" style="display: none">Log out</p>
-          </button>
-        </nav>
+        <button class="navButton" onclick="window.location.href='/frontend/html/timetable.html'">
+          <span class="material-symbols-outlined">
+            schedule
+            </span>Timetable</button>
+  
+        <button class="navButton" onclick="window.location.href='/frontend/html/exam.html'">
+          <span class="material-symbols-outlined">
+            school
+            </span>Exam Management</button>
+            
+        <button class="navButton" id="logoutButton">
+          <span class="material-symbols-outlined">
+            output
+            </span>Log out</button>
+      </nav>
     </div>
 
       <div class="exam-management">
@@ -50,6 +49,9 @@
     <div class="item countdown">
           <div class="countdown-content">
           <h2 class="exam-overview-title">Exam Overview</h2>
+          
+          <h3 class="customize-title">Your exams:</h3>
+          <div class="exam-container">No exam yet...</div>
           
           <h3 class="customize-title">Create new exam:</h3>
           <button class="create-exam-button">
@@ -90,11 +92,46 @@
                 <ul class="list-group" id="items"></ul>
               </form>
 
+              <button class="displayContent">Done</button>
+
             </div>
 
         </div>
         </div>
-    </div>
+
+      <div id="examContainersContainer">
+        <div id="examContainer" style="display: none">
+          <div id="checklistContainer" class="checklistContainer">
+              
+            <h3>Tasks to review</h3>
+            <ul id="checklistItems"></ul>
+
+          </div>
+  
+        </div>
+      </div>
+
+      <div id="editModal" class="editModal">
+        <div class="editModalContent">
+          <span class="closeEdit">&times;</span>
+          <h2>Edit Info</h2>
+      
+          <label for="editExamName">Exam Name:</label>
+          <input type="text" id="editExamName">
+         
+          <label for="editExamDate">Exam Date:</label>
+          <input type="datetime-local" id="editExamDate">
+          
+          <label for="editExamVenue">Exam Venue:</label>
+          <input type="text" id="editExamVenue">
+         
+          <button id="saveChanges">Save Changes</button>
+          <button id="cancelEdit">Cancel</button>
+          
+        </div>
+      </div>
+
+   
 
 
         <div class="item planner" style="display: none">
@@ -141,26 +178,10 @@
       
   </section>  
     
-    <script type="text/javascript" src="../js/logout.js"></script>
-    <script type="text/javascript" src="../js/schedule.js"></script>
-    <script type="text/javascript" src="../js/exam-overview.js"></script>
+    <script type="text/javascript" src="/frontend/js/logout.js"></script>
+    <script type="text/javascript" src="/frontend/js/schedule.js"></script>
+    <script type="text/javascript" src="/frontend/js/exam-overview.js"></script>
     <script>
-      const toggleSideNav = document.getElementById('menu-icon');
-    toggleSideNav.addEventListener('click', toggleNav);
-    
-    function toggleNav() {
-    document.querySelectorAll('.navText').forEach((text) => {
-      if (text.style.display === 'none') {
-        text.style.display = '';
-        text.setAttribute('status','hidden');
-        text.setAttribute('status', 'shown');
-      } else {
-        text.style.display = 'none';
-        text.setAttribute('status', 'shown');
-        text.setAttribute('status', 'hidden');
-      }
-    });
-  }
       
       function changeTab() {
         var li_elements = document.querySelectorAll(".tabBar ul li");

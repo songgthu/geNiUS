@@ -144,7 +144,7 @@
 
 .form-control {
   border: 1px solid #c99575;
-}
+} 
 
 
 .list-group li {
@@ -156,11 +156,119 @@ span {
   margin-bottom: 20px;
 }
 
+/* the exam container*/
+.item-checklist, .item-checkbox {
+  display: block;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-checkbox {
+  display: none;
+  margin-right: 10px;
+}
+
+.checklist-label {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.checklist-label .task-description {
+  margin-left: 5px;
+}
+
+.checklist-label .task-description::before, .custom-checkbox::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 10px;
+  border-color: #926359;
+}
+
+.checklist-label .item-checkbox:checked + .task-description::before {
+  background-color: #c99575;
+  border-color: #c99575;
+  text-decoration: line-through;
+}
+
+.checklist-label .item-checkbox:checked + .custom-checkbox::before {
+  background-color: #c99575;
+  border-color: #c99575;
+  text-decoration: line-through;
+}
+
+.checklist-container {
+  display: flex;
+  align-items: flex-start; /* Align the checklist container to the top */
+  flex-wrap: wrap; /* Allow the checklist items to wrap onto multiple lines if needed */
+}
+
+.btnEdit, .btnDel {
+  font-size: 15px;
+  padding: 7px;
+  background-color: #926359;
+  color:#f4eccd;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+
+/*the edit modal css*/
+
+.editModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+body.modal-open {
+  overflow: hidden;
+  filter: none;
+}
+
+.edit-button, .addButton {
+  display: inline-block;
+  font-size: 15px;
+  padding: 7px;
+  background-color: #926359;
+  color:#f4eccd;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+#editExamName, #editExamDate, #editExamVenue {
+  font-size: 15px;
+}
+
+.button-container {
+  display: flex;
+}
+
+.closeEdit {
+  cursor: pointer;
+}
+
+.blur {
+  filter: blur(3px);
+}
 
 
 
-
-  
   
   
   
