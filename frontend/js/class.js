@@ -1,4 +1,5 @@
 var todoList = null;
+var currentURL = window.location.href.split("/")[2];
 // REMOVE CLASS
 function attachRemoveClassListener() {
     const liElements = document.querySelectorAll(".class-name");
@@ -111,7 +112,7 @@ if (moduleCode !== null && (tutorial !== null || lab !== null || recitation !== 
 }
 
 // search
-fetch(`https://genius-awj5.onrender.com/modules`, {
+fetch(`https://${currentURL}/modules`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
@@ -385,7 +386,7 @@ function removeTask(event) {
       userId: sessionStorage.getItem('userId')
     };
     console.log(moduleData);
-    fetch(`https://genius-awj5.onrender.com/save-module-schedule`, {
+    fetch(`https://${currentURL}/save-module-schedule`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -415,7 +416,7 @@ function removeTask(event) {
   
 
   function retrieveModuleSchedule() {
-    fetch(`https://genius-4gmr.onrender.com/get-module-schedule`, {
+    fetch(`https://${currentURL}/get-module-schedule`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

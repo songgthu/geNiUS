@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 // FUNCTIONS FOR TASKS CUSTOMIZER
 // Add event listener to the "Add Task" button
 var addTaskButton = document.querySelector('.add-task-button');
@@ -230,7 +231,7 @@ const plannerData = {
   userId: userId
 };
 
-fetch(`https://genius-4gmr.onrender.com/save-planner`, {
+fetch(`https://${currentURL}/save-planner`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -255,7 +256,7 @@ get.addEventListener('click', getPlanner);
 document.addEventListener('DOMContentLoaded', getPlanner);
 const getPlannerData = { userId: userId };
 function getPlanner() {
-  fetch(`https://genius-4gmr.onrender.com/get-planner`, {
+  fetch(`https://${currentURL}/get-planner`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

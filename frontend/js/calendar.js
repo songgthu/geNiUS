@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 const currentDate = document.querySelector(".current-date");
 const daysTag = document.querySelector(".days");
 const prevNextIcon = document.querySelectorAll(".icons span");
@@ -154,7 +155,7 @@ function retrieveTaskList(selectedFormattedDate) {
     const data = {
         dataDate: selectedFormattedDate
     };
-fetch(`https://genius-awj5.onrender.com/task-list`, {
+fetch(`https://${currentURL}/task-list`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'

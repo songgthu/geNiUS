@@ -1,5 +1,6 @@
-const create = document.querySelector('.addButton');
+var currentURL = window.location.href.split("/")[2];
 
+const create = document.querySelector('.addButton');
 create.addEventListener('click', createTask);
 
 var modal = document.querySelector(".modal");
@@ -79,7 +80,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
       userId: userId
     };
 
-    fetch(`https://genius-4gmr.onrender.com/add-task`, {
+    fetch(`https://${currentURL}/add-task`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -119,7 +120,7 @@ function closeTask() {
   const userId = sessionStorage.getItem("userId");
   const data = { userId: userId };
 function retrieveTask(){
-  fetch(`https://genius-4gmr.onrender.com/tasks`, {
+  fetch(`https://${currentURL}/tasks`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -211,7 +212,7 @@ function checkBox(checkbox, taskName) {
     taskName: taskName
   };
 
-  fetch(`https://genius-4gmr.onrender.com/update-checkbox`, {
+  fetch(`https://${currentURL}/update-checkbox`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -268,7 +269,7 @@ function updateTask(oldTask) {
   
   // console.log(oldTask);
 
-  fetch(`https://genius-4gmr.onrender.com/update-task`, {
+  fetch(`https://${currentURL}/update-task`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -296,7 +297,7 @@ function deleteTask(taskName) {
   };
   console.log(taskName);
 
-  fetch(`https://genius-4gmr.onrender.com/delete-task`, {
+  fetch(`https://${currentURL}/delete-task`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
