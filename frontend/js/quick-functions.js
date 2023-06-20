@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 // FOR QUICK TIMER
 const hoursElement = document.querySelector('.time-hours');
 const minutesElement = document.querySelector('.time-minutes');
@@ -86,7 +87,7 @@ function updateTimer() {
 var countdownInfo = null;
 document.addEventListener('DOMContentLoaded', function() {
   const data = { email: sessionStorage.getItem('email')};
-  fetch(`https://genius-4gmr.onrender.com/get-quick-countdown`, {
+  fetch(`https://${currentURL}/get-quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -149,7 +150,7 @@ function startCountdown() {
     countdownDate: countdownDate,
     email: sessionStorage.getItem('email')
   };
-  fetch(`https://genius-4gmr.onrender.com/quick-countdown`, {
+  fetch(`https://${currentURL}/quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -256,7 +257,7 @@ function stopCountdown() {
   sessionStorage.removeItem('secondsCD');
   
   const data = { email: sessionStorage.getItem('email')};
-  fetch(`https://genius-4gmr.onrender.com/delete-quick-countdown`, {
+  fetch(`https://${currentURL}/delete-quick-countdown`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -298,7 +299,7 @@ function deleteShortcut(event) {
     const url = liElement.querySelector('a').getAttribute('href');
     const userId = sessionStorage.getItem('userId');
     const data = { userId: userId, name: name, url: url};
-    fetch(`https://genius-4gmr.onrender.com/delete-shortcut`, {
+    fetch(`https://${currentURL}/delete-shortcut`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -323,7 +324,7 @@ restore.addEventListener('click', restoreDefaults);
 function restoreDefaults() {
   document.querySelector('.shortcutList').innerHTML = defaultShortcuts;
   const data = { userId: sessionStorage.getItem('userId') };
-  fetch(`https://genius-4gmr.onrender.com/delete-shortcuts`, {
+  fetch(`https://${currentURL}/delete-shortcuts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -368,7 +369,7 @@ function addShortcut() {
     scInput: scInput,
     scURLInput: scURLInput
   };
-  fetch(`https://genius-4gmr.onrender.com/add-shortcut`, {
+  fetch(`https://${currentURL}/add-shortcut`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -391,7 +392,7 @@ function addShortcut() {
 function retrieveShortcuts() {
   const shortcutsList = document.querySelector(".shortcutList");
   const data = { userId: sessionStorage.getItem('userId')};
-  fetch(`https://genius-4gmr.onrender.com/get-shortcut`, {
+  fetch(`https://${currentURL}/get-shortcut`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

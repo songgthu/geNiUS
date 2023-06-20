@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 function handleRegister(event) {
   event.preventDefault(); // Prevents the default form submission behavior
 
@@ -33,7 +34,7 @@ function handleRegister(event) {
       password: password,
     };
 
-      fetch("https://genius-4gmr.onrender.com/register-user", {
+      fetch(`https://${currentURL}/register-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

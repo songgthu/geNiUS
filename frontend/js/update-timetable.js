@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 // Retrieve the stored URL from sessionStorage
 const iframe = document.getElementById('timetable-iframe');
 const userEmail = sessionStorage.getItem('email');
@@ -18,7 +19,7 @@ function updateTimetable(event) {
     url: input,
     email: userEmail
   };
-  fetch(`https://genius-4gmr.onrender.com/update-timetable`, {
+  fetch(`https://${currentURL}/update-timetable`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -40,7 +41,7 @@ function updateTimetable(event) {
 document.addEventListener('DOMContentLoaded', retrieveTimetable)
 function retrieveTimetable() {
   const data = { userEmail: userEmail };
-  fetch(`https://genius-4gmr.onrender.com/get-timetable`, {
+  fetch(`https://${currentURL}/get-timetable`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
