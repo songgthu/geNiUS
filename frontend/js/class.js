@@ -111,7 +111,7 @@ if (moduleCode !== null && (tutorial !== null || lab !== null || recitation !== 
 }
 
 // search
-fetch(`https://genius-4gmr.onrender.com/modules`, {
+fetch(`https://genius-awj5.onrender.com/modules`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
@@ -385,7 +385,7 @@ function removeTask(event) {
       userId: sessionStorage.getItem('userId')
     };
     console.log(moduleData);
-    fetch(`https://genius-4gmr.onrender.com/save-module-schedule`, {
+    fetch(`https://genius-awj5.onrender.com/save-module-schedule`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
