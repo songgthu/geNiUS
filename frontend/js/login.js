@@ -1,4 +1,5 @@
 var currentURL = window.location.href.split("/")[2];
+console.log(currentURL);
 window.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   loginForm.addEventListener('submit', handleLogin);
