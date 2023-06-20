@@ -24,7 +24,7 @@ function handleLogin(event) {
         password: password
       };
   
-    fetch(`${currentURL}/login-user`, {
+    fetch(`https://${currentURL}/login-user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
