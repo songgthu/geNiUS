@@ -209,7 +209,7 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
       date: date,
       venue: venue,
       todolist: contentArr,
-      userId: sessionStorage.getItem(userId)
+      userId: sessionStorage.getItem('userId')
     };
     fetch(`https://${currentURL}/add-exam`, {
     method: 'POST',
@@ -516,7 +516,7 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
       date: newDate,
       venue: newVenue,
       todolist: contentArr,
-      userId: sessionStorage.getItem(userId)
+      userId: sessionStorage.getItem('userId')
     };
     fetch(`https://${currentURL}/update-exam`, {
     method: 'POST',
