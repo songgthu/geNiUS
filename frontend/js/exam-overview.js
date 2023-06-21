@@ -126,9 +126,6 @@ function addExam() {
 for (let i = 0; i <= contentArr.length - 1; i++) {
   const listItem = document.createElement('li');
   listItem.textContent = contentArr[i][0];
-  // const checkbox = document.createElement('input');
-  // checkbox.type = 'checkbox';
-  // checkbox.classList.add('content-checkbox', `${contentArr[i][1]}`);
   listItem.innerHTML += `<input type="checkbox" class="content-checkbox ${contentArr[i][1]}"></input>`;
   newList.appendChild(listItem);
 
@@ -576,21 +573,108 @@ function retrieveExamData() {
 }).then(response => {
   if (response.status === 500) {
     alert('Internal server error');
+    return;
   } else if (response.status === 409) {
-    alert('Get exam failed')
+    alert('Get exam failed');
+    return;
   } else if (response.status === 201) {
     response.json().then(data => { 
-      console.log(data.results[0]);
+      displayExamData(data.results);
     })
     alert('Get exam successfully');
   }
 }).catch(error => {
     console.error('Error during query:', error)});
 
-  displayExamData();
+}
+
+function displayExamData(examData) {
+  for (let i = 0; i < examData.length; i++) {
+    const name = examData[i].name;
+    const date = examData[i].date;
+    const venue = examData[i].venue;
+    const contentArr = examData[i].todolist;
+// Create to-do list
+const newList = document.createElement('ul');
+newList.classList.add(`review-to-do-list-${name}`);
+
+// Create list items and append them to the new <ul> element
+for (let i = 0; i <= contentArr.length - 1; i++) {
+const listItem = document.createElement('li');
+listItem.textContent = contentArr[i][0];
+listItem.innerHTML += `<input type="checkbox" class="content-checkbox ${contentArr[i][1]}"></input>`;
+newList.appendChild(listItem);
+
+
+}
+
+if (name == null || date == null || venue == null) {
+  alert('Please fill in exam name, date and venue before submit');
+  return;
+} else {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  const formattedDate = new Date(date).toLocaleDateString('en-US', options);
+
+  const container = document.querySelector('.exam-container');
+  container.innerHTML += `<div class="exam-container-${name}">
+  <span class="material-symbols-outlined edit-exam-${name}"> edit </span>
+  <span class="material-symbols-outlined remove-exam-${name}">remove</span>
+  <h3 class="exam-title"> ${name.toUpperCase()} </h3>
+  <p class="exam-info"> 
+  Date: ${formattedDate} <br>
+  Venue: ${venue} <br>
+  </p> 
+  <div class="exam-countdown-${name}">
+  <div class="timing-part">
+    <div class="countdown-item">
+      <span class="countdown-number" id="countdown-days">00</span>
+      <span class="countdown-tag">DAYS</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-number" id="countdown-hours">00</span>
+      <span class="countdown-tag">HOURS</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-number" id="countdown-minutes">00</span>
+      <span class="countdown-tag">MINUTES</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-number" id="countdown-seconds">00</span>
+      <span class="countdown-tag">SECONDS</span>
+    </div>
+  </div>
+  </div>
+  <button class="toggle-content-${name}">Show Review Content</button>
+
+  <div class="review-content-${name}" style="display:none"> Review To-do List:
+  ${newList.innerHTML}
+  </div>
+
+  </div>`;
+
+  examObjects[name] = [date, venue, contentArr];
+  
+  
+  // Add event listener to show/hide review content
+  attachContentEventListener();
+
+  // Add event listener to check/uncheck checkbox
+  attachCheckboxEventListener(name);
+
+  // Add event listener to remove exam
+  attachRemoveExamEventListener();
+
+  // Add event listener to start countdown
   attachCountdownFunction();
+
+  attachEditExamEventListener(name);
+}
+  }
 }
 
-function displayExamData() {
-
-}
