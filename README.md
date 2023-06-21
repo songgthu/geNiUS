@@ -14,7 +14,8 @@ We want <strong>ALL</strong> NUS students to gain access to a customised app for
 - [x] Log in page
 - [x] Register page
 
-# Testing: Accessing our web application: https://genius-awj5.onrender.com/
+# Testing: Accessing our web application: 
+https://genius-awj5.onrender.com/
 
   # Milestone 2
 - [x] Introduction page
