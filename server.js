@@ -623,9 +623,9 @@ connection.execute(selectExam, [name, userId], (err, results) => {
     res.status(409).json({ error: 'Exam name already exist' });
     return;
   } else {
-  const addExam = `INSERT INTO exams (name, date, venue, created_by) VALUES (?, ?, ?, ?)`;
+  const addExam = `INSERT INTO exams (name, date, venue, todolist, created_by) VALUES (?, ?, ?, ?)`;
   
-  connection.execute(addExam, [name, date, venue, userId], (err, results) => {
+  connection.execute(addExam, [name, date, venue, todolist, userId], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal server error' });
