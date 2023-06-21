@@ -657,7 +657,7 @@ app.post('/delete-exam', (req, res) => {
 app.post('/update-exam', (req, res) => {
   const { oldName, name, date, venue, todolist, userId } = req.body;
   const updateExam = `
-  UPDATE users SET name = ?, date = ?, venue = ?, todolist = ?  WHERE name = ? AND created_by = ?
+  UPDATE exams SET name = ?, date = ?, venue = ?, todolist = ?  WHERE name = ? AND created_by = ?
 `;
 connection.execute(updateExam, [name, date, venue, todolist, oldName, userId], (err, results) => {
   if (err) {
@@ -666,6 +666,25 @@ connection.execute(updateExam, [name, date, venue, todolist, oldName, userId], (
     return;
   } else {
     res.status(201).json({message: 'Update exam successfully'});
+  }
+});
+  
+});
+
+app.post('/get-exam', (req, res) => {
+  const { userId } = req.body;
+  const getExam = `
+  SELECT * FROM exams WHERE created_by = ?
+`;
+connection.execute(getExam, [userId], (err, results) => {
+  if (err) {
+    console.error('Error Executing query:', err);
+    res.status(500).json({ error: 'Internal server error' });
+    return;
+  } else {
+    res.status(201).json({
+      results: results,
+      message: 'Get exam successfully'});
   }
 });
   

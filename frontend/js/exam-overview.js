@@ -538,3 +538,30 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
     attachCountdownFunction();
     
 }
+
+function retrieveExamData() {
+  const data = {
+    userId: sessionStorage.getItem('userId')
+  };
+  fetch(`https://${currentURL}/get-exam`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+}).then(response => {
+  if (response.status === 500) {
+    alert('Internal server error');
+  } else if (response.status === 409) {
+    alert('Get exam failed')
+  } else if (response.status === 201) {
+    response.json().then(data => { 
+      console.log(data.results[0]);
+    })
+    alert('Get exam successfully');
+  }
+}).catch(error => {
+    console.error('Error during query:', error)});
+
+  attachCountdownFunction();
+}
