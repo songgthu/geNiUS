@@ -258,6 +258,28 @@ function attachCheckboxEventListener(name) {
 
       console.log('unchecked');
     }
+    const data = {
+      userId: sessionStorage.getItem('userId'),
+      name: name,
+      todolist: examObjects[name][2]
+
+    }
+    fetch(`https://${currentURL}/update-exam-checkbox`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 409) {
+      alert('Update checkbox failed')
+    } else if (response.status === 201) {
+      alert('Update checkbox successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
   }));
 }
 
@@ -539,6 +561,8 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
     
 }
 
+document.addEventListener('DOMContentLoaded', retrieveExamData);
+
 function retrieveExamData() {
   const data = {
     userId: sessionStorage.getItem('userId')
@@ -563,5 +587,10 @@ function retrieveExamData() {
 }).catch(error => {
     console.error('Error during query:', error)});
 
+  displayExamData();
   attachCountdownFunction();
+}
+
+function displayExamData() {
+
 }

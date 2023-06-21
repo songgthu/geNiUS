@@ -690,6 +690,24 @@ connection.execute(getExam, [userId], (err, results) => {
   
 });
 
+app.post('/update-exam-checkbox', (req, res) => {
+  const { userId, name, todolist } = req.body;
+  const updateExamCheckbox = `
+  UPDATE exams SET todolist = ? WHERE created_by = ? AND name = ?
+`;
+connection.execute(updateExamCheckbox, [todolist, userId, name], (err, results) => {
+  if (err) {
+    console.error('Error Executing query:', err);
+    res.status(500).json({ error: 'Internal server error' });
+    return;
+  } else {
+    res.status(201).json({
+      message: 'Update checkbox successfully'});
+  }
+});
+  
+});
+
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
