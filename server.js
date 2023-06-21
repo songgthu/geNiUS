@@ -606,6 +606,72 @@ app.post('/get-module-schedule', (req, res) => {
   });
 });
 
+// FOR EXAM OVERVIEW FEATURE
+app.post('/add-exam', (req, res) => {
+  const { name, date, venue, todolist, userId } = req.body;
+  const selectExam = `
+  SELECT *
+  FROM exams
+  WHERE name = ? AND created_by = ?
+`;
+connection.execute(selectExam, [name, userId], (err, results) => {
+  if (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ error: 'Internal server error' });
+    return;
+  } else if(results.length > 0 && results[0].name == name) {
+    res.status(409).json({ error: 'Exam name already exist' });
+    return;
+  } else {
+  const addExam = `INSERT INTO exams (name, date, venue, created_by) VALUES (?, ?, ?, ?)`;
+  
+  connection.execute(addExam, [name, date, venue, userId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ message: 'Add task successfully' });
+    }
+  });
+  }
+});
+  
+});
+
+app.post('/delete-exam', (req, res) => {
+  const { name, userId } = req.body;
+
+  const deleteExam = `DELETE FROM exams WHERE name = ? AND created_by = ?`;
+  connection.execute(deleteExam, [name, userId], (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ message: 'Delete exam successfully' });
+    }
+  });
+});
+
+app.post('/update-task', (req, res) => {
+  // Retrieve the task from the request
+  const { newTask, newDeadline, oldTask} = req.body;
+      const updateTaskQuery = `UPDATE tasks SET task = ?, deadline = ?
+      WHERE task = ?`;
+      connection.execute(updateTaskQuery, [newTask, newDeadline, oldTask], (err, results) => {
+        if (err) {
+          console.error('Error executing query:', err);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        } else {
+          res.status(201).json({ message: 'Update task successfully' });
+        }
+      });
+    }
+  
+);
+
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
