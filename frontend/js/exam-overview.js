@@ -510,7 +510,31 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
     attachRemoveExamEventListener();
     attachEditExamEventListener(newName);
     closeEditModal();
-    attachCountdownFunction();
+    const exam = {
+      oldName: oldName,
+      name: newName,
+      date: newDate,
+      venue: newVenue,
+      todolist: contentArr,
+      userId: sessionStorage.getItem(userId)
+    };
+    fetch(`https://${currentURL}/update-exam`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(exam)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 409) {
+      alert('Update exam failed')
+    } else if (response.status === 201) {
+      alert('Update exam successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
 
+    attachCountdownFunction();
     
 }

@@ -623,7 +623,7 @@ connection.execute(selectExam, [name, userId], (err, results) => {
     res.status(409).json({ error: 'Exam name already exist' });
     return;
   } else {
-  const addExam = `INSERT INTO exams (name, date, venue, todolist, created_by) VALUES (?, ?, ?, ?)`;
+  const addExam = `INSERT INTO exams (name, date, venue, todolist, created_by) VALUES (?, ?, ?, ?, ?)`;
   
   connection.execute(addExam, [name, date, venue, todolist, userId], (err, results) => {
     if (err) {
@@ -654,23 +654,22 @@ app.post('/delete-exam', (req, res) => {
   });
 });
 
-app.post('/update-task', (req, res) => {
-  // Retrieve the task from the request
-  const { newTask, newDeadline, oldTask} = req.body;
-      const updateTaskQuery = `UPDATE tasks SET task = ?, deadline = ?
-      WHERE task = ?`;
-      connection.execute(updateTaskQuery, [newTask, newDeadline, oldTask], (err, results) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        } else {
-          res.status(201).json({ message: 'Update task successfully' });
-        }
-      });
-    }
+app.post('/update-exam', (req, res) => {
+  const { oldName, name, date, venue, todolist, userId } = req.body;
+  const updateExam = `
+  UPDATE users SET name = ?, date = ?, venue = ?, todolist = ?  WHERE name = ? AND created_by = ?
+`;
+connection.execute(updateExam, [name, date, venue, todolist, oldName, userId], (err, results) => {
+  if (err) {
+    console.error('Error Executing query:', err);
+    res.status(500).json({ error: 'Internal server error' });
+    return;
+  } else {
+    res.status(201).json({message: 'Update exam successfully'});
+  }
+});
   
-);
+});
 
 // Start the server
 const port = process.env.PORT || 5501;
