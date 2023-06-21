@@ -593,7 +593,7 @@ function displayExamData(examData) {
     const name = examData[i].name;
     const date = examData[i].date;
     const venue = examData[i].venue;
-    const contentArr = JSON.parse(examData[i].todolist).map(JSON.parse);
+    const contentArr = JSON.parse(examData[i].todolist);
     console.log(contentArr);
 // Create to-do list
 const newList = document.createElement('ul');
