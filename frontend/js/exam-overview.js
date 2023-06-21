@@ -594,6 +594,7 @@ function displayExamData(examData) {
     const date = examData[i].date;
     const venue = examData[i].venue;
     const contentArr = examData[i].todolist;
+    console.log(contentArr);
 // Create to-do list
 const newList = document.createElement('ul');
 newList.classList.add(`review-to-do-list-${name}`);
