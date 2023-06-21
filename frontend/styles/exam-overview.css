@@ -260,3 +260,6 @@
   line-height: 2.5;
 }
 
+.material-symbols-outlined.editContent {
+  cursor: pointer;
+}
