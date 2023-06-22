@@ -263,3 +263,32 @@
 .material-symbols-outlined.editContent {
   cursor: pointer;
 }
+
+.content-checkbox {
+  /* Create a custom checkbox */
+  content: "";
+  float: right;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #926359;
+  background-color: #f4eccd;
+}
+
+.content-checkbox:checked {
+  background-color: #926359; 
+  border-color: #926359; 
+}
+
+.content-checkbox:checked  {
+  content: "\2713";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  font-size: 14px;
+  color: #f4eccd; 
+}
+
+.content-checkbox:focus {
+  outline: 2px solid #926359;
+}
+
