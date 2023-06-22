@@ -348,15 +348,15 @@ app.post('/update-task', (req, res) => {
 
 // RETRIEVE TASK LIST ON CALENDAR
 app.post('/task-list', (req, res) => {
-  const {dataDate} = req.body;
+  const {dataDate, userId} = req.body;
 
   // Query the database to retrieve tasks for the selected date
   const retrieveTask = `
   SELECT *
   FROM tasks
-  WHERE SUBSTRING_INDEX(deadline, ',', 2) = ?`;
+  WHERE SUBSTRING_INDEX(deadline, ',', 2) = ? AND created_by = ?`;
 
-  connection.execute(retrieveTask, [dataDate], (error, results) => {
+  connection.execute(retrieveTask, [dataDate, userId], (error, results) => {
     if (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });
