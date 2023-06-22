@@ -379,13 +379,14 @@ function addShortcut() {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
+      retrieveShortcuts();
       alert('Add shortcut successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
 
   closeShortcutModal();
-  retrieveShortcuts();
+  
 
 }
 
