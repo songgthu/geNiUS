@@ -156,7 +156,6 @@ header {
 }
 
 .show-password-checkbox + .show-password-label:before {
-  /* Create a custom checkbox */
   content: "";
   position: absolute;
   left: 0;
@@ -168,22 +167,19 @@ header {
 }
 
 .show-password-checkbox:checked + .show-password-label:before {
-  /* Style the checked state of the checkbox */
-  background-color: #926359; /* Change this value to customize the background color */
-  border-color: #926359; /* Change this value to customize the border color */
+  background-color: #926359; 
+  border-color: #926359; 
 }
 
 .show-password-checkbox:checked + .show-password-label:after {
-  /* Show a checkmark when the checkbox is checked */
   content: "\2713";
   position: absolute;
   left: 4px;
   top: 1px;
   font-size: 14px;
-  color: #f4eccd; /* Change this value to customize the checkmark color */
+  color: #f4eccd; 
 }
 
 .show-password-checkbox:focus + .show-password-label:before {
-  /* Style the checkbox when focused */
-  outline: 2px solid #926359; /* Change this value to customize the outline color */
+  outline: 2px solid #926359;
 }
