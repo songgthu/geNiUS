@@ -153,7 +153,8 @@ function goToDate() {
 function retrieveTaskList(selectedFormattedDate) {
     // Make fetch call to retrieve task list
     const data = {
-        dataDate: selectedFormattedDate
+        dataDate: selectedFormattedDate,
+        userId: sessionStorage.getItem('userId')
     };
 fetch(`https://${currentURL}/task-list`, {
     method: 'POST',
