@@ -93,7 +93,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
 
-        alert('Add task successfully');
+        //alert('Add task successfully');
         close();
         retrieveTask();
       } else {
@@ -135,7 +135,7 @@ function retrieveTask(){
         sessionStorage.setItem('taskData', JSON.stringify(results));
         console.log(sessionStorage.getItem('taskData'));
         displayTodayTask();
-        alert('Task retrieve successfully');
+        //alert('Today's Task retrieve successfully');
         
       });
     } else {
@@ -223,7 +223,7 @@ function checkBox(checkbox, taskName) {
       alert('Internal server error');
     } else if (response.status === 201) {
       alert('Update checkbox successfully');
-      checkbox.checked = isChecked; // Update the checkbox state based on the server response
+      checkbox.checked = isChecked; 
       console.log(isChecked);
     } else {
 
@@ -279,7 +279,7 @@ function updateTask(oldTask) {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      alert('Update task successfully');
+      //alert('Update task successfully');
       retrieveTask();
     } else {
      
@@ -307,7 +307,7 @@ function deleteTask(taskName) {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      alert('Delete task successfully');
+      //alert('Delete task successfully');
       retrieveTask();
     } 
   }).catch(error => {

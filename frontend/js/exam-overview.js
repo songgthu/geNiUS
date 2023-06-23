@@ -273,7 +273,7 @@ function attachCheckboxEventListener(name) {
     } else if (response.status === 409) {
       alert('Update checkbox failed')
     } else if (response.status === 201) {
-      alert('Update checkbox successfully');
+      //alert('Update checkbox successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
@@ -404,7 +404,7 @@ function removeExam(name) {
     } else if (response.status === 409) {
       alert('Error during delete exam')
     } else if (response.status === 201) {
-      alert('Delete exam successfully');
+      //alert('Delete exam successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
@@ -549,7 +549,7 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
     } else if (response.status === 409) {
       alert('Update exam failed')
     } else if (response.status === 201) {
-      alert('Update exam successfully');
+      //alert('Update exam successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
@@ -581,7 +581,7 @@ function retrieveExamData() {
     response.json().then(data => { 
       displayExamData(data.results);
     })
-    alert('Get exam successfully');
+    //alert('Get exam successfully');
   }
 }).catch(error => {
     console.error('Error during query:', error)});

@@ -266,9 +266,9 @@ function getPlanner() {
       if (response.status === 500) {
         alert('Internal server error');
       } else if (response.status === 409) {
-          alert('No planner found');
+          //alert('No planner found');
       } else if (response.status === 201){
-        alert('Get planner successfully');
+        //alert('Get planner successfully');
         response.json().then(data => {
           const tasks = data.tasks;
           const schedule = data.schedule;

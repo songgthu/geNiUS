@@ -31,7 +31,7 @@ function updateTimetable(event) {
     } else if (response.status === 201) {
       // Store the updated URL in sessionStorage
       sessionStorage.setItem('url', input);
-      alert('Update successful');
+      //alert('Update successful');
     } else {
       // Handle other responses if needed
     }
@@ -53,7 +53,7 @@ function retrieveTimetable() {
     } else if (response.status === 201) {
       response.json().then(data => {
         iframe.src = data.results[0].url; 
-        alert('Get timetable successful');
+        //alert('Get timetable successful');
       })
       
       

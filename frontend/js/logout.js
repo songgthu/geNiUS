@@ -3,5 +3,5 @@ logoutButton.addEventListener('click', logout);
 
 function logout() {
     window.location.href = "/";
-    sessionStorage.removeItem("sessionToken");
+    sessionStorage.clear();
   }
