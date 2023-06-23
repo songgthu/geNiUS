@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(countdownInfo);  
         console.log(sessionStorage.getItem('countdownDate')); 
         console.log(sessionStorage.getItem('countdownName')); 
-        alert('Get countdown successfully');
+        //alert('Get countdown successfully');
       } 
       
     })
@@ -160,7 +160,7 @@ function startCountdown() {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      alert('Save countdown successfully');
+      //alert('Save countdown successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
@@ -267,7 +267,7 @@ function stopCountdown() {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      alert('Delete countdown successfully');
+      //alert('Delete countdown successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});
@@ -309,7 +309,7 @@ function deleteShortcut(event) {
       if (response.status === 500) {
         alert('Internal server error');
       } else if (response.status === 201) {
-        alert('Delete shortcut successfully');
+        //alert('Delete shortcut successfully');
         retrieveShortcuts();
       }
     }).catch(error => {
@@ -334,7 +334,7 @@ function restoreDefaults() {
       if (response.status === 500) {
         alert('Internal server error');
       } else if (response.status === 201) {
-        alert('Restore default shortcuts successfully');
+        //alert('Restore default shortcuts successfully');
         retrieveShortcuts();
       }
     }).catch(error => {
@@ -380,7 +380,7 @@ function addShortcut() {
       alert('Internal server error');
     } else if (response.status === 201) {
       retrieveShortcuts();
-      alert('Add shortcut successfully');
+      //alert('Add shortcut successfully');
     }
   }).catch(error => {
       console.error('Error during query:', error)});

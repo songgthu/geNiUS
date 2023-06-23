@@ -399,8 +399,6 @@ function removeTask(event) {
               alert('Save module schedule failed');
           } else if (response.status === 201){
             alert('Save module schedule successfully');
-          } else {
-            alert('?');
           }
         }).catch(error => {
           console.error('Error during query:', error)});
@@ -428,7 +426,7 @@ function removeTask(event) {
       } else if (response.status === 409) {
           alert('No module schedule found');
       } else if (response.status === 201){
-        alert('Get module schedule successfully');
+        //alert('Get module schedule successfully');
         response.json().then(data => {
           document.querySelector('.class-list').innerHTML = data.moduleList;
           attachRemoveClassListener();

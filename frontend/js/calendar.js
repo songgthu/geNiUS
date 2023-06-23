@@ -173,7 +173,7 @@ fetch(`https://${currentURL}/task-list`, {
             sessionStorage.setItem('taskListData', JSON.stringify(results));
             console.log(sessionStorage.getItem('taskListData'));
             displayDateTask();
-            alert('Task retrieve successfully');
+            //alert('Task retrieve successfully');
             
         })
     } 

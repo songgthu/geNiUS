@@ -43,7 +43,7 @@ function handleLogin(event) {
         console.log(userId);
         sessionStorage.setItem("email", email);
         
-        alert('Login successful');
+        //alert('Login successful');
         const url = `/dashboard.html`;
         sessionStorage.setItem("sessionToken", email);
         sessionStorage.setItem("username", username);
