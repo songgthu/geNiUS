@@ -398,7 +398,7 @@ function removeTask(event) {
           } else if (response.status === 409) {
               alert('Save module schedule failed');
           } else if (response.status === 201){
-            alert('Save module schedule successfully');
+            //alert('Save module schedule successfully');
           }
         }).catch(error => {
           console.error('Error during query:', error)});
@@ -424,7 +424,7 @@ function removeTask(event) {
       if (response.status === 500) {
         alert('Internal server error');
       } else if (response.status === 409) {
-          alert('No module schedule found');
+          //alert('No module schedule found');
       } else if (response.status === 201){
         //alert('Get module schedule successfully');
         response.json().then(data => {
