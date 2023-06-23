@@ -92,10 +92,8 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
       } else if(response.status === 409) {
         alert('Task name already exist');
       } else if (response.status === 201) {
-
         //alert('Add task successfully');
-        close();
-        retrieveTask();
+        //retrieveTask();
       } else {
        
       }
@@ -108,8 +106,6 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     }
   }
 // Open task
-
-
 function closeTask() {
   modal.style.display="none";
 }

@@ -94,8 +94,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
         //alert('Add task successfully');
-        close();
-        retrieveTask1();
+        // retrieveTask1();
       } else {
        
       }
