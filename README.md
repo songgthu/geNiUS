@@ -41,5 +41,9 @@ Let's take a look at our milestone achievements:
   <img width="381" alt="image" src="https://github.com/songgthu/Orbital-geNiUS/assets/113297207/c7226f74-e74d-41b5-8cb0-5a99c64b6dff">
 
   ### Dashboard
+  <img width="949" alt="image" src="https://github.com/songgthu/Orbital-geNiUS/assets/113297207/060cbb93-6474-48b8-83ea-d120ab908d47">
+
   ### Timetable
+  <img width="944" alt="image" src="https://github.com/songgthu/Orbital-geNiUS/assets/113297207/69538104-c1a2-4c49-b699-69dceb16fdc3">
+
   ### Exam management
