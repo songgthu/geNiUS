@@ -1,25 +1,39 @@
 # Orbital-geNiUS 💡
-_By Sarah and Xing Yu_
+_By Song Thu (Sarah) and Xing Yu_
+
+Welcome to geNiUS, your ultimate solution for achieving a harmonious blend of academic success, sleep, and an active social life. We understand the challenges faced by NUS students in balancing these crucial aspects of university life in NUS, and that's why we've developed a customized web application just for NUS students.
+
+To access our powerful tool, simply visit our web application through the following link: https://genius-awj5.onrender.com/
 
 # Our motivation and Goal
 We want <strong>ALL</strong> NUS students to gain access to a customised app for their studies and social life. <br>
 
-* Want to have jus one application to manage your uni life? <br> 
+* Want to have jus one application to manage your university life? <br> 
 * Want to incorporate your ***social commitments*** in your calendar? 💃 <br> 
 * Want more the ***exact content*** covered for each tutorial and lab? 📚 <br> 
 
-### Want all three, study, sleep and social life? You are at the right place!
+### Seeking a balanced lifestyle of study, sleep and social life? You are at the right place!
 
-# Milestone 1
+
+## Milestone Progress
+Let's take a look at our milestone achievements:
+
+# Milestone 1 (29 May)
 - [x] Log in page
 - [x] Register page
 
-# Testing: Accessing our web application: 
-https://genius-awj5.onrender.com/
-
-  # Milestone 2
-- [x] Introduction page
+  # Milestone 2 (26 June)
+- [x] Welcome page
 - [x] Dashboard page
-- [x] Timetable feature
-- [x] Calendar page
-  
+- [x] Timetable page
+- [x] Exam management page
+
+  # Milestone 3 (24 July)
+- [ ] Extend existing features
+- [ ] Profile page
+
+## Features
+  ### User Authentication
+  ### Dashboard
+  ### Timetable
+  ### Exam management
