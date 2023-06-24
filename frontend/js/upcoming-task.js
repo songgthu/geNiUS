@@ -44,7 +44,7 @@ var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { mon
 // Construct the formatted date string
 var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     // Create a new row
-    var table = document.querySelector('.task-table');
+    var table = document.querySelector('.task-table1');
     var row = table.insertRow();
 
     // // Create cells for the task, deadline, and status
