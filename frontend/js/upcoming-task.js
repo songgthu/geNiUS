@@ -279,6 +279,7 @@ function updateTask1(oldTask) {
     } else if (response.status === 201) {
       //alert('Update task successfully');
       retrieveTask1();
+      closeEditModal1();
     } else {
      
     }
@@ -307,6 +308,7 @@ function deleteTask1(taskName) {
     } else if (response.status === 201) {
       alert('Delete task successfully');
       retrieveTask1();
+      closeEditModal1();
     } else {
      
     }

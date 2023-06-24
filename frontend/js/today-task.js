@@ -277,6 +277,7 @@ function updateTask(oldTask) {
       alert('Internal server error');
     } else if (response.status === 201) {
       //alert('Update task successfully');
+      closeEditModal();
       retrieveTask();
     } else {
      
@@ -306,6 +307,7 @@ function deleteTask(taskName) {
     } else if (response.status === 201) {
       //alert('Delete task successfully');
       retrieveTask();
+      closeEditModal();
     } 
   }).catch(error => {
     console.error('Error during delete task:', error);
