@@ -401,9 +401,10 @@ document.querySelector(`.class-container-week-1`).style.display ='';
               alert('Save module schedule failed');
           } else if (response.status === 201){
             //alert('Save module schedule successfully');
+            document.querySelector(`.class-container-week-${currentWeek}`).style.display ='';
+            document.querySelector(`.class-container-week-1`).style.display ='none';
           }
-          document.querySelector(`.class-container-week-${currentWeek}`).style.display ='';
-          document.querySelector(`.class-container-week-1`).style.display ='none';
+          
         }).catch(error => {
           console.error('Error during query:', error)});
   }
