@@ -52,7 +52,7 @@ function retrieveTimetable() {
       alert('Internal server error');
     } else if (response.status === 201) {
       response.json().then(data => {
-        iframe.src = data.results[0].url; 
+        document.getElementById('timetable-iframe').src = data.results[0].url; 
         //alert('Get timetable successful');
       })
       
