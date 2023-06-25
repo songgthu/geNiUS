@@ -380,6 +380,8 @@ function removeTask(event) {
   moduleScheduleArray.push(rowData);
 }
 
+document.querySelector(`.class-container-week-${currentWeek}`).innerHTML.style.display ='none';
+document.querySelector(`.class-container-week-1`).innerHTML.style.display ='';
     const moduleData = {
       moduleList: document.querySelector('.class-list').innerHTML,
       moduleSchedule: document.querySelector('.class-body').innerHTML,
@@ -400,6 +402,8 @@ function removeTask(event) {
           } else if (response.status === 201){
             //alert('Save module schedule successfully');
           }
+          document.querySelector(`.class-container-week-${currentWeek}`).innerHTML.style.display ='';
+          document.querySelector(`.class-container-week-1`).innerHTML.style.display ='none';
         }).catch(error => {
           console.error('Error during query:', error)});
   }
