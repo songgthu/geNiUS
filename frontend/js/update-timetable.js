@@ -38,7 +38,7 @@ function updateTimetable(event) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', retrieveTimetable)
+document.addEventListener('DOMContentLoaded', retrieveTimetable);
 function retrieveTimetable() {
   const data = { userEmail: userEmail };
   fetch(`https://${currentURL}/get-timetable`, {
