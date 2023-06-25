@@ -219,7 +219,7 @@ function checkBox(checkbox, taskName) {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      alert('Update checkbox successfully');
+      // alert('Update checkbox successfully');
       checkbox.checked = isChecked; 
       console.log(isChecked);
     } else {
