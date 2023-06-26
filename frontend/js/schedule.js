@@ -84,7 +84,7 @@ function insertTask(event) {
     if (selectedTask) {
       var cell = event.target;
   
-      if (!cell.classList.contains('time-header')) {
+      if (!cell.classList.contains('time-header') && !cell.classList.contains('task-in-schedule')) {
         var existingTaskBlock = cell.querySelector('.task-in-schedule[data-task-id="' + selectedTask.id + '"]');
         if (existingTaskBlock) {
           alert('Task already added to the schedule. Please select another task.');

@@ -49,8 +49,6 @@ app.use(sessions({
     resave: false 
 }));
 
-var session;
-
 app.get('/', (req, res) => {
   session = req.session;
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'index.html'));
@@ -75,6 +73,10 @@ app.get('/timetable.html', (req, res) => {
 
 app.get('/exam.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'exam.html'));
+});
+
+app.get('/nusmods.com', (req, res) => {
+  res.sendFile('nusmods.com');
 });
 
 

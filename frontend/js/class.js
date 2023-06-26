@@ -227,7 +227,7 @@ function displayModule() {
     const reformattedArray = array.filter(item => !item.includes('<div class="horizontal-line"></div>'));
     const moduleName = reformattedArray[0];
     if(document.getElementById(`${moduleName}`)) {
-      alert('Module ' + moduleName + 'already exist!');
+      alert('Module ' + moduleName + ' already exist!');
       return;
     }
     console.log(array);
