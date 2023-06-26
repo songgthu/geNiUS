@@ -311,6 +311,7 @@ function attachCountdownFunction() {
   
       if (remainingTime <= 0) {
         stopCountdown();
+        document.querySelector(`.exam-container-${name}`).innerHTML += "<p class='countdown-end-notice'>Exam countdown has ended.</p>";
         return;
       }
   
@@ -343,7 +344,8 @@ function attachCountdownFunction() {
   
       if (daysCD <= 0 && hoursCD <= 0 && minutesCD <= 0 && secondsCD <= 0) {
         stopCountdown();
-        alert(eventHolder.textContent + " countdown ends!");
+        document.querySelector(`.exam-container-${name}`).innerHTML += "<p class='countdown-end-notice'>Exam countdown has ended.</p>";
+        return;
       }
   }
   
