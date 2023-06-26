@@ -83,6 +83,7 @@ function insertTask(event) {
   
     if (selectedTask) {
       var cell = event.target;
+      console.log(cell);
   
       if (!cell.classList.contains('time-header') && !cell.classList.contains('task-in-schedule')) {
         var existingTaskBlock = cell.querySelector('.task-in-schedule[data-task-id="' + selectedTask.id + '"]');
