@@ -52,6 +52,7 @@ function retrieveTimetable() {
       response.json().then(data => {
         document.getElementById('timetable-iframe').textContent = '';
         document.getElementById('timetable-iframe').src = data.results[0].url; 
+        console.log(document.getElementById('timetable-iframe').src);
         //alert('Get timetable successful');
       })
       
