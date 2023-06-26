@@ -135,10 +135,10 @@ const now = new Date();
   if (name == null || date == null || venue == null) {
     alert('Please fill in exam name, date and venue before submit');
     return;
-  } else if (date.getTime() === now.getTime()) {
+  } else if (new Date(date).getTime() === now.getTime()) {
     alert('Invalid date selected. Cannot create a countdown for the present time.');
     return;
-  } else if (date.getTime() < now.getTime()){
+  } else if (new Date(date).getTime() < now.getTime()){
     alert('Invalid date selected. Cannot create a countdown of a past event.');
     return;
   } else {
@@ -459,9 +459,15 @@ function updateExam(oldName) {
   const newName = editModal.querySelector('.edit-examNameInput').value || null;
   const newDate = editModal.querySelector('.edit-examDateInput').value || null;
   const newVenue = editModal.querySelector('.edit-examVenueInput').value || null;
- 
+  const now = new Date();
   if (newName == null || newDate == null || newVenue == null) {
     alert('Please fill in exam name, date and venue before submit');
+    return;
+  } else if (new Date(newDate).getTime() === now.getTime()) {
+    alert('Invalid date selected. Cannot create a countdown for the present time.');
+    return;
+  } else if (new Date(newDate).getTime() < now.getTime()){
+    alert('Invalid date selected. Cannot create a countdown of a past event.');
     return;
   }
 

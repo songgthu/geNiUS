@@ -169,10 +169,10 @@ function startCountdown() {
   if (eventCD == null || countdownDate == "") {
     alert('Please enter a valid event name and countdown date.');
     return;
-  } else if (countdownDate.getTime() === now.getTime()) {
+  } else if (new Date(countdownDate).getTime() === now.getTime()) {
     alert('Invalid date selected. Cannot create a countdown for the present time.');
     return;
-  } else if (countdownDate.getTime() < now.getTime()){
+  } else if (new Date(countdownDate).getTime() < now.getTime()){
     alert('Invalid date selected. Cannot create a countdown of a past event.');
     return;
   } else {

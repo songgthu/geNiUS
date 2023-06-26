@@ -226,7 +226,7 @@ function displayModule() {
     // Extract the relevant information from the moduleInfo lines
     const reformattedArray = array.filter(item => !item.includes('<div class="horizontal-line"></div>'));
     const moduleName = reformattedArray[0];
-    if(document.querySelector('.class-list').getElementById(moduleName)) {
+    if(document.getElementById(`${moduleName}`)) {
       alert('Module ' + moduleName + 'already exist!');
       return;
     }

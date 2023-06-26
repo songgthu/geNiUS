@@ -2,16 +2,17 @@ var currentURL = window.location.href.split("/")[2];
 
 const userEmail = sessionStorage.getItem('email');
 const update = document.querySelector('.submitButton');
-
-const form = document.querySelector('.flex-input');
 update.addEventListener('click', updateTimetable);
   
   
-function updateTimetable(event) {
-  event.preventDefault();
-  
-  const input = document.querySelector('.url').value;
-  document.getElementById('timetable-iframe').src = input;
+function updateTimetable() {
+
+  const input = document.querySelector('.url').value || null;
+
+  if (input == null) {
+    alert('Please fill in the url');
+    return;
+  }
 
   const data = {
     url: input,
@@ -27,6 +28,7 @@ function updateTimetable(event) {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
+      retrieveTimetable();
       //alert('Update successful');
     } else {
       // Handle other responses if needed
