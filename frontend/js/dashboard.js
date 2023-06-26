@@ -4,7 +4,8 @@ if (sessionToken) {
     const u = window.sessionStorage.getItem("username");
     welcomeElement.textContent = `Welcome, ${u}!`;
 } else {
-    window.location.href = "/frontend/html/login.html";
+    window.location.href = "/login.html";
+    alert('Your login session expired, please login again');
 }
 
 
