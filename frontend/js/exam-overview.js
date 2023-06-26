@@ -131,9 +131,15 @@ for (let i = 0; i <= contentArr.length - 1; i++) {
 
   
 }
-
+const now = new Date();
   if (name == null || date == null || venue == null) {
     alert('Please fill in exam name, date and venue before submit');
+    return;
+  } else if (date.getTime() === now.getTime()) {
+    alert('Invalid date selected. Cannot create a countdown for the present time.');
+    return;
+  } else if (date.getTime() < now.getTime()){
+    alert('Invalid date selected. Cannot create a countdown of a past event.');
     return;
   } else {
     const options = {
@@ -450,10 +456,14 @@ function editExam(oldName) {
 
 
 function updateExam(oldName) {
-  const newName = editModal.querySelector('.edit-examNameInput').value;
-  const newDate = editModal.querySelector('.edit-examDateInput').value;
-  const newVenue = editModal.querySelector('.edit-examVenueInput').value;
+  const newName = editModal.querySelector('.edit-examNameInput').value || null;
+  const newDate = editModal.querySelector('.edit-examDateInput').value || null;
+  const newVenue = editModal.querySelector('.edit-examVenueInput').value || null;
  
+  if (newName == null || newDate == null || newVenue == null) {
+    alert('Please fill in exam name, date and venue before submit');
+    return;
+  }
 
   var contentArr = [];
   editModal.querySelector('.edit-review-content-list').querySelectorAll('.content-text').

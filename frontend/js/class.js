@@ -203,7 +203,7 @@ fetch(`https://${currentURL}/modules`, {
     });
 }
 
-// SUBMIT BUTTON -> DISPLAY MODULE SCHEDULE
+// SUBMIT BUTTON -> ADD CLASS AND DISPLAY MODULE SCHEDULE
 const submitButton = document.querySelector('.submit-class-button');
 submitButton.addEventListener('click', displayModule);
 
@@ -226,6 +226,10 @@ function displayModule() {
     // Extract the relevant information from the moduleInfo lines
     const reformattedArray = array.filter(item => !item.includes('<div class="horizontal-line"></div>'));
     const moduleName = reformattedArray[0];
+    if(document.querySelector('.class-list').getElementById(moduleName)) {
+      alert('Module ' + moduleName + 'already exist!');
+      return;
+    }
     console.log(array);
     console.log(reformattedArray);
     

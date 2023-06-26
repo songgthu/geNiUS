@@ -1,6 +1,5 @@
 var currentURL = window.location.href.split("/")[2];
-// Retrieve the stored URL from sessionStorage
-const iframe = document.getElementById('timetable-iframe');
+
 const userEmail = sessionStorage.getItem('email');
 const update = document.querySelector('.submitButton');
 
@@ -12,8 +11,7 @@ function updateTimetable(event) {
   event.preventDefault();
   
   const input = document.querySelector('.url').value;
-  iframe.src = input;
-  console.log(input);
+  document.getElementById('timetable-iframe').src = input;
 
   const data = {
     url: input,
@@ -29,8 +27,6 @@ function updateTimetable(event) {
     if (response.status === 500) {
       alert('Internal server error');
     } else if (response.status === 201) {
-      // Store the updated URL in sessionStorage
-      sessionStorage.setItem('url', input);
       //alert('Update successful');
     } else {
       // Handle other responses if needed
@@ -55,7 +51,6 @@ function retrieveTimetable() {
         document.getElementById('timetable-iframe').src = data.results[0].url; 
         //alert('Get timetable successful');
       })
-      
       
     } 
   });
