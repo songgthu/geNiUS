@@ -156,6 +156,8 @@ function displayUpcomingTask() {
   for(let i = 0; i < taskData.length; i++) {
     const taskDate = new Date(taskData[i].deadline);
     if (today.getTime() < taskDate.getTime()) {
+      console.log(today.getTime());
+      console.log(taskDate.getTime());
     const newRow = document.createElement("tr");
     const taskCell = document.createElement("td");
     taskCell.classList.add("task-name1");
@@ -187,12 +189,12 @@ function displayUpcomingTask() {
     taskBody.appendChild(newRow);
     
     taskCell.addEventListener('click', function() {
-      openTask1(taskCell.textContent); // Pass the clicked task name as a parameter
+      openTask1(taskCell.textContent); 
     });
     checkbox.addEventListener('click', function() {
       checkBox1(checkbox, taskCell.textContent);
     });
-  } else {}
+  } 
   }
   
 }
