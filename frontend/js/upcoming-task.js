@@ -152,10 +152,11 @@ function displayUpcomingTask() {
   const taskBody = document.querySelector(".taskBody1");
   taskBody.innerHTML = "";
   const today = new Date();
-  
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
   for(let i = 0; i < taskData.length; i++) {
     const taskDate = new Date(taskData[i].deadline);
-    if (today.getTime() < taskDate.getTime()) {
+    if (today.getTime() < taskDate.getTime() && taskDate.getTime() >= tomorrow.getTime()) {
       console.log(today.getTime());
       console.log(taskDate.getTime());
     const newRow = document.createElement("tr");
