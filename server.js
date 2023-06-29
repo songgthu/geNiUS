@@ -66,7 +66,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(email, link) {
+async function sendMail(email, name, password) {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -81,14 +81,14 @@ async function sendMail(email, link) {
         accessToken: accessToken,
       },
     });
-    
+    const verificationToken = Math.floor(100000 + Math.random() * 900000);
 
     const mailOptions = {
       from: 'GENIUS <genius.nus.123@gmail.com>',
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href=${link}>Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -129,7 +129,9 @@ app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
 });
 
-
+app.get('/verify', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
+});
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
@@ -229,24 +231,8 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          const verificationToken = Math.floor(100000 + Math.random() * 900000);
-          const verificationLink = `https://genius-awj5.onrender.com/verify?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&hashedPassword=${encodeURIComponent(hashedPassword)}&verificationToken=${encodeURIComponent(verificationToken)}`;
-          sendMail(email, verificationLink);
-          
-      }
-    }
-    );
-  });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-  
-});
-
-app.get('/verify', (req, res) => {
-  const { name, email, hashedPassword, verificationToken } = req.query;
-  const createNewUser = `INSERT INTO users (name, email, password) 
+          sendMail(email, name, password);
+          const createNewUser = `INSERT INTO users (name, email, password) 
           VALUES (?, ?, ?);`; 
          
           // Insert the new user into the database
@@ -259,10 +245,18 @@ app.get('/verify', (req, res) => {
                 return;
               } else {
                 console.log('Create new user successfully');
-                res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
               }
             }
           );
+      }
+    }
+    );
+  });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+  
 });
 
 // Update Timetable endpoint
