@@ -1,3 +1,4 @@
+var currentURL = window.location.href.split("/")[2];
 // Sample user data (replace with your own logic)
 var user = {
     name: sessionStorage.getItem('username'),
@@ -5,7 +6,7 @@ var user = {
     password: sessionStorage.getItem('password'),
     userId: sessionStorage.getItem('userId')
   };
-
+console.log(user.password);
 
   // Function to display current user information
   function displayUserInfo() {
@@ -40,9 +41,29 @@ var user = {
     event.preventDefault(); // Prevent form submission
 
     // Get form values
-    var newName = document.getElementById('name').value;
-    var newEmail = document.getElementById('email').value;
-    var newPassword = document.getElementById('password').value;
+    var newName = document.getElementById('name').value || null;
+    var newEmail = document.getElementById('email').value || null;
+    var newPassword = document.getElementById('password').value || null;
+    if (newName == null || newEmail == null || newPassword == null) {
+      alert('Please fill in all the fields');
+      return;
+    }
+    if (password.length < 8) { 
+      alert("Password must be at least 8 characters long");
+      return;
+    } else if (!/[a-z]/.test(password)) {
+      alert("Password must contain at least one lowercase character");
+      return;
+    } else if(!/[A-Z]/.test(password)) {
+      alert("Password must contain at least one uppercase character");
+      return;
+    } else if(!/[0-9]/.test(password)) {
+      alert("Password must contain at least one digit");
+      return;
+    } else if(!/[!@#$%^&*]/.test(password)) {
+      alert("Password must contain at least one special character");
+      return;
+    }
 
     // Update user data (You can replace this with your own logic)
     user.name = newName;
@@ -77,6 +98,10 @@ var user = {
   // Attach edit button click event listener
   var editButton = document.getElementById('editButton');
   editButton.addEventListener('click', enableFormInputs);
+
+  var cancelButton = document.getElementById('cancelButton');
+  cancelButton.addEventListener('click', disableFormInputs);
+  
 
   // Function to handle account deletion
   function deleteAccount() {

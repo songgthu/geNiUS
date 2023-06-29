@@ -337,12 +337,12 @@ app.post('/update-task', (req, res) => {
   FROM tasks
   WHERE task = ?
 `;
-connection.execute(selectTaskQuery, [taskInput], (err, results) => {
+connection.execute(selectTaskQuery, [oldTask], (err, results) => {
   if (err) {
     console.error('Error executing query:', err);
     res.status(500).json({ error: 'Internal server error' });
     return;
-  } else if(results.length > 0 && results[0].task == taskInput) {
+  } else if(results.length > 0 && results[0].task == oldTask) {
     res.status(409).json({ error: 'Task name already exist' });
     return;
   } else {
