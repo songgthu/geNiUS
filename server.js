@@ -217,8 +217,8 @@ function sendVerificationEmail(email) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: secure_configuration.EMAIL_USERNAME,
-        pass: secure_configuration.PASSWORD
+        user: 'songthu0711@gmail.com',
+        pass: 'Hunggia0711'
       }
     });
 
