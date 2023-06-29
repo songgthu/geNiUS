@@ -369,6 +369,11 @@ function addShortcut() {
     alert('Please enter both shortcut name and URL.');
     return;
   }
+  const urlRegex = /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}(\/\S*)?$/;
+  if (!urlRegex.test(scURLInput)) {
+    alert('Please enter a valid URL.');
+    return;
+  }
   var shortcutInfo = null;
   const data = {
     userId: sessionStorage.getItem('userId'),
