@@ -33,7 +33,7 @@ function handleRegister(event) {
       email: email,
       password: password,
     };
-
+    
       fetch(`https://${currentURL}/register-user`, {
         method: "POST",
         headers: {
@@ -52,11 +52,16 @@ function handleRegister(event) {
       })
       .catch(error => {
         console.error('Error during registration:', error)});
+    };
+
+      
     }
-      }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('registerForm');
   registerForm.addEventListener('submit', handleRegister);
 });  
+
+
+
