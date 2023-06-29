@@ -229,7 +229,7 @@ function sendVerificationEmail(email) {
       to: email,
       subject: 'geNiUS Email Verification',
       text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
-      https://${currentURL}/verify/${token} 
+      https://https://genius-awj5.onrender.com/verify/${token} 
       Thank you for joining us and have a nice university journey!`
     };
 
