@@ -136,6 +136,10 @@ app.get('/verify/:verificationToken', (req, res) => {
   // Assuming the verification is successful, you can send the verify.html file
   res.redirect('/verify.html');
 });
+
+app.get('/verify.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
+});
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
