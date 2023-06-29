@@ -3,9 +3,42 @@
 <head>
   <link rel="stylesheet" href="../styles/profile.css">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <title>Profile Page</title>
 </head>
 <body>
+  <section class="grid-container">
+    <div class="sideNav">
+      <span class="material-symbols-outlined" id="menu-icon" onclick="toggleNav">menu</span>
+      <nav class="sideNav">
+        <button class="navButton dashboard" onclick="window.location.href='/dashboard.html'">
+          <span class="material-symbols-outlined">home</span>
+          <p class="navText" style="display: none">Dashboard</p>
+        </button>
+      
+        <button class="navButton timetable" onclick="window.location.href='/timetable.html'">
+          <span class="material-symbols-outlined">schedule</span>
+          <p class="navText" style="display: none">Timetable</p>
+        </button>
+      
+        <button class="navButton exam" onclick="window.location.href='/exam.html'">
+          <span class="material-symbols-outlined">school</span>
+          <p class="navText" style="display: none">Exam Management</p>
+        </button>
+
+        <button class="navButton profile" onclick="window.location.href='/profile.html'">
+          <span class="material-symbols-outlined">person</span>
+          <p class="navText" style="display: none">Profile</p>
+        </button>
+      
+        <button class="navButton logout">
+          <span class="material-symbols-outlined">output</span>
+          <p class="navText" style="display: none">Log out</p>
+        </button>
+      </nav>
+    </div>
+    <div class="main-content">
   <div class="profile-form">
     <h2>Profile</h2>
     <form id="editProfileForm">
@@ -26,7 +59,27 @@
   <div class="delete-account">
     <button id="deleteAccountButton">Delete Account</button>
   </div>
-
+</div>
+  </section>
+  <script type="text/javascript" src="../js/logout.js"></script>
   <script type="text/javascript" src="../js/profile.js"></script>
+  <script>
+    const toggleSideNav = document.getElementById('menu-icon');
+  toggleSideNav.addEventListener('click', toggleNav);
+  
+  function toggleNav() {
+  document.querySelectorAll('.navText').forEach((text) => {
+    if (text.style.display === 'none') {
+      text.style.display = '';
+      text.setAttribute('status','hidden');
+      text.setAttribute('status', 'shown');
+    } else {
+      text.style.display = 'none';
+      text.setAttribute('status', 'shown');
+      text.setAttribute('status', 'hidden');
+    }
+  });
+}
+</script>
 </body>
 </html>
