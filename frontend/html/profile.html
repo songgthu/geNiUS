@@ -50,8 +50,13 @@
 
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" placeholder="Enter your password">
+      <div class="show-password">
+        <input type="checkbox" id="show-password-checkbox" class="show-password-checkbox" onclick="togglePasswordVisibility()">
+        <label for="show-password-checkbox" class="show-password-label">Show Password</label>
+      </div>
 
       <button type="submit" id="saveButton">Save</button>
+      <button id="cancelButton">Cancel</button>
       <button type="button" id="editButton">Edit Profile</button>
     </form>
   </div>
@@ -80,6 +85,17 @@
     }
   });
 }
+
+    function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("password");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
+    }
+
 </script>
+
 </body>
 </html>
