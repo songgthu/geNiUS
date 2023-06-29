@@ -140,127 +140,59 @@ connection.execute(selectUserByEmailQuery,
 );
   
 });
-// Verify email
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-
-app.get('/verify/:token', (req, res) => {
-  const { token } = req.params;
-
-  // Verifying the JWT token
-  jwt.verify(token, 'ourSecretKey', function (err, decoded) {
-    if (err) {
-      console.log(err);
-      res.send("Email verification failed, possibly the link is invalid or expired");
-    } else {
-      res.send("Email verified successfully");
-    }
-  });
-});
 
 // Register endpoint
 app.post('/register-user', (req, res) => {
   const { name, email, password } = req.body;
-
-  // Check if the user already exists
-  const selectUserQuery = `
-    SELECT *
-    FROM users
-    WHERE email = ?
-  `;
-  connection.execute(selectUserQuery, [email], (err, results) => {
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
     if (err) {
-      console.error('Error querying the database:', err);
+      console.error('Error hashing password:', err);
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
-
-    if (results.length > 0 && email == results[0].email) {
-      res.status(409).json({ error: 'User already exists' });
-      console.log('This email has been used before!');
-    } else {
-      // Hash the password
-      bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-        if (err) {
-          console.error('Error hashing password:', err);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-
-        // Insert the new user into the database
-        const createNewUser = `INSERT INTO users (name, email, password) VALUES (?, ?, ?);`;
-        connection.execute(createNewUser, [name, email, hashedPassword], (err) => {
-          if (err) {
-            console.error('Error inserting into the database:', err);
-            res.status(500).json({ error: 'Internal server error' });
-            return;
-          }
-
-          // Send the verification email
-          sendVerificationEmail(email)
-            .then(() => {
-              res.status(201).json({ message: 'Registration successful' });
-              console.log('Verification email sent');
-            })
-            .catch((error) => {
-              console.error('Error sending verification email:', error);
-            });
-        });
-      });
-    }
-  });
-});
-
-// Function to send verification email
-const { google } = require('googleapis');
-
-async function sendVerificationEmail(email) {
-  try {
-    const oAuth2Client = new google.auth.OAuth2(
-      '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
-      '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',
-      'https://genius-awj5.onrender.com/login.html'
-    );
-
-    
-
-    const accessToken = await oAuth2Client.getAccessToken();
-
-    oAuth2Client.setCredentials({
-      refresh_token: accessToken
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: 'genius.nus.123@gmail.com',
-        accessToken,
-        clientId: '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
-        clientSecret: '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'
+  console.log(name);
+  // Check if the user already exists
+  const selectUserQuery = `
+  SELECT *
+  FROM users
+  WHERE email = ?
+`;
+  connection.execute(selectUserQuery,
+    [email],
+    (err, results) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        res.status(500).json({ error: 'Internal server error' });
+        return;
       }
-    });
 
-    const token = jwt.sign({ email_id: email }, 'Stack', { expiresIn: '24h' });
-
-    const mailConfigurations = {
-      from: 'genius.nus.123@gmail.com',
-      to: email,
-      subject: 'geNiUS Email Verification',
-      text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
-      https://https://genius-awj5.onrender.com/verify/${token} 
-      Thank you for joining us and have a nice university journey!`
-    };
-
-    const info = await transporter.sendMail(mailConfigurations);
-    console.log('Email Sent Successfully');
-    console.log(info);
-  } catch (error) {
-    console.error('Error sending verification email:', error);
+      if (results.length > 0 && email == results[0].email) {
+        res.status(409).json({ error: 'User already exists' });
+        console.log('This email had been used before!');
+      } else {
+        res.status(201).json({ message: 'Registration successful' });
+        const createNewUser = `INSERT INTO users (name, email, password) 
+        VALUES (?, ?, ?);`; 
+       
+        // Insert the new user into the database
+        connection.execute(
+          createNewUser,
+          [name, email, hashedPassword],
+          (err) => {
+            if (err) {
+              console.error('Error inserting into the database:', err);
+              return;
+            } else {
+              
+              console.log('Create new user successfully');
+            }
+          }
+        );
+    }
   }
-}
-
-
+  );
+});
+});
 
 // Update Timetable endpoint
 app.post('/update-timetable', (req, res) => {
@@ -771,7 +703,6 @@ connection.execute(updateExamCheckbox, [todolist, userId, name], (err, results) 
 });
   
 });
-
 // FOR PROFILE FEATURE
 app.post('/update-account', (req,res) => {
   const { name, email, password, userId } = req.body;
@@ -794,7 +725,7 @@ app.post('/update-account', (req,res) => {
 app.post('/delete-account', (req,res) => {
   const { email } = req.body;
   const deleteQuery = `DELETE FROM users WHERE email = ?`;
-  connection.execute(deleteQueryeQuery, [email], (err, results) =>{
+  connection.execute(deleteQuery, [email], (err, results) =>{
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal server error' });
@@ -805,13 +736,8 @@ app.post('/delete-account', (req,res) => {
     }
   });
 });
-
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
-
-
-
