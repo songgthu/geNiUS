@@ -38,7 +38,17 @@
 
       <div class="main-content">
         <div class="wrapper">
-          
+          <button class="quick-guide-button" onclick="toggleText()">Click here for a quick guide!</button>
+              <p class="guide-text" style="display: none">
+                <b>To have the best experience, please kindly follow our instruction:</b> <br>
+                You have two options to choose from: <br>
+                <b>Option A: Use the default screen and plan your modules directly here using NUSMods</b> <br>
+                1. Access NUSMods through the default screen provided. <br>
+                2. Plan your desired modules within this interface. <br>
+                <b>Option B: If you have already planned your timetable outside of NUSMods, follow these steps:</b> <br>
+                1. Locate the "Share/Sync" button in your external NUSMods timetable.<br>
+                2. Click on the button and copy the generated link.<br>
+                3. Paste the copied link in the below input box to import your timetable.</p>
             <div class="flex-input">
               <label for="url" class="url-label">Input Your NUSMods Timetable Link Here:</label>
               <input type="text" class="url" id="url" placeholder="Enter Your URL" autocomplete="off" required>
@@ -72,6 +82,18 @@
       }
     });
   }
+
+  function toggleText() {
+  var guideText = document.querySelector('.guide-text');
+  var btn = document.querySelector('.quick-guide-button');
+  if (guideText.style.display === 'none') {
+    guideText.style.display = 'block';
+    btn.textContent = "Hide quick guide";
+  } else {
+    guideText.style.display = 'none';
+    btn.textContent = "Click here for a quick guide!";
+  }
+}
     </script>
   </body>
 </html>

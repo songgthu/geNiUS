@@ -314,4 +314,13 @@ th {
   cursor: pointer;
 }
 
+.time-input {
+  padding: 10px;
+  background-color: #f4eccd;
+  border: none;
+  border-radius: 5px;
+  color: #926359;
+  font-size: 20px;
+}
+
 

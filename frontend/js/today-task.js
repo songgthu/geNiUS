@@ -93,7 +93,12 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
         //alert('Add task successfully');
-        //retrieveTask();
+        taskCell.addEventListener('click', function() {
+          openTask(taskCell.textContent); 
+        });
+        checkbox.addEventListener('click', function() {
+          checkBox(checkbox, taskCell.textContent);
+        });
         closeTask();
       } else {
        
@@ -128,7 +133,7 @@ function retrieveTask(){
       alert('Internal server error');
     } else if (response.status === 201) {
       response.json().then(data => {
-        const results = data.results; // Access the "results" property
+        const results = data.results;
         sessionStorage.setItem('taskData', JSON.stringify(results));
         console.log(sessionStorage.getItem('taskData'));
         displayTodayTask();
@@ -185,7 +190,7 @@ function displayTodayTask() {
     taskBody.appendChild(newRow);
     
     taskCell.addEventListener('click', function() {
-      openTask(taskCell.textContent); // Pass the clicked task name as a parameter
+      openTask(taskCell.textContent); 
     });
     checkbox.addEventListener('click', function() {
       checkBox(checkbox, taskCell.textContent);
