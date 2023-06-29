@@ -81,7 +81,7 @@ async function sendMail(email, link) {
         accessToken: accessToken,
       },
     });
-    const verificationToken = Math.floor(100000 + Math.random() * 900000);
+    
 
     const mailOptions = {
       from: 'GENIUS <genius.nus.123@gmail.com>',
@@ -229,6 +229,7 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
+          const verificationToken = Math.floor(100000 + Math.random() * 900000);
           const verificationLink = `https://genius-awj5.onrender.com/verify?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&hashedPassword=${encodeURIComponent(hashedPassword)}&verificationToken=${encodeURIComponent(verificationToken)}`;
           sendMail(email, verificationLink);
           
