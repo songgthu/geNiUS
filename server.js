@@ -143,109 +143,108 @@ connection.execute(selectUserByEmailQuery,
 // Verify email
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-  
-app.get('/verify/:token', (req, res)=>{
-    const {token} = req.params;
-  
-    // Verifying the JWT token 
-    jwt.verify(token, 'ourSecretKey', function(err, decoded) {
-        if (err) {
-            console.log(err);
-            res.send("Email verification failed, possibly the link is invalid or expired");
-        }
-        else {
-            res.send("Email verifified successfully");
-            res.status(201).json({ message: 'Registration successful' });
-        const createNewUser = `INSERT INTO users (name, email, password) 
-        VALUES (?, ?, ?);`; 
-       
-        // Insert the new user into the database
-        connection.execute(
-          createNewUser,
-          [name, email, hashedPassword],
-          (err) => {
-            if (err) {
-              console.error('Error inserting into the database:', err);
-              return;
-            } else {
-              
-              console.log('Create new user successfully');
-            }
-          }
-        );
-        }
-    });
+
+app.get('/verify/:token', (req, res) => {
+  const { token } = req.params;
+
+  // Verifying the JWT token
+  jwt.verify(token, 'ourSecretKey', function (err, decoded) {
+    if (err) {
+      console.log(err);
+      res.send("Email verification failed, possibly the link is invalid or expired");
+    } else {
+      res.send("Email verified successfully");
+    }
+  });
 });
 
 // Register endpoint
 app.post('/register-user', (req, res) => {
   const { name, email, password } = req.body;
-  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+
+  // Check if the user already exists
+  const selectUserQuery = `
+    SELECT *
+    FROM users
+    WHERE email = ?
+  `;
+  connection.execute(selectUserQuery, [email], (err, results) => {
     if (err) {
-      console.error('Error hashing password:', err);
+      console.error('Error querying the database:', err);
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
-  console.log(name);
-  // Check if the user already exists
-  const selectUserQuery = `
-  SELECT *
-  FROM users
-  WHERE email = ?
-`;
-  connection.execute(selectUserQuery,
-    [email],
-    (err, results) => {
-      if (err) {
-        console.error('Error querying the database:', err);
-        res.status(500).json({ error: 'Internal server error' });
-        return;
-      }
 
-      if (results.length > 0 && email == results[0].email) {
-        res.status(409).json({ error: 'User already exists' });
-        console.log('This email had been used before!');
-      } else {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-              user: secure_configuration.EMAIL_USERNAME,
-              pass: secure_configuration.PASSWORD
+    if (results.length > 0 && email == results[0].email) {
+      res.status(409).json({ error: 'User already exists' });
+      console.log('This email has been used before!');
+    } else {
+      // Hash the password
+      bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        if (err) {
+          console.error('Error hashing password:', err);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+
+        // Insert the new user into the database
+        const createNewUser = `INSERT INTO users (name, email, password) VALUES (?, ?, ?);`;
+        connection.execute(createNewUser, [name, email, hashedPassword], (err) => {
+          if (err) {
+            console.error('Error inserting into the database:', err);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
           }
+
+          // Send the verification email
+          sendVerificationEmail(email)
+            .then(() => {
+              res.status(201).json({ message: 'Registration successful' });
+              console.log('Verification email sent');
+            })
+            .catch((error) => {
+              console.error('Error sending verification email:', error);
+            });
+        });
       });
-        
-      
-      const token = jwt.sign({email_id: email}, "Stack", { expiresIn: '24h' } );    
-        
-      const mailConfigurations = {
-        
-          // It should be a string of sender/server email
-          from: 'songthu0711@gmail.com',
-        
-          to: `${email}`,
-        
-          // Subject of Email
-          subject: 'geNiUS Email Verification',
-            
-          // This would be the text of email body
-          text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
-                 https://${currentURL}/verify/${token} 
-                 Thank you for joining us and have a nice university journey!`
-            
-      };
-        
-      transporter.sendMail(mailConfigurations, function(error, info){
-          if (error) throw Error(error);
-          console.log('Email Sent Successfully');
-          console.log(info);
-      });
-      
-        
     }
-  }
-  );
+  });
 });
-});
+
+// Function to send verification email
+function sendVerificationEmail(email) {
+  return new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: secure_configuration.EMAIL_USERNAME,
+        pass: secure_configuration.PASSWORD
+      }
+    });
+
+    const token = jwt.sign({ email_id: email }, "Stack", { expiresIn: '24h' });
+
+    const mailConfigurations = {
+      from: 'songthu0711@gmail.com',
+      to: email,
+      subject: 'geNiUS Email Verification',
+      text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
+      https://${currentURL}/verify/${token} 
+      Thank you for joining us and have a nice university journey!`
+    };
+
+    transporter.sendMail(mailConfigurations, function (error, info) {
+      if (error) {
+        reject(error);
+      } else {
+        console.log('Email Sent Successfully');
+        console.log(info);
+        resolve();
+      }
+    });
+  });
+}
+
 
 // Update Timetable endpoint
 app.post('/update-timetable', (req, res) => {
