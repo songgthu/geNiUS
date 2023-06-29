@@ -174,7 +174,9 @@ app.post('/register-user', (req, res) => {
         res.status(409).json({ error: 'User already exists' });
         console.log('This email had been used before!');
       } else {
-        res.status(201).json({ message: 'Registration successful' });
+        sendMail()
+  .then((result) => {
+    res.status(201).json({ message: 'Registration successful' });
         const createNewUser = `INSERT INTO users (name, email, password) 
         VALUES (?, ?, ?);`; 
        
@@ -192,6 +194,9 @@ app.post('/register-user', (req, res) => {
             }
           }
         );
+    console.log('Email sent...', result)})
+  .catch((error) => console.log(error.message));
+        
     }
   }
   );
@@ -757,6 +762,68 @@ app.post('/delete-account', (req,res) => {
     }
   });
 });
+
+// Verify email
+const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+var verificationToken = 0;
+
+// These id's and secrets should come from .env file.
+const CLIENT_ID = '77488411127-j4nqf1itao4eufiob0pbjshi15k2p3dd.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04_ox1G-MMC3kCgYIARAAGAQSNwF-L9IrMtdstMSH_ZacN2E7PNx350cKgB05aJIR-qj9bN5nA4zqsCgvPguV5aXwO1RAG1SdlTQ';
+
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+async function sendMail() {
+  try {
+    const accessToken = await oAuth2Client.getAccessToken();
+
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: 'genius.nus.123@gmail.com',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
+    verificationToken = Math.floor(100000 + Math.random() * 900000);
+
+    const mailOptions = {
+      from: 'GENIUS <genius.nus.123@gmail.com>',
+      to: 'thst0711@gmail.com',
+      subject: 'Welcome to geNiUS',
+      text: 'Greetings! ',
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a><p>You will be redirected to our login page if verification is successful.</p><br>`,
+    };
+
+    const result = await transport.sendMail(mailOptions);
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+
+
+  app.post('/verify', (req,res) => {
+    const token = req.body.verificationToken;
+    if (token == verificationToken) {
+      res.redirect('/login.html');
+    } else {
+      res.redirect('/register.html');
+    }
+  });
+
 // Start the server
 const port = process.env.PORT || 5501;
 app.listen(port, () => {
