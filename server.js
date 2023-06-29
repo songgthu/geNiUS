@@ -175,7 +175,6 @@ app.post('/register-user', (req, res) => {
         } else {
           sendMail(email)
             .then((result) => {
-              res.status(201).json({ message: 'Registration successful' });
               const createNewUser = `INSERT INTO users (name, email, password) 
               VALUES (?, ?, ?);`;
 
@@ -189,6 +188,7 @@ app.post('/register-user', (req, res) => {
                     return;
                   } else {
                     console.log('Create new user successfully');
+                    res.status(201).json({ message: 'Registration successful' });
                   }
                 }
               );
