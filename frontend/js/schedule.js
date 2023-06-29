@@ -121,48 +121,155 @@ function insertTask(event) {
 // Add event listener to the "Add Row" button
   const addRowButton = document.querySelector('.add-row-button');
   addRowButton.addEventListener('click', addRow);
+  
+  const addRowInput = document.querySelector('.time-input');
+  addRowInput.addEventListener('input', formatTimeInput);
 
   const deleteRowButton = document.querySelector('.del-row-button');
   deleteRowButton.addEventListener('click', deleteRow);
 
   var table = document.querySelector('schedule-table');
   var tbody = document.querySelector('.schedule-body');
-// Function to add a new row to the table
+
+
+function formatTimeInput(event) {
+  const addRowInput = document.querySelector('.time-input'); 
+  addRowInput.value = addRowInput.value.replace(/[^0-9/]/g, "");
+    // Add ":" after the first two digits if it doesn't exist
+  if (addRowInput.value.length >= 2 && !addRowInput.value.includes(":")) {
+    addRowInput.value = addRowInput.value.slice(0, 2) + ":" + addRowInput.value.slice(2);
+  }
+
+  // Add " - " after the first five digits if it doesn't exist
+  if (addRowInput.value.length >= 5 && !addRowInput.value.includes(" - ")) {
+    addRowInput.value = addRowInput.value.slice(0, 5) + " - " + addRowInput.value.slice(5);
+  }
+
+  if (addRowInput.value.length >= 10) {
+    addRowInput.value = addRowInput.value.slice(0, 10) + ":" + addRowInput.value.slice(10);
+  }
+
+  // Limit the input to a maximum of 13 characters
+  if (addRowInput.value.length > 13) {
+    addRowInput.value = addRowInput.value.slice(0, 13);
+  }
+
+  // Handle the case when a character is deleted using the backspace or delete key
+  if (event.inputType === "deleteContentBackward") {
+    
+    const cursorPosition = addRowInput.selectionStart;
+    const inputValue = addRowInput.value;
+
+    // Delete the character before the cursor position
+    const newValue =
+      inputValue.slice(0, cursorPosition - 1) + inputValue.slice(cursorPosition);
+
+    // Update the input value
+    addRowInput.value = newValue;
+
+    // Set the cursor position after the deleted character
+    addRowInput.selectionStart = cursorPosition - 1;
+    addRowInput.selectionEnd = cursorPosition - 1;
+  }
+}
+
+
 function addRow() {
-    var newRow = document.createElement('tr');
-// Prompt the user for the time value
-var timeValue = window.prompt('Enter the time in the format HH:MM - HH:MM:');
-if (timeValue === null || timeValue === '') {
-  return; // If the user cancels or leaves the input empty, exit the function
-}
+  var newRow = document.createElement('tr');
+  // Prompt the user for the time value
+  var timeValue = document.querySelector('.time-input').value;
+  if (timeValue === null || timeValue === '') {
+    return; // If the user cancels or leaves the input empty, exit the function
+  }
 
-// Validate the time format using regex
-var timeRegex = /^\d{2}:\d{2}\s-\s\d{2}:\d{2}$/;
-if (!timeRegex.test(timeValue)) {
-  window.alert('Invalid time format. Please enter the time in the format HH:MM - HH:MM');
-} else {
-// Create the cells for the new row
-var timeCell = document.createElement('td');
-timeCell.classList.add("time-header");
-timeCell.textContent = timeValue;
+  // Validate the time format using regex
+  var timeRegex = /^\d{2}:\d{2}\s-\s\d{2}:\d{2}$/;
+  if (!timeRegex.test(timeValue)) {
+    window.alert('Invalid time format. Please enter the time in the format HH:MM - HH:MM');
+    return; // Exit the function if the time format is invalid
+  }
 
-// Add the new cells to the row
-newRow.appendChild(timeCell);
-for (var i = 0; i < 7; i++) {
-  var cell = document.createElement('td');
-  
-  newRow.appendChild(cell);
-}
+  // Check if the start time is greater than the end time
+  var [startTime, endTime] = timeValue.split(' - ');
+  if (!isValidTimeInterval(startTime, endTime)) {
+    window.alert('Invalid time interval. Please enter a valid time interval.');
+    return; // Exit the function if the time interval is invalid
+  }
 
-// Add the new row to the table body
-tbody.appendChild(newRow);
-var newCells = document.querySelectorAll('.schedule-body td');
+  var timeCells = document.querySelectorAll('.time-header');
+  for (var i = 0; i < timeCells.length; i++) {
+    var existingTimeValue = timeCells[i].textContent;
+    if (isTimeOverlap(timeValue, existingTimeValue)) {
+      window.alert('Overlapping time interval. Please enter a non-overlapping time interval.');
+      return; // Exit the function if there is an overlap
+    }
+  }
+
+  // Create the cells for the new row
+  var timeCell = document.createElement('td');
+  timeCell.classList.add("time-header");
+  timeCell.textContent = timeValue;
+
+  // Add the new cells to the row
+  newRow.appendChild(timeCell);
+  for (var j = 0; j < 7; j++) {
+    var cell = document.createElement('td');
+    newRow.appendChild(cell);
+  }
+
+  // Add the new row to the table body
+  tbody.appendChild(newRow);
+  var timeRows = Array.from(document.querySelectorAll('.time-header'));
+  timeRows.sort(function (a, b) {
+    var timeA = a.textContent;
+    var timeB = b.textContent;
+    return compareTimes(timeA, timeB);
+  });
+
+  timeRows.forEach(function (row) {
+    tbody.appendChild(row.parentNode); // Append the parent row to the table body
+  });
+
+  var newCells = document.querySelectorAll('.schedule-body td');
   newCells.forEach(function (cell) {
     cell.addEventListener('click', insertTask);
   });
 }
 
+function compareTimes(timeA, timeB) {
+  var [startA] = timeA.split(' - ');
+  var [startB] = timeB.split(' - ');
+  return startA.localeCompare(startB, undefined, { numeric: true });
 }
+
+function isValidTimeInterval(startTime, endTime) {
+  const startTimeInMinutes = parseTime(startTime);
+  const endTimeInMinutes = parseTime(endTime);
+  
+  const validTime = startTime.split(':')[0] < 24 && startTime.split(':')[1] < 60 && endTime.split(':')[0] < 24 && endTime.split(':')[1] < 60;
+  
+  const validInterval = startTimeInMinutes < endTimeInMinutes;
+  console.log(validTime && validInterval);
+  return validTime && validInterval; 
+}
+
+function isTimeOverlap(timeInterval1, timeInterval2) {
+  var [start1, end1] = timeInterval1.split(' - ');
+  var [start2, end2] = timeInterval2.split(' - ');
+  var startTime1 = parseTime(start1);
+  var endTime1 = parseTime(end1);
+  var startTime2 = parseTime(start2);
+  var endTime2 = parseTime(end2);
+  return (startTime1 < endTime2 && startTime2 < endTime1);
+}
+
+// Function to parse time in HH:MM format into minutes
+function parseTime(time) {
+  var [hours, minutes] = time.split(':');
+  return parseInt(hours) * 60 + parseInt(minutes);
+}
+
+
   
 function deleteRow() {
 var rows = tbody.getElementsByTagName('tr');
