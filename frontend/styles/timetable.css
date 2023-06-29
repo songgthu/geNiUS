@@ -114,6 +114,7 @@
 .submitButton:hover {
   background-color: #f4eccd;
   color: #926359;
+  transition-duration: 0.5s;
 }
 
 #timetable-iframe {
@@ -128,6 +129,31 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.quick-guide-button {
+  background-color: #926359;
+  font-family: 'Quicksand', sans-serif;
+  color: #f4eccd;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.quick-guide-button:hover {
+  background-color: #c99575;
+  color: #f4eccd;
+  transition-duration: 0.5s;
+}
+
+.guide-text {
+  padding: 15px;
+  border-radius: 10px;
+  color:#f4eccd;
+  background-color: #926359;
+  line-height: 2;
 }
 
 @media (max-width: 768px) {
