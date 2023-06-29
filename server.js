@@ -140,7 +140,7 @@ app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
   // Insert the new user into the database
   connection.execute(
     createNewUser,
-    [name, email, hashedPassword],
+    [name, email, password],
     (err) => {
       if (err) {
         console.error('Error inserting into the database:', err);
