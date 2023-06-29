@@ -725,7 +725,7 @@ connection.execute(updateExamCheckbox, [todolist, userId, name], (err, results) 
   
 });
 // FOR PROFILE FEATURE
-app.post('/update-account', (req,res) => {
+app.post('/update-profile', (req,res) => {
   const { name, email, password, userId } = req.body;
   const updateQuery = `UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?`;
   bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
