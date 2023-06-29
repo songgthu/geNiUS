@@ -94,7 +94,12 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
         //alert('Add task successfully');
-        // retrieveTask1();
+        taskCell.addEventListener('click', function() {
+          openTask1(taskCell.textContent); 
+        });
+        checkbox.addEventListener('click', function() {
+          checkBox1(checkbox, taskCell.textContent);
+        });
         closeTask1();
       } else {
        
@@ -157,8 +162,6 @@ function displayUpcomingTask() {
   for(let i = 0; i < taskData.length; i++) {
     const taskDate = new Date(taskData[i].deadline);
     if (today.getTime() < taskDate.getTime() && taskDate.getTime() >= tomorrow.getTime()) {
-      console.log(today.getTime());
-      console.log(taskDate.getTime());
     const newRow = document.createElement("tr");
     const taskCell = document.createElement("td");
     taskCell.classList.add("task-name1");
