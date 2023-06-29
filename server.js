@@ -88,7 +88,7 @@ async function sendMail(email) {
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com//verify/${verificationToken}">Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -127,6 +127,14 @@ app.get('/exam.html', (req, res) => {
 
 app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
+});
+
+app.get('/verify/:verificationToken', (req, res) => {
+  const verificationToken = req.params.verificationToken;
+  // Your verification logic here
+  
+  // Assuming the verification is successful, you can send the verify.html file
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
 });
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
