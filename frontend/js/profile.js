@@ -40,6 +40,7 @@ console.log(user.password);
 
   // Function to handle form submission
   function saveProfile(event) {
+    console.log('save');
     event.preventDefault(); // Prevent form submission
 
     // Get form values
@@ -102,7 +103,14 @@ console.log(user.password);
   editButton.addEventListener('click', enableFormInputs);
 
   var cancelButton = document.getElementById('cancelButton');
-  cancelButton.addEventListener('click', disableFormInputs);
+  cancelButton.addEventListener('click', cancelFormEdit);
+
+  function cancelFormEdit() {
+    document.getElementById('name').value = user.name;
+    document.getElementById('email').value = user.email;
+    document.getElementById('password').value = user.password;
+    disableFormInputs();
+  }
   
 
   // Function to handle account deletion
@@ -135,4 +143,4 @@ console.log(user.password);
   deleteButton.addEventListener('click', deleteAccount);
 
   // Display current user information on page load
-  displayUserInfo();
+  document.addEventListener('DOMContentLoaded', displayUserInfo());
