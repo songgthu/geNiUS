@@ -223,11 +223,13 @@ async function sendVerificationEmail(email) {
       'https://genius-awj5.onrender.com/login.html'
     );
 
-    // oAuth2Client.setCredentials({
-    //   refresh_token: 'YOUR_REFRESH_TOKEN'
-    // });
+    
 
     const accessToken = await oAuth2Client.getAccessToken();
+
+    oAuth2Client.setCredentials({
+      refresh_token: accessToken
+    });
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -769,6 +771,40 @@ connection.execute(updateExamCheckbox, [todolist, userId, name], (err, results) 
   }
 });
   
+});
+
+// FOR PROFILE FEATURE
+app.post('/update-account', (req,res) => {
+  const { name, email, password, userId } = req.body;
+  const updateQuery = `UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?`;
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    connection.execute(updateQuery, [ name, email, hashedPassword, userId], (err, results) =>{
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal server error' });
+        return;
+      } else {
+        res.status(201).json({ 
+          message: 'Update profile successfully' });
+      }
+    });
+  });
+  
+});
+
+app.post('/delete-account', (req,res) => {
+  const { email } = req.body;
+  const deleteQuery = `DELETE FROM users WHERE email = ?`;
+  connection.execute(deleteQueryeQuery, [email], (err, results) =>{
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ 
+        message: 'Delete account successfully' });
+    }
+  });
 });
 
 // Start the server

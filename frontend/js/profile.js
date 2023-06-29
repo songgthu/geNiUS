@@ -1,14 +1,11 @@
 // Sample user data (replace with your own logic)
-// var user = {
-//     name: sessionStorage.getItem('username'),
-//     email: sessionStorage.getItem('email'),
-//     password: sessionStorage.getItem('password')
-//   };
-  var user = {
-    name: "John Doe",
-    email: 'john@gmail.com',
-    password: 'pass'
+var user = {
+    name: sessionStorage.getItem('username'),
+    email: sessionStorage.getItem('email'),
+    password: sessionStorage.getItem('password'),
+    userId: sessionStorage.getItem('userId')
   };
+
 
   // Function to display current user information
   function displayUserInfo() {
@@ -51,9 +48,26 @@
     user.name = newName;
     user.email = newEmail;
     user.password = newPassword;
+    
+    fetch(`https://${currentURL}/update-profile`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
+        sessionStorage.setItem('username', newName);
+        sessionStorage.setItem('email', newEmail);
+        sessionStorage.setItem('password', newPassword);
+        disableFormInputs();
+        alert('Update profile successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
 
-    disableFormInputs();
-    console.log('Profile updated!');
   }
 
   // Attach form submit event listener
@@ -69,12 +83,24 @@
     // Add your own logic to delete the account
     const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
     if (confirmation) {
+        const data = { userId: sessionStorage.getItem('email')};
+        fetch(`https://${currentURL}/delete-account`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(response => {
+    if (response.status === 500) {
+      alert('Internal server error');
+    } else if (response.status === 201) {
         window.location.href = "/";
         sessionStorage.clear();
-        fetch
-      } else {
-        
-      }
+        alert('Delete account successfully');
+    }
+  }).catch(error => {
+      console.error('Error during query:', error)});
+      } 
   }
 
   // Attach delete account button click event listener
