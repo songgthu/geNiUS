@@ -66,7 +66,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(email) {
+async function sendMail(email, name, password) {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -88,7 +88,7 @@ async function sendMail(email) {
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${email}/${password}">Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -129,17 +129,32 @@ app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
 });
 
-app.get('/verify/:verificationToken', (req, res) => {
+app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
   const verificationToken = req.params.verificationToken;
+  const name = req.params.name;
+  const email = req.params.email;
+  const password = req.params.password;
   // Your verification logic here
+  const createNewUser = `INSERT INTO users (name, email, password) VALUES (?, ?, ?);`; 
+         
+  // Insert the new user into the database
+  connection.execute(
+    createNewUser,
+    [name, email, hashedPassword],
+    (err) => {
+      if (err) {
+        console.error('Error inserting into the database:', err);
+        return;
+      } else {
+        res.redirect('/login.html');
+        console.log('Create new user successfully');
+      }
+    }
+  );
   
-  // Assuming the verification is successful, you can send the verify.html file
-  res.redirect('/verify.html');
+  
 });
 
-app.get('/verify.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
-});
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
@@ -239,23 +254,8 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          sendMail(email);
-          const createNewUser = `INSERT INTO users (name, email, password) 
-          VALUES (?, ?, ?);`; 
-         
-          // Insert the new user into the database
-          connection.execute(
-            createNewUser,
-            [name, email, hashedPassword],
-            (err) => {
-              if (err) {
-                console.error('Error inserting into the database:', err);
-                return;
-              } else {
-                console.log('Create new user successfully');
-              }
-            }
-          );
+          sendMail(email, name, hashedPassword);
+          
       }
     }
     );
