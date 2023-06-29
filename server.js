@@ -97,9 +97,7 @@ async function sendMail(email) {
     return error;
   }
 }
-sendMail('songthu0711@gmail.com')
-  .then((result) => console.log('Email sent...', result))
-  .catch((error) => console.log(error.message));
+
 
 app.get('/', (req, res) => {
   session = req.session;
@@ -226,9 +224,9 @@ app.post('/register-user', (req, res) => {
         res.status(409).json({ error: 'User already exists' });
         console.log('This email had been used before!');
       } else {
-        // sendMail(email).then((result) => console.log('Email sent...', result))
-        // .catch((error) => console.log(error.message));
+        
         res.status(201).json({ message: 'Registration successful' });
+        sendMail(email);
         const createNewUser = `INSERT INTO users (name, email, password) 
         VALUES (?, ?, ?);`; 
        
