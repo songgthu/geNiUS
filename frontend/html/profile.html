@@ -40,16 +40,24 @@
     </div>
     <div class="main-content">
   <div class="profile-form">
-    <h2>Profile</h2>
+    <h2 align="center" class="profileHeader">Profile</h2>
     <form id="editProfileForm">
-      <label for="name">Name:</label>
+    
+    <div class="flex-input">
+      <label for="name" class="profileNameLabel">Name:</label>
       <input type="text" id="name" name="name" placeholder="Enter your name">
+    </div>
 
-      <label for="email">Email:</label>
+    <div class="flex-input">
+      <label for="email" class="profileEmailLabel">Email:</label>
       <input type="email" id="email" name="email" placeholder="Enter your email">
+    </div>
 
-      <label for="password">Password:</label>
+    <div class="flex-input">
+      <label for="password" class="profilePwdLabel">Password:</label>
       <input type="password" id="password" name="password" placeholder="Enter your password">
+    </div>
+
       <div class="show-password">
         <input type="checkbox" id="show-password-checkbox" class="show-password-checkbox" onclick="togglePasswordVisibility()">
         <label for="show-password-checkbox" class="show-password-label">Show Password</label>
