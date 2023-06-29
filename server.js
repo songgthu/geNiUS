@@ -217,15 +217,15 @@ function sendVerificationEmail(email) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'songthu0711@gmail.com',
-        pass: 'Hunggia0711'
+        user: `genius.nus.123@gmail.com`,
+        pass: `Genius@123`
       }
     });
 
     const token = jwt.sign({ email_id: email }, "Stack", { expiresIn: '24h' });
 
     const mailConfigurations = {
-      from: 'songthu0711@gmail.com',
+      from: 'genius.nus.123@gmail.com',
       to: email,
       subject: 'geNiUS Email Verification',
       text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
