@@ -212,7 +212,6 @@ app.post('/register-user', (req, res) => {
 });
 
 // Function to send verification email
-const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 
 async function sendVerificationEmail(email) {
