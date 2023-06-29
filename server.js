@@ -212,17 +212,37 @@ app.post('/register-user', (req, res) => {
 });
 
 // Function to send verification email
-function sendVerificationEmail(email) {
-  return new Promise((resolve, reject) => {
+const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+
+async function sendVerificationEmail(email) {
+  try {
+    const oAuth2Client = new google.auth.OAuth2(
+      '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
+      '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',
+      'https://genius-awj5.onrender.com/login.html'
+    );
+
+    
+
+    const accessToken = await oAuth2Client.getAccessToken();
+
+    oAuth2Client.setCredentials({
+      refresh_token: accessToken
+    });
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: `genius.nus.123@gmail.com`,
-        pass: `Genius@123`
+        type: 'OAuth2',
+        user: 'genius.nus.123@gmail.com',
+        accessToken,
+        clientId: '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
+        clientSecret: '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'
       }
     });
 
-    const token = jwt.sign({ email_id: email }, "Stack", { expiresIn: '24h' });
+    const token = jwt.sign({ email_id: email }, 'Stack', { expiresIn: '24h' });
 
     const mailConfigurations = {
       from: 'genius.nus.123@gmail.com',
@@ -233,17 +253,14 @@ function sendVerificationEmail(email) {
       Thank you for joining us and have a nice university journey!`
     };
 
-    transporter.sendMail(mailConfigurations, function (error, info) {
-      if (error) {
-        reject(error);
-      } else {
-        console.log('Email Sent Successfully');
-        console.log(info);
-        resolve();
-      }
-    });
-  });
+    const info = await transporter.sendMail(mailConfigurations);
+    console.log('Email Sent Successfully');
+    console.log(info);
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+  }
 }
+
 
 
 // Update Timetable endpoint
@@ -754,6 +771,40 @@ connection.execute(updateExamCheckbox, [todolist, userId, name], (err, results) 
   }
 });
   
+});
+
+// FOR PROFILE FEATURE
+app.post('/update-account', (req,res) => {
+  const { name, email, password, userId } = req.body;
+  const updateQuery = `UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?`;
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    connection.execute(updateQuery, [ name, email, hashedPassword, userId], (err, results) =>{
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).json({ error: 'Internal server error' });
+        return;
+      } else {
+        res.status(201).json({ 
+          message: 'Update profile successfully' });
+      }
+    });
+  });
+  
+});
+
+app.post('/delete-account', (req,res) => {
+  const { email } = req.body;
+  const deleteQuery = `DELETE FROM users WHERE email = ?`;
+  connection.execute(deleteQueryeQuery, [email], (err, results) =>{
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+      res.status(201).json({ 
+        message: 'Delete account successfully' });
+    }
+  });
 });
 
 // Start the server
