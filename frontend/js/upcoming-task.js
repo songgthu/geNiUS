@@ -45,7 +45,31 @@ var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { mon
 var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     // Create a new row
     var table = document.querySelector('.task-table1');
-    var row = table.insertRow();
+    
+    
+    console.log(userId);
+    console.log(taskInput);
+    console.log(formattedDate);
+    const data1 = {
+      taskInput: taskInput,
+      deadline: formattedDate,
+      userId: userId
+    };
+
+    fetch(`https://${currentURL}/add-task`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data1)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if(response.status === 409) {
+        alert('Task name already exist');
+      } else if (response.status === 201) {
+        //alert('Add task successfully');
+        var row = table.insertRow();
 
     // // Create cells for the task, deadline, and status
     var taskCell = row.insertCell(0);
@@ -71,29 +95,6 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     checkboxContainer.appendChild(label);
 
     statusCell.appendChild(checkboxContainer);
-    
-    console.log(userId);
-    console.log(taskInput);
-    console.log(formattedDate);
-    const data1 = {
-      taskInput: taskInput,
-      deadline: formattedDate,
-      userId: userId
-    };
-
-    fetch(`https://${currentURL}/add-task`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data1)
-    }).then(response => {
-      if (response.status === 500) {
-        alert('Internal server error');
-      } else if(response.status === 409) {
-        alert('Task name already exist');
-      } else if (response.status === 201) {
-        //alert('Add task successfully');
         taskCell.addEventListener('click', function() {
           openTask1(taskCell.textContent); 
         });

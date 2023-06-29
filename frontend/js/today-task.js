@@ -44,7 +44,31 @@ var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { mon
 var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     // Create a new row
     var table = document.querySelector('.task-table');
-    var row = table.insertRow();
+    
+    const userId = sessionStorage.getItem("userId");
+    console.log(userId);
+    console.log(taskInput);
+    console.log(formattedDate);
+    const data = {
+      taskInput: taskInput,
+      deadline: formattedDate,
+      userId: userId
+    };
+
+    fetch(`https://${currentURL}/add-task`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.status === 500) {
+        alert('Internal server error');
+      } else if(response.status === 409) {
+        alert('Task name already exist');
+      } else if (response.status === 201) {
+        //alert('Add task successfully');
+        var row = table.insertRow();
 
     // // Create cells for the task, deadline, and status
     var taskCell = row.insertCell(0);
@@ -70,29 +94,6 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
     checkboxContainer.appendChild(label);
 
     statusCell.appendChild(checkboxContainer);
-    const userId = sessionStorage.getItem("userId");
-    console.log(userId);
-    console.log(taskInput);
-    console.log(formattedDate);
-    const data = {
-      taskInput: taskInput,
-      deadline: formattedDate,
-      userId: userId
-    };
-
-    fetch(`https://${currentURL}/add-task`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(response => {
-      if (response.status === 500) {
-        alert('Internal server error');
-      } else if(response.status === 409) {
-        alert('Task name already exist');
-      } else if (response.status === 201) {
-        //alert('Add task successfully');
         taskCell.addEventListener('click', function() {
           openTask(taskCell.textContent); 
         });
@@ -257,8 +258,12 @@ function openTask(oldTask) {
 // Function to update task change (name, deadline, checkbox)
 function updateTask(oldTask) {
   console.log("here");
-  const newTask = document.querySelector('.newTaskInput').value;
-  const newDeadline = document.querySelector('.newDeadlineInput').value;
+  const newTask = document.querySelector('.newTaskInput').value || null;
+  const newDeadline = document.querySelector('.newDeadlineInput').value || null;
+  if (newTask == null || newDeadline == null) {
+    alert('Please fill in all the fields');
+    return;
+  }
   var [datePart, timePart] = newDeadline.split('T');
   var [year, month, day] = datePart.split('-');
   var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { month: 'long' });
