@@ -55,7 +55,10 @@ function selectTask(event) {
   
       if (confirmDelete) {
         // Remove the selected task
+        document.querySelectorAll(`[data-task-id="${selectedTask.textContent}"]`).forEach((task) => task.parentNode.removeChild(task));
+ 
         selectedTask.parentNode.removeChild(selectedTask);
+        
       }
     } else {
       window.alert('Please select a task to delete.');
@@ -92,7 +95,7 @@ function insertTask(event) {
           alert('Task already added to the schedule. Please select another task.');
           return;
         }
-        var divElement = `<div class="task-in-schedule" data-task-id="${selectedTask.id}"}>
+        var divElement = `<div class="task-in-schedule" data-task-id="${selectedTask.textContent}"}>
         ${selectedTask.textContent}
         <span class="deleteTaskInSchedule">&times;</span>
         </div>`
