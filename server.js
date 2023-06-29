@@ -66,7 +66,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(email) {
+async function sendMail(email, link) {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -88,7 +88,7 @@ async function sendMail(email) {
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com//verify/${verificationToken}">Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href=${link}>Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -128,6 +128,8 @@ app.get('/exam.html', (req, res) => {
 app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
 });
+
+
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
@@ -227,8 +229,23 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          sendMail(email);
-          const createNewUser = `INSERT INTO users (name, email, password) 
+          const verificationLink = `https://genius-awj5.onrender.com/verify?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&hashedPassword=${encodeURIComponent(hashedPassword)}&verificationToken=${encodeURIComponent(verificationToken)}`;
+          sendMail(email, verificationLink);
+          
+      }
+    }
+    );
+  });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+  
+});
+
+app.get('/verify', (req, res) => {
+  const { name, email, hashedPassword, verificationToken } = req.query;
+  const createNewUser = `INSERT INTO users (name, email, password) 
           VALUES (?, ?, ?);`; 
          
           // Insert the new user into the database
@@ -241,18 +258,10 @@ app.post('/register-user', (req, res) => {
                 return;
               } else {
                 console.log('Create new user successfully');
+                res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
               }
             }
           );
-      }
-    }
-    );
-  });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-  
 });
 
 // Update Timetable endpoint
