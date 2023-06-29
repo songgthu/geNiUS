@@ -134,7 +134,7 @@ app.get('/verify/:verificationToken', (req, res) => {
   // Your verification logic here
   
   // Assuming the verification is successful, you can send the verify.html file
-  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
+  res.redirect('/verify.html');
 });
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
