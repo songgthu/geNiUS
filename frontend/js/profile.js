@@ -50,19 +50,19 @@ console.log(user.password);
       alert('Please fill in all the fields');
       return;
     }
-    if (password.length < 8) { 
+    if (newPassword.length < 8) { 
       alert("Password must be at least 8 characters long");
       return;
-    } else if (!/[a-z]/.test(password)) {
+    } else if (!/[a-z]/.test(newPassword)) {
       alert("Password must contain at least one lowercase character");
       return;
-    } else if(!/[A-Z]/.test(password)) {
+    } else if(!/[A-Z]/.test(newPassword)) {
       alert("Password must contain at least one uppercase character");
       return;
-    } else if(!/[0-9]/.test(password)) {
+    } else if(!/[0-9]/.test(newPassword)) {
       alert("Password must contain at least one digit");
       return;
-    } else if(!/[!@#$%^&*]/.test(password)) {
+    } else if(!/[!@#$%^&*]/.test(newPassword)) {
       alert("Password must contain at least one special character");
       return;
     }
