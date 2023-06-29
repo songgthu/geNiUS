@@ -118,7 +118,7 @@ console.log(user.password);
     // Add your own logic to delete the account
     const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
     if (confirmation) {
-        const data = { userId: sessionStorage.getItem('email')};
+        const data = { email: sessionStorage.getItem('email')};
         fetch(`https://${currentURL}/delete-account`, {
     method: 'POST',
     headers: {
