@@ -278,7 +278,8 @@ connection.execute(selectTaskQuery, [taskInput], (err, results) => {
 });
 
 app.post('/tasks', (req,res) => {
-  const{ userId } = req.body;
+  const { userId } = req.body;
+
   const retrieveQuery = `SELECT * FROM tasks WHERE created_by = ?`;
   connection.execute(retrieveQuery, [userId], (err, results) =>{
     if (err) {
@@ -331,6 +332,20 @@ app.post('/delete-task', (req, res) => {
 app.post('/update-task', (req, res) => {
   // Retrieve the task from the request
   const { newTask, newDeadline, oldTask} = req.body;
+  const selectTaskQuery = `
+  SELECT *
+  FROM tasks
+  WHERE task = ?
+`;
+connection.execute(selectTaskQuery, [taskInput], (err, results) => {
+  if (err) {
+    console.error('Error executing query:', err);
+    res.status(500).json({ error: 'Internal server error' });
+    return;
+  } else if(results.length > 0 && results[0].task == taskInput) {
+    res.status(409).json({ error: 'Task name already exist' });
+    return;
+  } else {
       const updateTaskQuery = `UPDATE tasks SET task = ?, deadline = ?
       WHERE task = ?`;
       connection.execute(updateTaskQuery, [newTask, newDeadline, oldTask], (err, results) => {
@@ -342,7 +357,9 @@ app.post('/update-task', (req, res) => {
           res.status(201).json({ message: 'Update task successfully' });
         }
       });
-    }
+  }
+});
+}
   
 );
 
