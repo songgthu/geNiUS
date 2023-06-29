@@ -42,7 +42,7 @@ function handleLogin(event) {
         const userId = data.userId;
         console.log(userId);
         sessionStorage.setItem("email", email);
-        sessionStorage.setItem("password", data.password);
+        sessionStorage.setItem("password", password);
         
         //alert('Login successful');
         const url = `/dashboard.html`;
