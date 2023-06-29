@@ -66,7 +66,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(email, name, password) {
+async function sendMail(email) {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -88,7 +88,7 @@ async function sendMail(email, name, password) {
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com//verify/${verificationToken}">Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -127,10 +127,6 @@ app.get('/exam.html', (req, res) => {
 
 app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
-});
-
-app.get('/verify', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
 });
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
@@ -231,7 +227,7 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          sendMail(email, name, password);
+          sendMail(email);
           const createNewUser = `INSERT INTO users (name, email, password) 
           VALUES (?, ?, ?);`; 
          
