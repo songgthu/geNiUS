@@ -140,6 +140,42 @@ connection.execute(selectUserByEmailQuery,
 );
   
 });
+// Verify email
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+  
+app.get('/verify/:token', (req, res)=>{
+    const {token} = req.params;
+  
+    // Verifying the JWT token 
+    jwt.verify(token, 'ourSecretKey', function(err, decoded) {
+        if (err) {
+            console.log(err);
+            res.send("Email verification failed, possibly the link is invalid or expired");
+        }
+        else {
+            res.send("Email verifified successfully");
+            res.status(201).json({ message: 'Registration successful' });
+        const createNewUser = `INSERT INTO users (name, email, password) 
+        VALUES (?, ?, ?);`; 
+       
+        // Insert the new user into the database
+        connection.execute(
+          createNewUser,
+          [name, email, hashedPassword],
+          (err) => {
+            if (err) {
+              console.error('Error inserting into the database:', err);
+              return;
+            } else {
+              
+              console.log('Create new user successfully');
+            }
+          }
+        );
+        }
+    });
+});
 
 // Register endpoint
 app.post('/register-user', (req, res) => {
@@ -170,24 +206,41 @@ app.post('/register-user', (req, res) => {
         res.status(409).json({ error: 'User already exists' });
         console.log('This email had been used before!');
       } else {
-        res.status(201).json({ message: 'Registration successful' });
-        const createNewUser = `INSERT INTO users (name, email, password) 
-        VALUES (?, ?, ?);`; 
-       
-        // Insert the new user into the database
-        connection.execute(
-          createNewUser,
-          [name, email, hashedPassword],
-          (err) => {
-            if (err) {
-              console.error('Error inserting into the database:', err);
-              return;
-            } else {
-              
-              console.log('Create new user successfully');
-            }
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: secure_configuration.EMAIL_USERNAME,
+              pass: secure_configuration.PASSWORD
           }
-        );
+      });
+        
+      
+      const token = jwt.sign({email_id:'123@gmail.com'}, "Stack", { expiresIn: '24h' } );    
+        
+      const mailConfigurations = {
+        
+          // It should be a string of sender/server email
+          from: 'songthu0711@gmail.com',
+        
+          to: `${email}`,
+        
+          // Subject of Email
+          subject: 'geNiUS Email Verification',
+            
+          // This would be the text of email body
+          text: `Welcome to geNiUS! To activate your account please follow the given link to verify your email:
+                 https://${currentURL}/verify/${token} 
+                 Thank you for joining us and have a nice university journey!`
+            
+      };
+        
+      transporter.sendMail(mailConfigurations, function(error, info){
+          if (error) throw Error(error);
+          console.log('Email Sent Successfully');
+          console.log(info);
+      });
+      
+        
     }
   }
   );
