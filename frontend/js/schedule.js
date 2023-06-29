@@ -10,7 +10,8 @@ function addTask() {
     // Prompt the user to enter the task name
     var taskName = window.prompt('Enter the task name:');
     if (taskName === null || taskName.trim() === '') {
-      return; // If the user cancels or leaves the input empty, exit the function
+      alert('Cannot create empty task');
+      return; 
     }
   
     // Create a new task element
@@ -177,9 +178,10 @@ function formatTimeInput(event) {
 function addRow() {
   var newRow = document.createElement('tr');
   // Prompt the user for the time value
-  var timeValue = document.querySelector('.time-input').value;
-  if (timeValue === null || timeValue === '') {
-    return; // If the user cancels or leaves the input empty, exit the function
+  var timeValue = document.querySelector('.time-input').value || null;
+  if (timeValue == null) {
+    alert('Please fill in the blank');
+    return; 
   }
 
   // Validate the time format using regex
