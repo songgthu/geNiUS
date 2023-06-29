@@ -215,7 +215,7 @@ app.post('/register-user', (req, res) => {
       });
         
       
-      const token = jwt.sign({email_id:'123@gmail.com'}, "Stack", { expiresIn: '24h' } );    
+      const token = jwt.sign({email_id: email}, "Stack", { expiresIn: '24h' } );    
         
       const mailConfigurations = {
         
