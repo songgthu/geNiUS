@@ -23,6 +23,7 @@ console.log(user.password);
       formInputs[i].disabled = true;
     }
     document.getElementById('saveButton').style.display = 'none';
+    document.getElementById('cancelButton').style.display = 'none';
     document.getElementById('editButton').style.display = 'block';
   }
 
@@ -33,6 +34,7 @@ console.log(user.password);
       formInputs[i].disabled = false;
     }
     document.getElementById('saveButton').style.display = 'block';
+    document.getElementById('cancelButton').style.display = 'block';
     document.getElementById('editButton').style.display = 'none';
   }
 
