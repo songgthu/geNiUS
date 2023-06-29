@@ -197,57 +197,62 @@ connection.execute(selectUserByEmailQuery,
 
 // Register endpoint
 app.post('/register-user', (req, res) => {
-  const { name, email, password } = req.body;
-  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-    if (err) {
-      console.error('Error hashing password:', err);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-  console.log(name);
-  // Check if the user already exists
-  const selectUserQuery = `
-  SELECT *
-  FROM users
-  WHERE email = ?
-`;
-  connection.execute(selectUserQuery,
-    [email],
-    (err, results) => {
+  try {
+    const { name, email, password } = req.body;
+    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
       if (err) {
-        console.error('Error querying the database:', err);
+        console.error('Error hashing password:', err);
         res.status(500).json({ error: 'Internal server error' });
         return;
       }
-
-      if (results.length > 0 && email == results[0].email) {
-        res.status(409).json({ error: 'User already exists' });
-        console.log('This email had been used before!');
-      } else {
-        
-        res.status(201).json({ message: 'Registration successful' });
-        sendMail(email);
-        const createNewUser = `INSERT INTO users (name, email, password) 
-        VALUES (?, ?, ?);`; 
-       
-        // Insert the new user into the database
-        connection.execute(
-          createNewUser,
-          [name, email, hashedPassword],
-          (err) => {
-            if (err) {
-              console.error('Error inserting into the database:', err);
-              return;
-            } else {
-              
-              console.log('Create new user successfully');
+    console.log(name);
+    // Check if the user already exists
+    const selectUserQuery = `
+    SELECT *
+    FROM users
+    WHERE email = ?
+  `;
+    connection.execute(selectUserQuery,
+      [email],
+      (err, results) => {
+        if (err) {
+          console.error('Error querying the database:', err);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+  
+        if (results.length > 0 && email == results[0].email) {
+          res.status(409).json({ error: 'User already exists' });
+          console.log('This email had been used before!');
+        } else {
+          
+          res.status(201).json({ message: 'Registration successful' });
+          //sendMail(email);
+          const createNewUser = `INSERT INTO users (name, email, password) 
+          VALUES (?, ?, ?);`; 
+         
+          // Insert the new user into the database
+          connection.execute(
+            createNewUser,
+            [name, email, hashedPassword],
+            (err) => {
+              if (err) {
+                console.error('Error inserting into the database:', err);
+                return;
+              } else {
+                console.log('Create new user successfully');
+              }
             }
-          }
-        );
+          );
+      }
     }
+    );
+  });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  );
-});
+  
 });
 
 // Update Timetable endpoint
