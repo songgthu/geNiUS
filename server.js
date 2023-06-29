@@ -154,54 +154,53 @@ app.post('/register-user', (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
-  console.log(name);
-  // Check if the user already exists
-  const selectUserQuery = `
-  SELECT *
-  FROM users
-  WHERE email = ?
-`;
-  connection.execute(selectUserQuery,
-    [email],
-    (err, results) => {
-      if (err) {
-        console.error('Error querying the database:', err);
-        res.status(500).json({ error: 'Internal server error' });
-        return;
-      }
+    console.log(name);
+    // Check if the user already exists
+    const selectUserQuery = `
+      SELECT *
+      FROM users
+      WHERE email = ?`;
+    connection.execute(selectUserQuery,
+      [email],
+      (err, results) => {
+        if (err) {
+          console.error('Error querying the database:', err);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
 
-      if (results.length > 0 && email == results[0].email) {
-        res.status(409).json({ error: 'User already exists' });
-        console.log('This email had been used before!');
-      } else {
-        sendMail()
-  .then((result) => {
-    res.status(201).json({ message: 'Registration successful' });
-        const createNewUser = `INSERT INTO users (name, email, password) 
-        VALUES (?, ?, ?);`; 
-       
-        // Insert the new user into the database
-        connection.execute(
-          createNewUser,
-          [name, email, hashedPassword],
-          (err) => {
-            if (err) {
-              console.error('Error inserting into the database:', err);
-              return;
-            } else {
-              
-              console.log('Create new user successfully');
-            }
-          }
-        );
-    console.log('Email sent...', result)})
-  .catch((error) => console.log(error.message));
-        
-    }
-  }
-  );
+        if (results.length > 0 && email == results[0].email) {
+          res.status(409).json({ error: 'User already exists' });
+          console.log('This email has been used before!');
+        } else {
+          sendMail(email)
+            .then((result) => {
+              res.status(201).json({ message: 'Registration successful' });
+              const createNewUser = `INSERT INTO users (name, email, password) 
+              VALUES (?, ?, ?);`;
+
+              // Insert the new user into the database
+              connection.execute(
+                createNewUser,
+                [name, email, hashedPassword],
+                (err) => {
+                  if (err) {
+                    console.error('Error inserting into the database:', err);
+                    return;
+                  } else {
+                    console.log('Create new user successfully');
+                  }
+                }
+              );
+              console.log('Email sent...', result);
+            })
+            .catch((error) => console.log(error.message));
+        }
+      }
+    );
+  });
 });
-});
+
 
 // Update Timetable endpoint
 app.post('/update-timetable', (req, res) => {
@@ -781,7 +780,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail() {
+async function sendMail(email) {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -800,7 +799,7 @@ async function sendMail() {
 
     const mailOptions = {
       from: 'GENIUS <genius.nus.123@gmail.com>',
-      to: 'thst0711@gmail.com',
+      to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
       html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}">Verify Account</a><p>You will be redirected to our login page if verification is successful.</p><br>`,
