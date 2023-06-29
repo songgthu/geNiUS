@@ -74,6 +74,10 @@ app.get('/timetable.html', (req, res) => {
 app.get('/exam.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'exam.html'));
 });
+
+app.get('/profile.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
+});
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
