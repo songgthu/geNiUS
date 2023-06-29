@@ -227,7 +227,7 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          //sendMail(email);
+          sendMail(email);
           const createNewUser = `INSERT INTO users (name, email, password) 
           VALUES (?, ?, ?);`; 
          
