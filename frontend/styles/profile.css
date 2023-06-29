@@ -1,9 +1,68 @@
+* {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 25px;
+}
 body {
-    font-family: Arial, sans-serif;
+
+    background-color: #f4eccd;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto;
+    height: 100vh;
+  }
+  
+  .sideNav {
+    background-color: #f4eccd;
+    padding: 20px;
+  }
+  
+  .main-content {
+    background-color: #f4eccd;
+    padding: 20px;
+  }
+  .navButton {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #926359;
+    color: #f4eccd;
+    border-radius: 10px;
+    padding: 5px;
+    width: 160px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    display: block;
+    border-color: #f4eccd;
+  }
+  
+  .navButton:hover {
+    background-color: #c99575;
+    transition-duration: 0.5s;
+  }
+  
+  
+  
+  .navText[status="shown"] {
+    font-size: 20px;
+    text-align: center;
+    align-self: center;
+  }
+  
+  #menu-icon {
+    color: #926359;
+    margin-left: 20px;
+    transform: scale(1.5);
+    cursor: pointer;
+  }
+  
+  #menu-icon:hover {
+    color: #c99575;
   }
 
   .profile-form {
-    max-width: 400px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -21,6 +80,7 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
+    font: 'Quicksand', sans-serif;
   }
 
   .profile-form button {
