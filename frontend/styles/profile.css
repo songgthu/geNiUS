@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  .profile-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .profile-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .profile-form input[type="text"],
+  .profile-form input[type="email"],
+  .profile-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .profile-form button {
+    background-color: #c99575;
+    color: #f4eccd;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .profile-form button:hover {
+    background-color: #926359;
+    transition-duration: 0.5s;
+  }
+
+  .delete-account {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .delete-account button {
+    background-color: #926359;
+    color: #f4eccd;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .delete-account button:hover {
+    background-color: #c99575;
+    transition-duration: 0.5s;
+  }
