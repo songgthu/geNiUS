@@ -212,17 +212,35 @@ app.post('/register-user', (req, res) => {
 });
 
 // Function to send verification email
-function sendVerificationEmail(email) {
-  return new Promise((resolve, reject) => {
+const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+
+async function sendVerificationEmail(email) {
+  try {
+    const oAuth2Client = new google.auth.OAuth2(
+      '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
+      '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',
+      'https://genius-awj5.onrender.com/login.html'
+    );
+
+    // oAuth2Client.setCredentials({
+    //   refresh_token: 'YOUR_REFRESH_TOKEN'
+    // });
+
+    const accessToken = await oAuth2Client.getAccessToken();
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: `genius.nus.123@gmail.com`,
-        pass: `Genius@123`
+        type: 'OAuth2',
+        user: 'genius.nus.123@gmail.com',
+        accessToken,
+        clientId: '365007334918-kjm2k94vairnsjd29h1t3nsmoekiq4gm.apps.googleusercontent.com',
+        clientSecret: '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'
       }
     });
 
-    const token = jwt.sign({ email_id: email }, "Stack", { expiresIn: '24h' });
+    const token = jwt.sign({ email_id: email }, 'Stack', { expiresIn: '24h' });
 
     const mailConfigurations = {
       from: 'genius.nus.123@gmail.com',
@@ -233,17 +251,14 @@ function sendVerificationEmail(email) {
       Thank you for joining us and have a nice university journey!`
     };
 
-    transporter.sendMail(mailConfigurations, function (error, info) {
-      if (error) {
-        reject(error);
-      } else {
-        console.log('Email Sent Successfully');
-        console.log(info);
-        resolve();
-      }
-    });
-  });
+    const info = await transporter.sendMail(mailConfigurations);
+    console.log('Email Sent Successfully');
+    console.log(info);
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+  }
 }
+
 
 
 // Update Timetable endpoint
