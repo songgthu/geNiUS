@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -27,6 +28,7 @@
     "googleapis": "^120.0.0",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.2",
+    "mocha": "^10.2.0",
     "mysql2": "^3.3.2",
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22",

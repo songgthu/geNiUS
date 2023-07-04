@@ -86,9 +86,13 @@ async function sendMail(email, name, password) {
     const mailOptions = {
       from: 'GENIUS <genius.nus.123@gmail.com>',
       to: email,
-      subject: 'Welcome to geNiUS',
+      subject: '[Welcome to geNiUS] Verification Email',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Verify Account</a>`,
+      html: `<h2>Hello ${name}! Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Verify Account</a><br>
+      <p>Please note that the link can only be clicked once.</p><br>
+      <p>You should be redirected to our login page after verification is successful.</p><br>
+      <p>Have a nice day,</p><br>
+      <p>geNiUS Developer Team</p>`,
     };
 
     const result = await transport.sendMail(mailOptions);
