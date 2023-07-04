@@ -47,7 +47,7 @@ function handleRegister(event) {
             // User already exists
             alert('User already exists');
         } else if (response.status === 201){
-            alert('Registration successful');
+            alert('Please check your mailbox to verify your account before login');
         } else {}
       })
       .catch(error => {
