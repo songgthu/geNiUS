@@ -88,7 +88,7 @@ async function sendMail(email, name, password) {
       to: email,
       subject: 'Welcome to geNiUS',
       text: 'Greetings! ',
-      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${email}/${password}">Verify Account</a>`,
+      html: `<h2>Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Verify Account</a>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -254,7 +254,7 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          sendMail(encodeURIComponent(email), name, encodeURIComponent(hashedPassword));
+          sendMail(email, name, hashedPassword);
           
       }
     }
