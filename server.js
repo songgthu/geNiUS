@@ -132,10 +132,10 @@ app.get('/profile.html', (req, res) => {
 app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
   const verificationToken = req.params.verificationToken;
   const name = req.params.name;
-  const email = req.params.email;
-  const password = req.params.password;
+  const email = decodeURIComponent(req.params.email);;
+  const password = decodeURIComponent(req.params.password);;
   // Your verification logic here
-  const createNewUser = `INSERT INTO users (name, email, password) VALUES (?, ?, ?);`; 
+  const createNewUser = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`; 
          
   // Insert the new user into the database
   connection.execute(
@@ -254,7 +254,7 @@ app.post('/register-user', (req, res) => {
         } else {
           
           res.status(201).json({ message: 'Registration successful' });
-          sendMail(email, name, hashedPassword);
+          sendMail(encodeURIComponent(email), name, encodeURIComponent(hashedPassword));
           
       }
     }
