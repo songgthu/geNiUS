@@ -129,7 +129,6 @@ async function sendResetPassWordMail(email, name) {
       html: `<h2>Hello ${name}, Thank you for supporting geNiUS</h2><br>
       <p>Please click the following link to reset your password:</p>
       <a href="https://genius-awj5.onrender.com/reset/${verificationToken}/${encodeURIComponent(email)}">Click Here To Reset Password</a>
-      <p>Please note that the link can be cicked only once.</p>
       <p>You should be redirected to our login page after reset password is successful</p>
       <p>Have a nice day,</p>
       <p>geNiUS Team</p>`,
