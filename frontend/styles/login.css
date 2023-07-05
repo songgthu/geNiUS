@@ -83,7 +83,7 @@ label {
 
 .loginButton:hover, .registerButton:hover, .resetButton:hover, .requestButton:hover {
   cursor: pointer;
-  color: #95817d;
+  color: #926359;
   background-color: #f4eccd;
   transition-duration: 0.6s;
 }
