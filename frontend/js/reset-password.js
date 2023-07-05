@@ -31,9 +31,7 @@ function resetPassword(event) {
       } else if (response.status === 201) {
         alert('Reset password successfully');
         window.location.href = '/login.html';
-      } else {
-        // Handle other response statuses if needed
-      }
+      } 
     })
     .catch(error => {
       console.error('Error during reset password:', error);
