@@ -92,7 +92,7 @@ async function sendMail(email, name, password) {
       <p>Please click the following link to verify your account:</p><br>
       <a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Click Here To Verify Account</a><br>
       <p>Please note that the link can be cicked only once.</p><br>
-      <p>You should be redirected to our login page after verification is successful</p><br>
+      <p>You should be able to redirected to our login page after verification is successful</p><br>
       <p>Have a nice day,</p><br>
       <p>geNiUS Team</p><br>`,
     };
@@ -189,7 +189,7 @@ app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
         console.error('Error inserting into the database:', err);
         return;
       } else {
-        res.redirect('/login.html');
+        res.redirect('/verify.html');
         console.log('Create new user successfully');
       }
     }
