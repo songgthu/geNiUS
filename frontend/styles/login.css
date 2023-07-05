@@ -1,4 +1,4 @@
-.header, .heading, .link, .login, .register, .loginButton, .registerButton, .homeButton {
+.header, .heading, .link, .login, .register, .loginButton, .registerButton, .homeButton, .resetButton, .requestButton {
   font-family: 'Quicksand', sans-serif;
 }
 .header {
@@ -66,7 +66,7 @@ label {
 
 }
 
-.registerButton, .loginButton, .homeButton {
+.registerButton, .loginButton, .homeButton, .resetButton, .requestButton {
   width: 80%; 
   font-size: 19px;
   font-weight: 700;
@@ -81,7 +81,7 @@ label {
   padding-bottom: 7px;
 }
 
-.loginButton:hover, .registerButton:hover{
+.loginButton:hover, .registerButton:hover, .resetButton:hover, .requestButton:hover {
   cursor: pointer;
   color: #95817d;
   background-color: #f4eccd;
@@ -93,13 +93,13 @@ label {
   transition-duration: 0.6s;
 }
 
-.email-label, .pwd-label, .name-label {
+.email-label, .pwd-label, .name-label, .password-label, .confirm-password-label {
   color: #f4eccd;
   
 }
 
-.email, .password, .name {
-  border: 0cm;
+.email, .password, .name, .confirm-password {
+  border: none;
 }
 
 .heading {
