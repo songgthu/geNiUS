@@ -126,13 +126,13 @@ async function sendResetPassWordMail(email, name) {
       to: email,
       subject: '[Hello from geNiUS] Reset your password',
       text: 'Greetings! ',
-      html: `<h2>Hello ${name},Thank you for supporting geNiUS</h2><br>
-      <p>Please click the following link to reset your password:</p><br>
-      <a href="https://genius-awj5.onrender.com/reset/${verificationToken}/${encodeURIComponent(email)}">Click Here To Reset Password</a><br>
-      <p>Please note that the link can be cicked only once.</p><br>
-      <p>You should be redirected to our login page after reset password is successful</p><br>
-      <p>Have a nice day,</p><br>
-      <p>geNiUS Team</p><br>`,
+      html: `<h2>Hello ${name}, Thank you for supporting geNiUS</h2><br>
+      <p>Please click the following link to reset your password:</p>
+      <a href="https://genius-awj5.onrender.com/reset/${verificationToken}/${encodeURIComponent(email)}">Click Here To Reset Password</a>
+      <p>Please note that the link can be cicked only once.</p>
+      <p>You should be redirected to our login page after reset password is successful</p>
+      <p>Have a nice day,</p>
+      <p>geNiUS Team</p>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -170,6 +170,9 @@ app.get('/exam.html', (req, res) => {
 
 app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
+});
+app.get('/reset-password.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'reset-password.html'));
 });
 
 app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
