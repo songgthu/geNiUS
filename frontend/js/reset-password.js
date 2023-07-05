@@ -27,9 +27,10 @@ function resetPassword(event) {
       if (response.status === 500) {
         alert('Internal server error');
       } else if (response.status === 409) {
-        alert('Invalid email, account does not exist');
+        alert('Reset password failed');
       } else if (response.status === 201) {
-        alert('Please check your mailbox to change your password');
+        alert('Reset password successfully');
+        window.redirect('/login.html')
       } else {
         // Handle other response statuses if needed
       }
