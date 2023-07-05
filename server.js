@@ -88,13 +88,13 @@ async function sendMail(email, name, password) {
       to: email,
       subject: '[Welcome to geNiUS] Verification Email',
       text: 'Greetings! ',
-      html: `<h2>Hello ${name},Thank you for supporting geNiUS</h2><br>
-      <p>Please click the following link to verify your account:</p><br>
-      <a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Click Here To Verify Account</a><br>
-      <p>Please note that the link can be clicked only once.</p><br>
-      <p>You should be able to redirected to our login page after verification is successful</p><br>
-      <p>Have a nice day,</p><br>
-      <p>geNiUS Team</p><br>`,
+      html: `<h2>Hello ${name}! Thank you for supporting geNiUS</h2><br>
+      <p>Please click the following link to verify your account:</p>
+      <a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Click Here To Verify Account</a>
+      <p>Please note that the link can be clicked only once.</p>
+      <p>You should be able to redirected to our login page after verification is successful</p>
+      <p>Have a nice day,</p>
+      <p>geNiUS Team</p>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -126,7 +126,7 @@ async function sendResetPassWordMail(email, name) {
       to: email,
       subject: '[Hello from geNiUS] Reset your password',
       text: 'Greetings! ',
-      html: `<h2>Hello ${name}, Thank you for supporting geNiUS</h2><br>
+      html: `<h2>Hello ${name}! Thank you for supporting geNiUS</h2><br>
       <p>Please click the following link to reset your password:</p>
       <a href="https://genius-awj5.onrender.com/reset/${verificationToken}/${encodeURIComponent(email)}">Click Here To Reset Password</a>
       <p>You should be redirected to our login page after reset password is successful</p>
