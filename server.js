@@ -88,11 +88,13 @@ async function sendMail(email, name, password) {
       to: email,
       subject: '[Welcome to geNiUS] Verification Email',
       text: 'Greetings! ',
-      html: `<h2>Hello ${name}! Thank you for supporting geNiUS</h2><br><p>Please click the following link to verify your account:</p><br><a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Verify Account</a><br>
-      <p>Please note that the link can only be clicked once.</p><br>
-      <p>You should be redirected to our login page after verification is successful.</p><br>
+      html: `<h2>Hello ${name},Thank you for supporting geNiUS</h2><br>
+      <p>Please click the following link to verify your account:</p><br>
+      <a href="https://genius-awj5.onrender.com/verify/${verificationToken}/${name}/${encodeURIComponent(email)}/${encodeURIComponent(password)}">Click Here To Verify Account</a><br>
+      <p>Please note that the link can be cicked only once.</p><br>
+      <p>You should be redirected to our login page after verification is successful</p><br>
       <p>Have a nice day,</p><br>
-      <p>geNiUS Developer Team</p>`,
+      <p>geNiUS Team</p><br>`,
     };
 
     const result = await transport.sendMail(mailOptions);
@@ -102,6 +104,43 @@ async function sendMail(email, name, password) {
   }
 }
 
+async function sendResetPassWordMail(email, name) {
+  try {
+    const accessToken = await oAuth2Client.getAccessToken();
+
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: 'genius.nus.123@gmail.com',
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
+    const verificationToken = Math.floor(100000 + Math.random() * 900000);
+
+    const mailOptions = {
+      from: 'GENIUS <genius.nus.123@gmail.com>',
+      to: email,
+      subject: '[Hello from geNiUS] Reset your password',
+      text: 'Greetings! ',
+      html: `<h2>Hello ${name},Thank you for supporting geNiUS</h2><br>
+      <p>Please click the following link to reset your password:</p><br>
+      <a href="https://genius-awj5.onrender.com/reset/${verificationToken}/${encodeURIComponent(email)}">Click Here To Reset Password</a><br>
+      <p>Please note that the link can be cicked only once.</p><br>
+      <p>You should be redirected to our login page after reset password is successful</p><br>
+      <p>Have a nice day,</p><br>
+      <p>geNiUS Team</p><br>`,
+    };
+
+    const result = await transport.sendMail(mailOptions);
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
 
 app.get('/', (req, res) => {
   session = req.session;
@@ -159,6 +198,66 @@ app.get('/verify/:verificationToken/:name/:email/:password', (req, res) => {
   
 });
 
+app.get('/reset/:verificationToken/:email', (req, res) => {
+  const email = decodeURIComponent(req.params.email);;
+  res.redirect(`/reset-password.html?email=${encodeURIComponent(email)}`); 
+  
+});
+
+app.post('/send-reset-password', (req, res) => {
+
+  const { email} = req.body;
+  // Query the database to retrieve the user
+  const selectUserByEmailQuery = `
+  SELECT *
+  FROM users
+  WHERE email = ?
+`;
+
+connection.execute(selectUserByEmailQuery,
+  [email],
+  (err, results) => {
+    if (err) {
+      console.error('Error Executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    // Check if account exists
+    if(results.length > 0 && email == results[0].email) {
+      res.status(201).json({ message: 'Valid email' });
+      sendResetPassWordMail(email, results[0].name);
+    } else {
+      res.status(409).json({ error: 'Invalid email, account does not exist' });
+    }
+  
+  }
+);
+  
+});
+
+app.post('/reset-password', (req, res) => {
+
+  const { email, password } = req.body;
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+  // Query the database to retrieve the user
+  const updatePassword = `UPDATE users SET password = ? WHERE email = ?`;
+
+connection.execute(updatePassword,
+  [hashedPassword, email],
+  (err, results) => {
+    if (err) {
+      console.error('Error Executing query:', err);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    } else {
+    res.status(201).json({message: 'Update password successfully'});
+  }
+  
+  }
+);
+  });
+  
+});
   
 const apiUrl = 'https://api.nusmods.com/v2/2022-2023/';
 app.post('/modules', (req, res) => {
