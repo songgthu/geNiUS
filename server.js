@@ -171,6 +171,11 @@ app.get('/exam.html', (req, res) => {
 app.get('/profile.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'profile.html'));
 });
+
+app.get('/verify.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'html', 'verify.html'));
+});
+
 app.get('/reset-password.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'html', 'reset-password.html'));
 });
