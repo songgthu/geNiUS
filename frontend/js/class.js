@@ -87,9 +87,9 @@ searchClass.addEventListener('click', searchModule);
 function searchModule() {
 // get input data
 const moduleCode = document.querySelector('.classInput').value.trim().toUpperCase() || null;
-const tutorial = document.querySelector('.tutorialInput').value.trim() || null;
-const lab = document.querySelector('.labInput').value.trim() || null;
-const recitation = document.querySelector('.recInput').value.trim() || null;
+const tutorial = document.querySelector('.tutorialInput').value.trim().toString().toUpperCase() || null;
+const lab = document.querySelector('.labInput').value.trim().toString().toUpperCase() || null;
+const recitation = document.querySelector('.recInput').value.trim().toString().toUpperCase() || null;
 var searchData = {};
 
 if (moduleCode !== null && (tutorial !== null || lab !== null || recitation !== null)) {
