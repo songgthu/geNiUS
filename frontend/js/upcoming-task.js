@@ -61,6 +61,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
       } else if (response.status === 201) {
         //alert('Add task successfully');
         retrieveTask1();
+        closeTask1();
       }
     })
     .catch(error => {
