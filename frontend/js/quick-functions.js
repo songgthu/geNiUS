@@ -22,6 +22,13 @@ function setTime() {
     seconds = parseInt(prompt('Enter seconds:'));
     if (hours > 24 || minutes > 60 || seconds > 60 || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
         alert("Invalid time input, please try again.");
+        return;
+    } else if (hours == 0 && minutes == 0 && seconds == 0) {
+        alert("Invalid time input, please try again.");
+        return;
+    } else if (hours < 0 || minutes < 0 && seconds < 0) {
+        alert("Invalid time input, please try again.");
+        return;
     } else {
     // Update the timer display
     hoursElement.textContent = formatTime(hours);
