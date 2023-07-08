@@ -68,41 +68,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
         //alert('Add task successfully');
-        var row = table.insertRow();
-
-    // // Create cells for the task, deadline, and status
-    var taskCell = row.insertCell(0);
-   
-    var deadlineCell = row.insertCell(1);
-    var statusCell = row.insertCell(2);
-
-    // // Set the values for the cells
-    taskCell.textContent = taskInput;
-    deadlineCell.textContent = formattedDate;
-
-    // // Create a checkbox and label for the status cell
-    var checkboxContainer = document.createElement('div');
-    checkboxContainer.className = 'checkbox-container';
-
-    var checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.id = 'statusCheckbox' + table.rows.length;
-    checkboxContainer.appendChild(checkbox);
-
-    var label = document.createElement('label');
-    label.htmlFor = 'statusCheckbox' + table.rows.length;
-    checkboxContainer.appendChild(label);
-
-    statusCell.appendChild(checkboxContainer);
-        taskCell.addEventListener('click', function() {
-          openTask(taskCell.textContent); 
-        });
-        checkbox.addEventListener('click', function() {
-          checkBox(checkbox, taskCell.textContent);
-        });
-        closeTask();
-      } else {
-       
+        retrieveTask();
       }
     })
     .catch(error => {
@@ -151,8 +117,8 @@ function retrieveTask(){
 
 function displayTodayTask() {
   const taskData = JSON.parse(sessionStorage.getItem('taskData'));
-  const table = document.querySelector(".task-table")
-  const taskBody = document.querySelector(".taskBody");
+  const table = document.querySelector(".task-table");
+  const taskBody = table.querySelector(".taskBody");
   taskBody.innerHTML = "";
   const today = new Date();
   
@@ -191,13 +157,13 @@ function displayTodayTask() {
     taskBody.appendChild(newRow);
     
     taskCell.addEventListener('click', function() {
-      openTask(taskCell.textContent); 
+      openTask(taskCell.textContent, deadlineCell.textContent); 
     });
     checkbox.addEventListener('click', function() {
       checkBox(checkbox, taskCell.textContent);
     });
     
-  } else {}
+  }
   }
   
 }
@@ -238,30 +204,27 @@ function checkBox(checkbox, taskName) {
 }
 
 
-function openTask(oldTask) {
-  console.log("1");
+function openTask(oldTask, taskDeadline) {
   editModal.style.display="block";
   const update = document.querySelector(".saveChangeButton");
-  console.log(update);
-  console.log(oldTask);
-  
   
   update.addEventListener('click', function(){
-    console.log("2");
     updateTask(oldTask);
   });
   const del = document.querySelector('.deleteTaskButton');
   del.addEventListener('click', function() {
-    deleteTask(oldTask);
+    deleteTask(oldTask, taskDeadline);
 });
 }
 // Function to update task change (name, deadline, checkbox)
-function updateTask(oldTask) {
-  console.log("here");
+function updateTask(oldTask, oldDeadline) {
   const newTask = document.querySelector('.newTaskInput').value || null;
   const newDeadline = document.querySelector('.newDeadlineInput').value || null;
   if (newTask == null || newDeadline == null) {
     alert('Please fill in all the fields');
+    return;
+  } else if (newTask == oldTask && newDeadline == oldDeadline) {
+    alert('Cannot update due to no changes made to this task');
     return;
   }
   var [datePart, timePart] = newDeadline.split('T');
@@ -271,10 +234,10 @@ function updateTask(oldTask) {
   const data = {
     newTask: newTask,
     newDeadline: formattedDate,
-    oldTask: oldTask
+    oldTask: oldTask,
+    userId: sessionStorage.getItem('userId')
   };
   
-  // console.log(oldTask);
 
   fetch(`https://${currentURL}/update-task`, {
     method: 'POST',
@@ -298,10 +261,12 @@ function updateTask(oldTask) {
 }
 
 // Function to delete task
-function deleteTask(taskName) {
+function deleteTask(taskName, taskDeadline) {
 
   const data = {
-    taskName: taskName
+    taskName: taskName,
+    taskDeadline: taskDeadline,
+    userId: sessionStorage.getItem('userId')
   };
   console.log(taskName);
 
