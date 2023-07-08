@@ -11,6 +11,22 @@ function resetPassword(event) {
   event.preventDefault(); 
   const password = document.querySelector(".password").value;
   const confirmPassword = document.querySelector(".confirm-password").value;
+  if (password.length < 8) { //check for pwd length
+    alert("Password must be at least 8 characters long");
+    return;
+  } else if (!/[a-z]/.test(password)) {
+    alert("Password must contain at least one lowercase character");
+    return;
+  } else if(!/[A-Z]/.test(password)) {
+    alert("Password must contain at least one uppercase character");
+    return;
+  } else if(!/[0-9]/.test(password)) {
+    alert("Password must contain at least one digit");
+    return;
+  } else if(!/[!@#$%^&*]/.test(password)) {
+    alert("Password must contain at least one special character");
+    return;
+  }
   if (password === confirmPassword) {
     const data = {
       email: email,
