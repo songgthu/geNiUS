@@ -30,26 +30,17 @@ function createTask1(){
     // Get the input value
     const taskInput = document.querySelector('.taskInput1').value;
     const deadline = document.querySelector('.deadlineInput1').value;
-    console.log(deadline);
     if (taskInput != "" && deadline != "") {
     var [datePart, timePart] = deadline.split('T');
 
 // Split the date component into year, month, and day
 var [year, month, day] = datePart.split('-');
 
-
 // Convert the month value to a string representation
 var monthString = new Date(datePart + 'T00:00:00').toLocaleString('en-US', { month: 'long' });
 
 // Construct the formatted date string
 var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
-    // Create a new row
-    var table = document.querySelector('.task-table1');
-    
-    
-    console.log(userId);
-    console.log(taskInput);
-    console.log(formattedDate);
     const data1 = {
       taskInput: taskInput,
       deadline: formattedDate,
@@ -69,41 +60,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
         alert('Task name already exist');
       } else if (response.status === 201) {
         //alert('Add task successfully');
-        var row = table.insertRow();
-
-    // // Create cells for the task, deadline, and status
-    var taskCell = row.insertCell(0);
-   
-    var deadlineCell = row.insertCell(1);
-    var statusCell = row.insertCell(2);
-
-    // // Set the values for the cells
-    taskCell.textContent = taskInput;
-    deadlineCell.textContent = formattedDate;
-
-    // // Create a checkbox and label for the status cell
-    var checkboxContainer = document.createElement('div');
-    checkboxContainer.className = 'checkbox-container';
-
-    var checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.id = 'statusCheckbox' + table.rows.length;
-    checkboxContainer.appendChild(checkbox);
-
-    var label = document.createElement('label');
-    label.htmlFor = 'statusCheckbox' + table.rows.length;
-    checkboxContainer.appendChild(label);
-
-    statusCell.appendChild(checkboxContainer);
-        taskCell.addEventListener('click', function() {
-          openTask1(taskCell.textContent); 
-        });
-        checkbox.addEventListener('click', function() {
-          checkBox1(checkbox, taskCell.textContent);
-        });
-        closeTask1();
-      } else {
-       
+        retrieveTask1();
       }
     })
     .catch(error => {
@@ -113,13 +70,11 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
       alert("Please fill in all the fields");
     }
   }
-// Open task
 
 
 function closeTask1() {
   modal1.style.display="none";
 }
-
   // Retrieve task data
   // Fetch task data from the database
   document.addEventListener('DOMContentLoaded', retrieveTask1);
@@ -137,15 +92,13 @@ function retrieveTask1(){
       alert('Internal server error');
     } else if (response.status === 201) {
       response.json().then(data1 => {
-        const results = data1.results; // Access the "results" property
+        const results = data1.results; 
         sessionStorage.setItem('taskData', JSON.stringify(results));
         console.log(sessionStorage.getItem('taskData'));
         displayUpcomingTask();
         //alert('Task retrieve successfully');
       });
-    } else {
-     
-    }
+    } 
   })
   .catch(error => {
     console.error('Error during retrieve task:', error)});
@@ -155,7 +108,7 @@ function retrieveTask1(){
 function displayUpcomingTask() {
   const taskData = JSON.parse(sessionStorage.getItem('taskData'));
   const table = document.querySelector(".task-table1")
-  const taskBody = document.querySelector(".taskBody1");
+  const taskBody = table.querySelector(".taskBody1");
   taskBody.innerHTML = "";
   const today = new Date();
   const tomorrow = new Date();
