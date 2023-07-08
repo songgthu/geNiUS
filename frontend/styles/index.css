@@ -1,3 +1,6 @@
+html {
+  font-family: 'Quicksand', sans-serif;
+}
 .background {
   background-color: #f4eccd;
   flex-direction: column;
@@ -34,8 +37,14 @@ nav {
     text-decoration: underline;
     transition-duration: 0.6s;
   }
-  h1, p, button {
-    font-family: 'Quicksand', sans-serif;font-family: 'Quicksand', sans-serif;
+  h1, h3, p {
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    color: #926359;
+    line-height: 1.25;
+  }
+  button {
+    font-family: 'Quicksand', sans-serif;
     text-align: center;
     color: #926359;
   }
@@ -47,8 +56,14 @@ nav {
   h1 {
     margin-bottom: 20px;
   }
+  h3 {
+    font-size: 30px;
+  }
   p {
-  font-size: 20px;
+    margin-left: 60px;
+    margin-right: 60px;
+    font-size: 25px;
+    font-weight: 700;
   }
   .startButton {
     margin-top: 20px;
@@ -63,7 +78,4 @@ nav {
   .startButton:hover {
     background-color: #c99575;
     transition-duration: 0.6s;
-  }
-  .content {
-    
   }

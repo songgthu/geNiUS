@@ -6,7 +6,6 @@ var user = {
     password: sessionStorage.getItem('password'),
     userId: sessionStorage.getItem('userId')
   };
-console.log(user.password);
 
   // Function to display current user information
   function displayUserInfo() {
