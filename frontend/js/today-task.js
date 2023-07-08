@@ -69,6 +69,7 @@ var formattedDate = monthString + ' ' + day + ', ' + year + ', ' + timePart;
       } else if (response.status === 201) {
         //alert('Add task successfully');
         retrieveTask();
+        retrieveTask1();
         closeTask();
       }
     })
@@ -251,8 +252,9 @@ function updateTask(oldTask, oldDeadline) {
       alert('Internal server error');
     } else if (response.status === 201) {
       //alert('Update task successfully');
-      closeEditModal();
       retrieveTask();
+      retrieveTask1();
+      closeEditModal();
     } else {
      
     }
