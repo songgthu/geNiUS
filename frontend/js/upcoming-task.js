@@ -149,7 +149,7 @@ function displayUpcomingTask() {
     taskBody.appendChild(newRow);
     
     taskCell.addEventListener('click', function() {
-      openTask1(taskCell.textContent); 
+      openTask1(taskCell.textContent, deadlineCell.textContent); 
     });
     checkbox.addEventListener('click', function() {
       checkBox1(checkbox, taskCell.textContent);
@@ -194,27 +194,20 @@ function checkBox1(checkbox, taskName) {
 }
 
 
-function openTask1(oldTask) {
-  console.log("1");
+function openTask1(oldTask, oldDeadline) {
   editModal1.style.display="block";
-  //const oldTask= document.querySelector('.task-name').textContent;
   const update = document.querySelector(".saveChangeButton1");
-  console.log(update);
-  console.log(oldTask);
-  
   
   update.addEventListener('click', function(){
-    console.log("2");
     updateTask1(oldTask);
   });
   const del = document.querySelector('.deleteTaskButton1');
   del.addEventListener('click', function() {
-    deleteTask1(oldTask);
+    deleteTask1(oldTask, oldDeadline);
 });
 }
 // Function to update task change (name, deadline, checkbox)
 function updateTask1(oldTask) {
-  console.log("here");
   const newTask = document.querySelector('.newTaskInput1').value;
   const newDeadline = document.querySelector('.newDeadlineInput1').value;
   var [datePart, timePart] = newDeadline.split('T');
@@ -224,7 +217,8 @@ function updateTask1(oldTask) {
   const data1 = {
     newTask: newTask,
     newDeadline: formattedDate,
-    oldTask: oldTask
+    oldTask: oldTask,
+    userId: sessionStorage.getItem('userId')
   };
   
   // console.log(oldTask);
@@ -252,12 +246,12 @@ function updateTask1(oldTask) {
 }
 
 // Function to delete task
-function deleteTask1(taskName) {
+function deleteTask1(taskName, taskDeadline) {
 
   const data1 = {
-    taskName: taskName
+    taskName: taskName,
+    taskDeadline: taskDeadline
   };
-  console.log(taskName);
 
   fetch(`https://${currentURL}/delete-task`, {
     method: 'POST',
