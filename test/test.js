@@ -162,16 +162,15 @@ var user = {
     email: 'thst0711@gmail.com',
     password: 'Strongpassword@123'
   }; 
-describe('Profile', function () {
-    it('should display an error when user update a weak password and does not update user info', function () {
+  describe('Profile', function () {
+    it('should display an error when user updates a weak password and does not update user info', function () {
       const newName = 'Sarah';
       const newEmail = 'thst0711@gmail.com';
       const newPassword = 'Weakpassword!';
-
-      // Perform the login and assert the expected behavior
+  
+      // Perform the profile update and assert the expected behavior
       return saveProfile(newName, newEmail, newPassword)
         .then(response => {
-          // This code block should not execute
           assert.fail('Expected an error to be thrown');
         })
         .catch(error => {
@@ -183,7 +182,25 @@ describe('Profile', function () {
           assert.strictEqual(user.password, 'Strongpassword@123');
         });
     });
+  
+    it('should update username in dashboard when user updates profile successfully', function () {
+      const newName = 'Xing Yu';
+      const newEmail = 'xingyu@gmail.com';
+      const newPassword = 'Strongpassword@123';
+  
+      // Perform the profile update and assert the expected behavior
+      return saveProfile(newName, newEmail, newPassword)
+        .then(response => {
+          assert.strictEqual(user.name, newName); 
+          assert.strictEqual(user.email, newEmail);
+          assert.strictEqual(user.password, newPassword);
+        })
+        .catch(error => {
+          assert.fail('Expected no error to be thrown');
+        });
+    });
   });
+  
 
 function saveProfile(newName, newEmail, newPassword) {
     return new Promise((resolve, reject) => {  
@@ -219,9 +236,95 @@ function saveProfile(newName, newEmail, newPassword) {
         user.password = newPassword;
         resolve({ status: 200 });
     }
-
     
 });
     
 
 }
+
+// change tab function
+const { JSDOM } = require('jsdom');
+var dom = new JSDOM(`
+      <html>
+        <body>
+          <div class="tabBar">
+          <ul>
+          <li data-li="overview"  class="active" onclick="changeTab()">Overview</li>
+          <li data-li="today" onclick="changeTab()">Today's Tasks</li>
+          <li data-li="upcoming" onclick="changeTab()">Upcoming Tasks</li>
+          <li data-li="classes" onclick="changeTab()">Class Management</li>
+          </ul>
+          </div>
+          <div class="item overview"></div>
+          <div class="item today"></div>
+          <div class="item upcoming"></div>
+          <div class="item classes"></div>
+        </body>
+      </html>
+`);
+var document = dom.window.document;
+
+describe('changeTab function', function () {
+  it('should activate the clicked tab and display the corresponding item: upcoming tab', function () {
+    const tab = "upcoming";
+    return changeTab(tab)
+      .then(response => {
+        const li_elements = document.querySelectorAll(".tabBar ul li");
+        const item_elements = document.querySelectorAll(".item");
+
+        li_elements.forEach(li => {
+          if (li.getAttribute("data-li") === tab) {
+            assert.isTrue(li.classList.contains("active"), `Expected ${tab} tab to be active`);
+          } else {
+            assert.isFalse(li.classList.contains("active"), `Expected ${tab} tab not to be active`);
+          }
+        });
+
+        item_elements.forEach(item => {
+          if (item.classList.contains(tab)) {
+            assert.strictEqual(item.style.display, "block", `Expected ${tab} item to be displayed`);
+          } else {
+            assert.strictEqual(item.style.display, "none", `Expected ${tab} item to be hidden`);
+          }
+        });
+      })
+      .catch(error => {
+        assert.fail('Expected no error to be thrown');
+      });
+  });
+});
+
+
+function changeTab(li_value) {
+  return new Promise((resolve, reject) => {
+    var li_elements = document.querySelectorAll(".tabBar ul li");
+    var item_elements = document.querySelectorAll(".item");
+
+    li_elements.forEach(function (li) {
+      li.classList.remove("active");
+    });
+
+    var selectedTab = document.querySelector(`[data-li="${li_value}"]`);
+    if (selectedTab) {
+      selectedTab.classList.add("active");
+      item_elements.forEach(function (item) {
+        item.style.display = "none";
+      });
+
+      var selectedTabItem = document.querySelector(`.${li_value}`);
+      if (selectedTabItem) {
+        selectedTabItem.style.display = "block";
+        resolve({ status: 200 });
+      } else {
+        const error = new Error('changeTab function failed');
+        error.status = 400;
+        reject(error);
+      }
+    } else {
+      const error = new Error('changeTab function failed');
+      error.status = 400;
+      reject(error);
+    }
+  });
+}
+
