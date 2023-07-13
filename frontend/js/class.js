@@ -272,7 +272,6 @@ function displayModule() {
             
             </div>
             `;
-
             
             const addTaskIcons = document.querySelectorAll(`.material-symbols-outlined.${session}-${moduleName}-w${i}-addTask`);
             console.log(addTaskIcons);
@@ -280,9 +279,7 @@ function displayModule() {
               icon.addEventListener('click', () => addTaskInModule(session, moduleName, i));
               
             });
-            
-            
-          }
+      }
     }
     if(reformattedArray.length - (i + 4) == 2) {
         break;
@@ -419,8 +416,6 @@ document.querySelector(`.class-container-week-1`).style.display ='';
   getModuleScheduleButton.addEventListener('click', retrieveModuleSchedule);
 
   document.addEventListener('DOMContentLoaded', retrieveModuleSchedule);
-
-  
 
   function retrieveModuleSchedule() {
     fetch(`https://${currentURL}/get-module-schedule`, {
