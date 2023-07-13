@@ -131,6 +131,10 @@ fetch(`https://${currentURL}/modules`, {
         var semesterValue = semesterDropdown.value == 1 ? 0 : 1;
         
         const resultOutput = document.querySelector('.result-content');
+        if (data.semesterData.length === 0) {
+          resultOutput.innerHTML = "No results found";
+          return;
+        }
         resultOutput.innerHTML = moduleCode +`<br>`;
         
         console.log(semesterValue);
@@ -214,6 +218,10 @@ function attachRemoveTaskListener() {
 attachRemoveTaskListener();
 
 function displayModule() {
+  if(document.querySelector('.result-content').innerHTML == "No results found") {
+    alert('No module to be added to the schedule');
+    return;
+  }
     const moduleInfo = document.querySelector('.result-content').innerHTML;
     closeClassModalBox();
   
