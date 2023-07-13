@@ -131,11 +131,7 @@ fetch(`https://${currentURL}/modules`, {
         var semesterValue = semesterDropdown.value == 1 ? 0 : 1;
         
         const resultOutput = document.querySelector('.result-content');
-        if (data.semesterData[semesterValue].timetable.length === 0) {
-          resultOutput.innerHTML = "No results found";
-          return;
-        }
-        console.log(data.semesterData);
+        
         resultOutput.innerHTML = moduleCode +`<br>`;
         
         console.log(semesterValue);
@@ -197,6 +193,12 @@ fetch(`https://${currentURL}/modules`, {
     
             }
         }
+        console.log(resultOutput.innerHTML);
+        if(resultOutput.innerHTML == moduleCode +`<br>`) {
+          resultOutput.innerHTML = "No results found";
+          return;
+        }
+        
         console.log(resultOutput.innerHTML);
         }
         
