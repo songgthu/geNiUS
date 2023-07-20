@@ -401,7 +401,6 @@ connection.execute(updateURLQuery,
 });
 
 app.post('/get-timetable', (req, res) => {
-
   const { userEmail } = req.body;
 
   // Query the database to retrieve the user
