@@ -1,5 +1,9 @@
 var currentURL = window.location.href.split("/")[2];
-
+const sessionToken = sessionStorage.getItem("sessionToken");
+if (!sessionToken) {
+    window.location.href = "/login.html";
+    alert('Your login session expired, please login again');
+}
 const userEmail = sessionStorage.getItem('email');
 const update = document.querySelector('.submitButton');
 update.addEventListener('click', updateTimetable);

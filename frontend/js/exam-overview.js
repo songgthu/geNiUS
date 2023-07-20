@@ -1,3 +1,8 @@
+const sessionToken = sessionStorage.getItem("sessionToken");
+if (!sessionToken) {
+    window.location.href = "/login.html";
+    alert('Your login session expired, please login again');
+}
 var currentURL = window.location.href.split("/")[2];
 var examObjects = {};
 const modal = document.querySelector(".exam-modal");
