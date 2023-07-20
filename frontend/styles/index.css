@@ -79,3 +79,7 @@ nav {
     background-color: #c99575;
     transition-duration: 0.6s;
   }
+
+  img {
+    align-self: center;
+  }

@@ -113,8 +113,14 @@ input[type="checkbox"] {
   vertical-align: middle;
 }
 
-.material-symbols-outlined {
-  vertical-align: middle;
+#prev, #next {
+  margin-top: 10px;
+}
+.line {
+  border-bottom: 4px solid #c99575;
+  width: 100%;
+  margin-top: 20px;
+  align-self: center;
 }
 
 .item {
@@ -173,7 +179,7 @@ input[type="checkbox"] {
 .gotodate {
   display: flex;
   margin-top: 20px;
-
+  margin-left: 20px;
 }
 
 .date-input {
@@ -350,7 +356,7 @@ input[type="checkbox"] {
 }
 
 .shortcut {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .shortcut-title {
