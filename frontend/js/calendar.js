@@ -183,7 +183,6 @@ console.error(error);
 });
 }
 
-
 // Display task
 function displayDateTask() {
     const taskListData = JSON.parse(sessionStorage.getItem('taskListData'));
@@ -249,4 +248,3 @@ function countTasks() {
 
 const overviewTab = document.querySelector('li[data-li="overview"].active');
 overviewTab.addEventListener('click', goToToday);
-

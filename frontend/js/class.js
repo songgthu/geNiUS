@@ -370,7 +370,6 @@ function removeTask(event) {
   var moduleListArray = [];
   var moduleScheduleArray = [];
 
-
   function saveModuleSchedule() {
     // Store module list in an array
   var moduleList = document.querySelector('.class-list').getElementsByTagName('li');
