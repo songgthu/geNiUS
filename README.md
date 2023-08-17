@@ -1,4 +1,4 @@
-# Orbital-geNiUS 💡
+# geNiUS 💡
 _By Song Thu (Sarah) and Xing Yu_
 
 Welcome to geNiUS, your ultimate solution for achieving a harmonious blend of academic success, sleep, and an active social life. We understand the challenges faced by NUS students in balancing these crucial aspects of university life in NUS, and that's why we've developed a customized web application just for NUS students.
