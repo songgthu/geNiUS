@@ -15,10 +15,10 @@ const sessions = require('express-session');
 
 // Create connection to the remote database
 const connection = mysql.createConnection({
-  host: 'aws.connect.psdb.cloud',
-  user: 'j4ofi384s2ejay5pw4td',
-  password: 'pscale_pw_Bv3FTbBWvxxG4zvWxwheFCWRlTxWSCAUWP9rWe3PFAV',
-  database: 'genius',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   ssl: { rejectUnauthorized: true },
   multipleStatements: true,
 });
