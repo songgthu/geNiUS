@@ -14,14 +14,15 @@ const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 // Create connection to the remote database
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  ssl: { rejectUnauthorized: true },
-  multipleStatements: true,
-});
+// const connection = mysql.createConnection({
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_DATABASE,
+//   ssl: { rejectUnauthorized: true },
+//   multipleStatements: true,
+// });
+const connection = mysql.createConnection(process.env.DATABASE_URL);
 
 // Connect to the database
 connection.connect((err) => {
