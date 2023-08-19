@@ -14,15 +14,14 @@ const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 // Create connection to the remote database
-// const connection = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_DATABASE,
-//   ssl: { rejectUnauthorized: true },
-//   multipleStatements: true,
-// });
-const connection = mysql.createConnection(process.env.DATABASE_URL);
+const connection = mysql.createConnection({
+  host: 'aws.connect.psdb.cloud',
+  user: 'tlfs4tooy6bxlx4pz3i1',
+  password: 'pscale_pw_Awe7TQooWHmPHTAKo5TilgjvRKauKbKdEmnHWZcEM3q',
+  database: 'genius',
+  ssl: { rejectUnauthorized: true },
+  multipleStatements: true,
+});
 
 // Connect to the database
 connection.connect((err) => {
