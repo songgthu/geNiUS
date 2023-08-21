@@ -29,8 +29,8 @@ Let's take a look at our milestone achievements:
 - [x] Exam management page
 
   # Milestone 3 (24 July)
-- [ ] Extend existing features
-- [ ] Profile page
+- [x] Extend existing features
+- [x] Profile page
 
 ## Features
   ### Welcome page
